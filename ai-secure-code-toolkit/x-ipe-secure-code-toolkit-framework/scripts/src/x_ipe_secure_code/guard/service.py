@@ -515,6 +515,7 @@ def _conclude_open(root: Path, vid: str, command: str) -> dict[str, Any] | None:
     result = engine.conclude(
         state, observed, _policy_now(root, state, command), ended_at, control_of(state, used)
     )
+    report.stamp(result)  # CR-TASK-086: the build writing this result (engine output stays pure)
     with ProcessLock(runs.commit_lock(root, vid), timeout=runs.BARRIER_TIMEOUT):
         if runs.cancel_marker(root, vid) is not None:
             return None

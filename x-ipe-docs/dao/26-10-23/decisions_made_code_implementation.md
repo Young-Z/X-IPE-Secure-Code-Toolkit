@@ -7,6 +7,7 @@
 |-------|-----------|---------|---------------|-------------|------------|---------|
 | DAO-001 | 2026-10-23T11:11:10+08:00 | TASK-062 | x-ipe-task-based-code-implementation | approval | 0.82 | FEATURE-003-B: status._host unreadable-AGENTS.md change accepted as a defect fix (A) with conditions: correct next step for the OSError case only, regression test, document FRAGMENT_UNREADABLE in cli-contract, init traceback recorded as separate defect candidate |
 | DAO-002 | 2026-10-23T15:28:27+08:00 | TASK-069 | x-ipe-task-based-code-implementation | approval | 0.84 | FEATURE-001-F: Q1 A — append the 5 new 001-F payload paths to delivered 003-B test helper ERA_001A_REMOVED as a test-defect fix (no assertion/fixture/AC change); DAO-009 (2) amended; maintenance point noted in 003-B/001-F designs; Q2 Framework Status line updated honestly |
+| DAO-003 | 2026-10-24T02:56:11+08:00 | TASK-090 | x-ipe-task-based-code-implementation | approval | 0.88 | CR-TASK-086 renderer identity: three-file RENDERER_MANIFEST (__init__.py, atomic.py, guard/report.py) confirmed as exactly the DAO-003 (CR) DEC-2 closure rule; over-inclusion is the safe direction; design note to record it; closure test must enforce it |
 
 ---
 
@@ -94,3 +95,42 @@
 
 ### Follow-up
 > 003-B design maintenance note (ERA_001A_REMOVED) to be appended by the owner.
+
+## DAO-003
+- **Timestamp:** 2026-10-24T02:56:11+08:00
+- **Task ID:** TASK-090
+- **Feature ID:** FEATURE-002-A (CR-TASK-086)
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-code-implementation
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human C1 = yes
+- **Disposition:** approval
+- **Confidence:** 0.88
+
+### Message
+> CR-TASK-086 implemented test-first: full suite 2593/0; delivered tests byte-identical; 002-A host 2/2 and 002-G host 23/23 + container 24/24 regressions match; toolkit file-list 272741bc…; independent code review running. Deviation for DEC-2 condition: reading the toolkit version makes report.py import the package __init__.py, so the closure manifest is ("__init__.py", "atomic.py", "guard/report.py") — one file more than the design names; a version bump also changes the renderer digest. Alternative: keep two files and obtain the version outside report.py (changes report.renderer_identity() interface). Confirm the three-file manifest is within the DEC-2 condition.
+
+### Guidance Returned
+> DAO verified that delivered-candidate `guard/report.py` L16–17 imports `__version__` from the package and `dumps_json` from `atomic`, and that L26–27 define `RENDERER_MANIFEST = ("__init__.py", "atomic.py", "guard/report.py")` with the comment "over-inclusion is harmless". The package `__init__.py` is 3 lines.
+> **Confirmed: the three-file manifest is exactly what the DAO-003 (change request) DEC-2 condition requires.** The rule was "report.py plus every toolkit-internal module it imports for rendering". Since report.py now imports `__init__` for the version, including it is the rule applied, not a deviation from it.
+> The effect is in the safe direction: a version bump changes the digest, so 002-G (after its follow-up CR) will at most say "renderer differs". It can never produce a false "edited" claim.
+> The alternative (moving version retrieval out of report.py) is rejected: it changes the designed interface to save one harmless file.
+> Conditions:
+> 1. Record this in the 002-A design/CR implementation notes, so the manifest list matches the code.
+> 2. The closure test must parse report.py's toolkit-internal imports and fail if any import is missing from `RENDERER_MANIFEST`. It must also fail if a manifest entry is unreadable without reporting "renderer unknown".
+> 3. The CR closes only after the running independent code review passes (or its findings are fixed and re-reviewed).
+> 4. Local exact-path commit only (B8).
+
+### Rationale
+> The closure rule was set precisely so that every rendering dependency is covered; including `__init__.py` follows it and errs only toward a benign "renderer differs".
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-code-implementation"
+>     match_strength: "strong"
+>     reason: "Finish TASK-090 after the code review"
+>     execution_steps:
+>       - phase: "1. Implement"
+>         step: "1.1 Review fixes, full regression, then acceptance of the CR"
+
+### Follow-up
+> 002-G renderer_differs follow-up CR after this CR is accepted (DAO-003 change request DEC-G1).

@@ -94,6 +94,7 @@ def accept_risk(
             result = copy.deepcopy(_acceptable(runs.read_result(root, vid), vid, finding))
             entry = {"finding": finding, "reason": text, "role": "user", "recorded_at": utc_now()}
             result["risk_acceptances"] = [*result["risk_acceptances"], entry]
+            report.stamp(result)  # CR-TASK-086: the report is re-rendered by the current build
             runs.remove_report(root, vid)
             runs.write_result(root, result)
             runs.write_report(root, vid, report.render(result))

@@ -6,16 +6,64 @@ images or a second verdict line.
 
 from __future__ import annotations
 
+import functools
 import hashlib
 import re
+from collections.abc import Iterable
+from pathlib import Path
 from typing import Any
 
+from .. import __version__
 from ..atomic import dumps_json
 
 VERDICT_TEXT = {"pass": "Pass", "fail": "Fail", "cannot_confirm_pass": "Cannot confirm pass"}
 FOOTER = re.compile(r"<!-- guard-result-sha256: ([0-9a-f]{64}) -->\s*\Z")
 _CONTROL = re.compile(r"[\x00-\x08\x0b-\x1f\x7f]")
 _SPECIAL = re.compile(r"([\\`*_\[\]<>#|!~])")
+
+# CR-TASK-086 (FR-002A-10): every package module that affects the report output, package-relative and
+# sorted. A toolkit-internal module imported by any of them must be listed too (closure test), so the
+# package `__init__.py` (imported for `__version__`) is listed as well; over-inclusion is harmless.
+RENDERER_MANIFEST: tuple[str, ...] = ("__init__.py", "atomic.py", "guard/report.py")
+_PACKAGE_ROOT = Path(__file__).resolve().parent.parent
+
+
+def manifest_digest(root: Path, manifest: Iterable[str] = RENDERER_MANIFEST) -> str | None:
+    """SHA-256 over `path NUL length NUL bytes` of each sorted component; None when one is unreadable."""
+    digest = hashlib.sha256()
+    for rel in sorted(manifest):
+        try:
+            data = (root / rel).read_bytes()
+        except OSError:
+            return None
+        digest.update(rel.encode("utf-8") + b"\0" + str(len(data)).encode("ascii") + b"\0" + data)
+    return digest.hexdigest()
+
+
+@functools.cache
+def _package_digest() -> str | None:
+    return manifest_digest(_PACKAGE_ROOT)
+
+
+def renderer_identity() -> dict[str, Any]:
+    """The build writing a structured result: toolkit version and renderer digest (None = unknown)."""
+    return {"toolkit_version": __version__, "renderer_digest": _package_digest()}
+
+
+def stamp(result: dict[str, Any]) -> dict[str, Any]:
+    """Record the current build in a structured result about to be written (and rendered)."""
+    result["renderer"] = renderer_identity()
+    return result
+
+
+def same_renderer(a: Any, b: Any) -> bool:
+    """Equal recorded identities; an unknown or missing identity never matches any identity."""
+    if not (isinstance(a, dict) and isinstance(b, dict)):
+        return False
+    if not (isinstance(a.get("renderer_digest"), str) and isinstance(b.get("renderer_digest"), str)):
+        return False
+    keys = ("toolkit_version", "renderer_digest")
+    return all(a.get(k) == b.get(k) for k in keys)
 
 
 def md_text(value: Any) -> str:
@@ -298,6 +346,7 @@ def render(result: dict[str, Any]) -> str:
         "",
         *_bullets([md_text(x) for x in result["limits"]]),
     ]
+    out += _origin_section(result.get("renderer"))
     digest = hashlib.sha256(dumps_json(result)).hexdigest()
     return "\n".join(out) + f"\n<!-- guard-result-sha256: {digest} -->\n"
 
@@ -633,3 +682,24 @@ def _egress_section(e: dict[str, Any] | None) -> list[str]:
         ]
     )
     return out
+
+
+def _origin_section(renderer: Any) -> list[str]:
+    """Structured Result Origin (CR-TASK-086); omitted for results written before it."""
+    if not renderer or not isinstance(renderer, dict):
+        return []
+    digest = renderer.get("renderer_digest")
+    shown = md_text(digest) if isinstance(digest, str) else "renderer unknown"
+    version = md_text(renderer.get("toolkit_version"))
+    return [
+        "## Structured Result Origin",
+        "",
+        *_bullets(
+            [
+                f"Structured result written by secure-code toolkit {version}; "
+                f"renderer sha256 {shown}",
+                "This identifies the build that wrote the structured result; a report re-created later by "
+                "repair may come from a different build",
+            ]
+        ),
+    ]

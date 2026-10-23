@@ -259,7 +259,7 @@ None material. Decisions (10-19-2026, interact-with-human):
 | --- | --- | --- | --- | --- | --- |
 | R-01…R-03, R-06…R-09; FR-002A-5, FR-002A-9 | US-08 | AC-002A-01a…01d, 01g, 01h | N/A | Integration | covered |
 | R-04, R-05; FR-002A-8 | US-08 | AC-002A-01e, 01f | N/A | Integration | covered |
-| Human C1 (10-23-2026); FR-002A-10 | US-08 | AC-002A-01i, 01j, 01k, 01l | N/A | Integration / Unit | planned — CR-TASK-086 |
+| Human C1 (10-23-2026); FR-002A-10 | US-08 | AC-002A-01i, 01j, 01k, 01l | N/A | Integration / Unit | implemented, unit/integration tests pass (TASK-090); acceptance pending — CR-TASK-086 |
 | V-02, AC-16 | US-01 | AC-002A-02a, 02b | N/A | Integration | covered |
 | V-03…V-07, AC-17; FR-002A-1 | US-02 | AC-002A-02c…02g | N/A | Integration | covered |
 | V-10, V-23, AC-11 | US-03 | AC-002A-03a…03d | N/A | Integration | covered |
@@ -282,3 +282,4 @@ None material. Decisions (10-19-2026, interact-with-human):
 | --- | --- | --- | --- |
 | AC-002A-01a…08b | Planned per Test Type; no tests yet | planned | not measured |
 | AC-002A-01i, 01j, 01k, 01l (CR-TASK-086) | Planned per Test Type; not implemented (documents-only CR; delivered v1.0 evidence for other ACs unaffected) | planned | not measured |
+| AC-002A-01i, 01j, 01k, 01l (CR-TASK-086, TASK-090) | Implemented; `tests/guard/test_guard_renderer.py` (30 tests) RED before / GREEN after; full suite 2593 passed, 4 skipped; delivered tests byte-identical — see [CR Implementation Evidence](x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/CR-TASK-086-renderer-version.md) | implemented (acceptance pending) | not measured |
