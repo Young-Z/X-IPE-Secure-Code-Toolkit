@@ -8,6 +8,7 @@
 | DAO-001 | 2026-10-23T06:06:53+08:00 | TASK-058 | x-ipe-task-based-feature-acceptance-test | approval | 0.84 | FEATURE-002-D: Bug Fix for F-1 (9 misconfig types incl. ansible) and F-2 (exact-match WARN allow-list, fail-closed) without spec change; rerun; park at acceptance under existing status (B9); then FEATURE-003-B |
 | DAO-002 | 2026-10-23T17:47:54+08:00 | TASK-070 | x-ipe-task-based-feature-acceptance-test | approval | 0.85 | FEATURE-001-F acceptance PASS accepted (63/63, 3 superseded, 001-D 02b clauses superseded/re-run) → Feature Closing; O-1 interpretation confirmed (existing knowledge lock file on first use, consistent with DAO-004 (1)); O-2 recorded as optional human CR/polish candidate, not a defect |
 | DAO-003 | 2026-10-24T00:06:26+08:00 | TASK-091 | x-ipe-task-based-feature-acceptance-test | approval | 0.86 | FEATURE-002-G acceptance PASS (76/76 at 15985026…) accepted → Feature Closing; unit/integration evidence accepted (02c/02h/04f are Unit by spec; 07g/07h/07j Integration via in-process hooks; 05l simulated + limit); host-only 002-D regression accepted (no 002-D code touched; container re-run at 002-D B9 acceptance; no new downloads now); wording readings confirmed |
+| DAO-004 | 2026-10-24T05:15:42+08:00 | TASK-058 | x-ipe-task-based-feature-acceptance-test | critique | 0.86 | FEATURE-002-D B9 run: re-downloading the Trivy binary (GitHub) and Python deps (PyPI) is NOT covered by B9 (DB download via tool_update only; acceptance downloads were already ruled outside tool-validation authority in DAO-002 TD) → (B) escalate as human B17; park TASK-058 at existing status; no partial closing (C rejected); queue reorder to TASK-084 next confirmed |
 
 ---
 
@@ -149,3 +150,48 @@
 
 ### Follow-up
 > Supplementary real-Trivy 002-G comparison during 002-D B9 acceptance; 002-G C1 follow-up CR after CR-086.
+
+## DAO-004
+- **Timestamp:** 2026-10-24T05:15:42+08:00
+- **Task ID:** TASK-058
+- **Feature ID:** FEATURE-002-D
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-feature-acceptance-test
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human B9 = A, B10 = A
+- **Disposition:** critique
+- **Confidence:** 0.86
+
+### Message
+> Human B9=A: "one-time acceptance-time Trivy DB download via the toolkit's tool_update path inside a disposable container for FEATURE-002-D"; B10=A. At resumption, the TASK-058/059 Docker assets (fat2d-* images, uv cache volume, binary volumes with the official Trivy v0.76.1 linux/arm64 binary sha256:b422130e…) were removed. Running TC-L-01 now would additionally need (1) re-download of the same digest-pinned Trivy v0.76.1 asset from GitHub and (2) re-seeding a uv/pip cache from PyPI to build the image; TC-G-01 further needs iptables + Docker CLI via apt (clearly outside B9). Options: (A) treat (1)+(2) as within B9 and run TC-L-01; (B) escalate (1)+(2) to the human, park TASK-058, run TASK-084 (001-G) next; (C) close acceptance as partial. Owner recommends (B); confirm queue reorder.
+
+### Guidance Returned
+> DAO verified the B9 wording in human_decisions.md L14: "Authorize one-time acceptance-time Trivy DB download via the toolkit's `tool_update` path inside a disposable container for FEATURE-002-D".
+> **(1)+(2) are NOT covered by B9 → (B).**
+> - B9 authorizes exactly one kind of egress: the Trivy vulnerability-DB download through the toolkit's own `tool_update` path. Re-fetching the Trivy binary from GitHub and the Python dependencies from PyPI are different recipients and purposes.
+> - DAO-002 (technical design) already ruled that acceptance-time downloads fall outside the earlier tool-validation authorization: "same kind of download" does not extend a purpose-bound grant, and 002-C itself defines egress authorization per purpose. Treating them as covered now would contradict that ruling and the feature's own principle.
+> - No representative grant of new network access is possible.
+> **Escalate as human item B17**, phrased for a quick answer:
+> "For FEATURE-002-D acceptance in a disposable container, authorize re-downloading:
+> - (1) the official Trivy v0.76.1 linux/arm64 binary (same pinned digest sha256:b422130e…, GitHub release);
+> - (2) the toolkit's Python dependency packages from PyPI to build the test image;
+> - optionally (3) apt packages (iptables, Docker CLI) for the real-binary gate case TC-G-01.
+> Answer A = (1)+(2), B = (1)+(2)+(3), or C = keep 002-D parked."
+> Downloads go into disposable containers/volumes only, never into the repository or the host project tree, with digests recorded.
+> **Park TASK-058** at its existing status (FEATURE-002-D stays Implemented / parked on B17; B10 is accepted as a limit). Record the missing-assets finding and that nothing was run.
+> **(C) is rejected:** closing acceptance as partial with in-scope ACs unexecuted would be a false completion. The 002-D container regression and the supplementary real-Trivy 002-G comparison (DAO-003 acceptance) stay deferred with it.
+> **Queue reorder confirmed: TASK-084 (001-G, demo-relevant) runs next,** then the rest of the code queue as ordered. Include B17 in the next human status summary, alongside B15, B16 and the P6 classification note.
+
+### Rationale
+> The human's grant is purpose-specific, and re-acquiring a binary and build dependencies are separate egress purposes, consistent with DAO-002 and the 002-C principle. Parking keeps the evidence honest and lets demo-relevant work proceed.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-code-implementation"
+>     match_strength: "strong"
+>     reason: "TASK-084 FEATURE-001-G implementation next in the reordered queue"
+>     execution_steps:
+>       - phase: "1. Implement"
+>         step: "1.1 Write failing tests then code (TDD)"
+
+### Follow-up
+> Human item B17 (re-download authorization for 002-D acceptance); TASK-058 parked.

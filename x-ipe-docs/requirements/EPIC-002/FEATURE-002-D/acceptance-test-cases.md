@@ -295,3 +295,5 @@ acceptance_evidence:
 ```
 
 This record shows hash and coverage consistency only. The executed artifacts above are the proof, and stakeholder outcome is **not measured**.
+
+> **Note (2026-10-24, resumption after B9/B10):** the human granted B9 = A (one-time Trivy DB download via `tool_update` in a disposable container) and B10 = A (Apple Silicon arm64 evidence accepted; x86-64 recorded as an unverified limit — TC-X-01 stays not executed as an accepted limit). At resumption the Docker assets of TASK-058/059 (official v0.76.1 binary volume, uv cache, images) had been removed; re-downloading them is outside B9, so TASK-058 is parked on human item **B17** (representative DAO-004, feature acceptance test). Nothing was run; the results above are unchanged.
