@@ -1,0 +1,13 @@
+rules:
+  - id: python-sql-string-build
+    languages: [python]
+    severity: ERROR
+    message: SQL text built from variables is passed to execute (possible SQL injection, CWE-89)
+    metadata:
+      cwe: "CWE-89"
+    patterns:
+      - pattern-either:
+          - pattern: $CONN.execute(f"...", ...)
+          - pattern: $CONN.execute("..." % $X, ...)
+          - pattern: $CONN.execute("..." + $X, ...)
+          - pattern: $CONN.execute("...".format(...), ...)

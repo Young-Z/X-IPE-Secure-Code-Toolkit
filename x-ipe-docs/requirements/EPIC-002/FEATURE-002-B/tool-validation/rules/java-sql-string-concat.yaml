@@ -1,0 +1,21 @@
+rules:
+  - id: java-sql-string-concat
+    languages: [java]
+    severity: ERROR
+    message: SQL text concatenated with variables is executed (possible SQL injection, CWE-89)
+    metadata:
+      cwe: "CWE-89"
+    pattern-either:
+      - pattern: (java.sql.Statement $S).executeQuery("..." + $X)
+      - pattern: (java.sql.Statement $S).executeUpdate("..." + $X)
+      - pattern: (java.sql.Statement $S).execute("..." + $X)
+      - pattern: $S.executeQuery("..." + $X + ...)
+  - id: java-runtime-exec
+    languages: [java]
+    severity: WARNING
+    message: Runtime.exec with a non-constant command (possible command injection, CWE-78)
+    metadata:
+      cwe: "CWE-78"
+    patterns:
+      - pattern: Runtime.getRuntime().exec($CMD)
+      - pattern-not: Runtime.getRuntime().exec("...")

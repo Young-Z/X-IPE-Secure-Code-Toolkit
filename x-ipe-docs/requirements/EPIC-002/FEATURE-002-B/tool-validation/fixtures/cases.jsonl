@@ -1,0 +1,8 @@
+{"case":"m-default","exit":0,"seconds":0,"argv":"scan --json --disable-version-check --config /v/rules/python-sql-string-build.yaml /samples/m"}
+{"case":"m-verbose","exit":0,"seconds":0,"argv":"scan --json --verbose --disable-version-check --config /v/rules/python-sql-string-build.yaml /samples/m"}
+{"case":"m-verbose-include-ignored","exit":0,"seconds":0,"argv":"scan --json --verbose --disable-version-check --x-ignore-semgrepignore-files --config /v/rules/python-sql-string-build.yaml /samples/m"}
+{"case":"w-verbose-two-files","exit":0,"seconds":0,"argv":"scan --json --verbose --disable-version-check --config /v/rules/java-sql-string-concat.yaml --config /v/rules/python-sql-string-build.yaml /samples/w/src/main/java/org/owasp/webgoat/lessons/jwt"}
+{"case":"mixed-generic","exit":0,"seconds":0,"argv":"scan --json --verbose --disable-version-check --config /v/fixture-rules/generic-secret.yaml /samples/m"}
+{"case":"skipped-rule","exit":0,"seconds":0,"argv":"scan --json --verbose --disable-version-check --config /v/fixture-rules/bad-language.yaml /samples/m"}
+{"case":"error-plus-results","exit":0,"seconds":0,"argv":"scan --json --verbose --disable-version-check --config /v/rules/python-sql-string-build.yaml /v/fixture-src"}
+{"case":"file-target","exit":0,"seconds":0,"argv":"scan --json --verbose --disable-version-check --config /v/rules/python-sql-string-build.yaml /samples/m/registration.py /samples/m/public"}

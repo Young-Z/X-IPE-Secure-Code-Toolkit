@@ -1,0 +1,17 @@
+rules:
+  - id: python-ok
+    languages: [python]
+    severity: INFO
+    message: any execute call
+    pattern: $C.execute(...)
+  - id: needs-pro-feature
+    languages: [python]
+    severity: ERROR
+    message: taint mode rule
+    mode: taint
+    options:
+      interfile: true
+    pattern-sources:
+      - pattern: input(...)
+    pattern-sinks:
+      - pattern: eval(...)

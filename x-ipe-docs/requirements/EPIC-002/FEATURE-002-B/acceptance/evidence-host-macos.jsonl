@@ -1,0 +1,3 @@
+{"tc": "TC-B-11", "acs": ["AC-002B-01b", "AC-002B-06a"], "status": "Pass", "checks": ["host User role", "01b registration refused without Maintainer authorization", "06a status: provided, not registered, with next step", "nothing recorded"], "failed": []}
+{"tc": "TC-B-10", "acs": ["AC-002B-04f"], "status": "Pass", "checks": ["04f cheapest sufficient, no all-tools default, ask before more, record choice/changes", "tool run instructions: local rules only, never record opengrep yourself", "reference documents the tool request"], "failed": []}
+{"summary": {"mode": "host", "platform": "darwin", "python": "3.13.3", "passed": 2, "total": 2}}

@@ -1,0 +1,63 @@
+running 1 rules from 1 config /v/fixture-rules/generic-secret.yaml_0
+No .semgrepignore found. Using default .semgrepignore rules. See the docs for the list of default ignores: https://semgrep.dev/docs/cli-usage/#ignore-files
+Rules:
+- v.fixture-rules.generic-hardcoded-password
+Unable to ignore files ignored by git (/samples/m is not a git directory or git is not installed). Running on all files instead...
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+Unable to ignore files ignored by git (/samples/m is not a git directory or git is not installed). Running on all files instead...
+  Scanning 20 files tracked by git with 1 Code rule:
+  Scanning 11 files.
+
+========================================
+Files skipped:
+========================================
+
+  Always skipped by Opengrep:
+
+   • <none>
+
+  Skipped by .gitignore:
+  (Disable by passing --no-git-ignore)
+
+   • <all files not listed by `git ls-files` were skipped>
+
+  Skipped by .semgrepignore:
+  - https://semgrep.dev/docs/ignoring-files-folders-code/#understand-semgrep-defaults
+
+   • /samples/m/tests
+
+  Skipped by --include patterns:
+
+   • <none>
+
+  Skipped by --exclude patterns:
+
+   • <none>
+
+  Files skipped due to insufficient read permissions:
+
+   • <none>
+
+  Skipped by limiting to files smaller than 1000000 bytes:
+  (Adjust with the --max-target-bytes flag)
+
+   • <none>
+
+  Partially analyzed due to parsing or internal Opengrep errors
+
+   • <none>
+
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+Some files were skipped or only partially analyzed.
+  Scan skipped: 1 directories matching .semgrepignore patterns
+  For a full list of skipped files, run opengrep with the --verbose flag.
+
+Ran 1 rule on 11 files: 0 findings.

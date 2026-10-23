@@ -1,0 +1,4 @@
+rules:
+  - id: broken
+    languages: [python]
+    pattern: (
