@@ -256,7 +256,7 @@ None blocking. Decided by the user on 10-20-2026:
 | AC-26; FR-21 (B-08…B-10) | US-04 | AC-002C-04a…04f | N/A | Integration | planned |
 | AC-29; FR-20 (E-01, E-02) | US-05 | AC-002C-05a…05h | N/A | Integration (05h Unit) | planned |
 | FR-20, FR-21 reporting; skill; compatibility | US-06 | AC-002C-06a…06c | N/A | Integration | planned |
-| CR-TASK-077 (B12 = A); AC-25; FR-21 (B-02) | US-01 | AC-002C-01h, 01i | N/A | Integration (plus Unit) | planned (CR, not implemented) |
+| CR-TASK-077 (B12 = A); AC-25; FR-21 (B-02) | US-01 | AC-002C-01h, 01i | N/A | Integration (plus Unit) | implemented (TASK-083; unit/integration evidence; black-box helper path proven in FEATURE-002-F acceptance) |
 | B-07, B-11 (remote/async), D-16, D-19 (beyond declarations) | — | — | N/A | — | design / out of scope |
 
 ## Context and Verification Evidence

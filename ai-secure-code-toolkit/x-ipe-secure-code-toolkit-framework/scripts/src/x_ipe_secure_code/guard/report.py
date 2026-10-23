@@ -547,7 +547,10 @@ def _budget_section(result: dict[str, Any]) -> list[str]:
             [
                 a["id"],
                 a["kind"],
-                [f"{c}/{m}" for c, m in a["covers"]["pairs"]] + a["covers"]["findings"] + a["covers"]["na"],
+                [f"{c}/{m}" for c, m in a["covers"]["pairs"]]
+                + a["covers"]["findings"]
+                + a["covers"]["na"]
+                + a["covers"].get("helpers", []),
                 a["extra"],
                 a["status"],
                 _minutes(a["overrun_seconds"]) if a["overrun_seconds"] else "—",

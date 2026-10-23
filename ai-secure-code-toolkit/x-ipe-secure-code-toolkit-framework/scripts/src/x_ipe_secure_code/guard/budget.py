@@ -174,25 +174,37 @@ def status(state: dict[str, Any], consumed: float) -> dict[str, Any]:
 
 
 # --------------------------------------------------------------------------- attempts
+def _known_helpers(state: dict[str, Any]) -> set[str]:
+    """Helper ids of this verification (run-state key written by FEATURE-002-F); absent means none."""
+    helpers = state.get("helpers")
+    if not isinstance(helpers, list):
+        return set()
+    return {h["id"] for h in helpers if isinstance(h, dict) and isinstance(h.get("id"), str)}
+
+
 def _covers(state: dict[str, Any], kind: str, raw: Any) -> dict[str, list]:
     ck = _ck()
     if kind == "reviewer":
-        ck.obj(raw, "covers", {"findings", "na"})
+        ck.obj(raw, "covers", {"findings", "na", "helpers"})
         findings = {f["id"] for f in state["findings"]}
         plan = state["plan"]
         na_ids = {c["id"] for c in plan["checks"]} | {f"policy:{n['rule']}" for n in plan["not_applicable"]}
-        out = {"pairs": [], "findings": [], "na": []}
-        for key, known in (("findings", findings), ("na", na_ids)):
+        out = {"pairs": [], "findings": [], "na": [], "helpers": []}
+        for key, known, label in (
+            ("findings", findings, "finding"),
+            ("na", na_ids, "N/A"),
+            ("helpers", _known_helpers(state), "helper"),
+        ):
             for i, item in enumerate(ck.items(raw.get(key), f"covers.{key}")):
                 item = ck.key(item, f"covers.{key}[{i}]")
                 if item not in known:
-                    raise ck.fail(
-                        f"covers.{key}[{i}]: unknown {key[:-1] if key == 'findings' else 'N/A'} {item!r}"
-                    )
+                    raise ck.fail(f"covers.{key}[{i}]: unknown {label} {item!r}")
                 if item not in out[key]:
                     out[key].append(item)
-        if not out["findings"] and not out["na"]:
-            raise ck.fail("a reviewer attempt must cover at least one finding or N/A decision")
+        if not out["findings"] and not out["na"] and not out["helpers"]:
+            raise ck.fail("a reviewer attempt must cover at least one finding, N/A decision or helper")
+        if not out["helpers"]:
+            del out["helpers"]
         return out
     ck.obj(raw, "covers", {"pairs"}, frozenset({"pairs"}))
     methods = {c["id"]: {m["name"] for m in c["methods"]} for c in state["plan"]["checks"]}
@@ -223,11 +235,13 @@ def _seen(state: dict[str, Any]) -> dict[str, set]:
         "pairs": {tuple(p) for p in base["pairs"]},
         "findings": set(base["findings"]),
         "na": set(base["na"]),
+        "helpers": set(base.get("helpers", [])),
     }
     for a in state["attempts"]:
         seen["pairs"] |= {tuple(p) for p in a["covers"]["pairs"]}
         seen["findings"] |= set(a["covers"]["findings"])
         seen["na"] |= set(a["covers"]["na"])
+        seen["helpers"] |= set(a["covers"].get("helpers", []))
     return seen
 
 
@@ -244,9 +258,7 @@ def register(
     seen = _seen(state)
     planned = {tuple(p) for p in state["budget"]["planned"] or []}
     extra_pairs = [p for p in cov["pairs"] if tuple(p) in seen["pairs"] or tuple(p) not in planned]
-    extra_items = [i for i in cov["findings"] if i in seen["findings"]] + [
-        i for i in cov["na"] if i in seen["na"]
-    ]
+    extra_items = [i for key in ("findings", "na", "helpers") for i in cov.get(key, []) if i in seen[key]]
     extra = len(extra_pairs) + len(extra_items)
     b = state["budget"]
     if b["extra_used"] + extra > b["extra_attempts"]:
@@ -316,6 +328,7 @@ def cite(
         [f"{c}/{m}" for c, m in used.get("pairs", set()) if [c, m] not in cov["pairs"]]
         + [i for i in used.get("findings", set()) if i not in cov["findings"]]
         + [i for i in used.get("na", set()) if i not in cov["na"]]
+        + [i for i in used.get("helpers", set()) if i not in cov.get("helpers", [])]
         + [c for c in used.get("checks", set()) if c not in {p[0] for p in cov["pairs"]}]
     )
     if outside:

@@ -410,6 +410,7 @@ def record_review(project: str | None, run_id: str, request: str) -> Result:
             used_items = {
                 "findings": {s["id"] for s in subjects if s["type"] == "finding"},
                 "na": {s["id"] for s in subjects if s["type"] == "na_decision"},
+                "helpers": {s["id"] for s in subjects if s["type"] == "helper"},
             }
             budget.cite(state, doc["attempt"], {"reviewer"}, used_items, used, now()[0], doc.get("usage"))
             entry["attempt"] = doc["attempt"]

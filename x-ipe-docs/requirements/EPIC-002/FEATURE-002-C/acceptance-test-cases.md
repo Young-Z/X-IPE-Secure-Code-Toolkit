@@ -137,3 +137,9 @@ The interactive gate is documented as a cooperative control (user decision). Eve
 - **Network access is not OS-enforced**, including for tools that Adapters launch (stated in every report).
 - **Fixtures:** the late-commit and concurrent-cancel races (04d) and the unacknowledged live owner (04c) were verified with the fake tool in integration tests.
 - **Stakeholder outcome:** not measured.
+
+## Note — CR-TASK-077 implementation (2026-10-24, TASK-083; append-only)
+
+The results above are for the v1.0 delivery and stay valid for requests that name no helpers. CR-TASK-077 (human B12 = A) added the Reviewer coverage item `helpers` in `guard/budget.py`, `guard/service.py` and `guard/report.py`. New criteria AC-002C-01h and AC-002C-01i are covered by unit/integration tests in two new test files, using a synthetic `state["helpers"]`. Full suite: 2563 passed, 4 skipped. ruff: clean. All 128 delivered test files are byte-identical.
+
+Black-box regression in host mode used the unchanged runner `34756ef9…`: 2/2 Pass (TC-C-10, TC-C-09), with output byte-identical to `acceptance/evidence-host-macos.jsonl`. Container cases were not rerun; they need `auth init`, which is never run on the host. The helper path has no black-box case in 002-C; it moves to FEATURE-002-F acceptance. The toolkit tree after the change is `b89a972f…`. Details and logs: [CR-TASK-077 Implementation Evidence](CR-TASK-077-helpers-coverage.md#implementation-evidence-2026-10-24-task-083--code-implementation-owner-sage).

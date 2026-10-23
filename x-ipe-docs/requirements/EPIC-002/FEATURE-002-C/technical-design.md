@@ -646,3 +646,5 @@ Their unit tests and black-box runners must be updated for attempt registration 
 - Delivered tests requiring change: **none** (inspected list in the CR document).
 
 **Evidence invalidation.** None of the delivered 002-C evidence (TASK-037/038/040) is invalidated for requests without helpers; AC-002C-01h/01i evidence is pending implementation.
+
+> **Implementation status (2026-10-24, appended by Sage):** the CR-TASK-077 delta is implemented by TASK-083 (`guard/budget.py`, `guard/service.py`, `guard/report.py`; new tests `tests/guard/test_budget_helpers_units.py`, `tests/guard/test_guard_budget_helpers.py` — new files instead of the planned appends, so delivered test files stay byte-identical). Independent code review PASS; full suite 2563 passed, 0 failed; 002-C host black-box regression byte-identical. Evidence: CR-TASK-077 "Implementation Evidence" section. Toolkit file-list hash `b89a972fa0fe35007e6017519365e73ed0a2309005495178ec44b5a5d63c176a`.

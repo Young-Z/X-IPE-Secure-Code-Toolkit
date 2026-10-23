@@ -188,3 +188,53 @@ The budget-sizing estimate in Conflict #8 and in the 002-C design handoff (2) ("
 - it costs **one more** when the helper method was added by a method change, because the `generation` pair was not planned.
 
 With the default 3 extra attempts, about **one clean helper** fits; a second helper normally needs `secure-code guard extend` by the user. FEATURE-002-F reports the expected extra attempts (design §11.3). Optional human CR candidate (not approved): a helper-aware default budget. Recorded by the TASK-081 design worker for Sage per DAO-014 (technical design, `x-ipe-docs/dao/26-10-23/decisions_made_technical_design.md`).
+
+## Implementation Evidence (2026-10-24, TASK-083 — Code Implementation, owner Sage)
+
+Append-only; the text above is unchanged. Authority: human B12 = A (`x-ipe-docs/dao/26-10-23/human_decisions.md`, now sha256 `d616db5344b05a77…` after later appends; B12 row unchanged), DAO-002 (`decisions_made_change_request.md` `b27dcc215ac9c432…`: DEC-1…DEC-6). Inputs read: specification v1.1 `4768aa000416c48e…`, technical design v1.1 `48ccd3f95c9fbddf…` ("CR-TASK-077 Delta"), this CR before this append `0ec909690622d220…`. No board, Git, memory, `.github/skills`, `.x-ipe/` or `x-ipe-docs/secure-code/` writes.
+
+**Product changes (exactly the design file list).** Paths under `ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/`:
+
+| File | Before (= CR read time) | After | Change |
+| --- | --- | --- | --- |
+| `budget.py` | `1cbc6833a8a7643e…` | `dbd4afff2761386b…` (402 lines) | `_known_helpers` (DEC-2: `state["helpers"][*]["id"]`, absent/non-list → empty, fail closed); reviewer `covers` keys + `helpers` (validated, deduplicated, "unknown helper '<id>'"); new empty-coverage message; `helpers` written only when named (DEC-5); `_seen` adds helpers (`seen_before.get`, every attempt any status); `register` counts extra helpers after findings and N/A (named in `ATTEMPTS_EXHAUSTED`); `cite` refuses `used["helpers"]` outside coverage. `initial`/`ensure`/`summary`/`cancel_unfinished`/`extend` unchanged |
+| `service.py` | `8f3d7303d58182fe…` | `fdebb28e319ff91e…` (600 lines) | `guard review`: `used_items["helpers"]` from `helper` subjects (DEC-3; inert until FEATURE-002-F adds the subject type) |
+| `report.py` | `ce3cc4e54b92b73d…` | `36a655d98d94b47c…` (635 lines) | Attempts table Covers column + `covers.get("helpers", [])` |
+
+No new error code, no schema version change, Guard skill text unchanged (DEC-4).
+
+**Tests (test-first; new files only).** Owner condition "every delivered test byte-identical" means the new test functions are in two **new** files instead of being appended to `test_budget_units.py`/`test_guard_budget.py` as the design's test plan named (placement only; scope unchanged):
+- `tests/guard/test_budget_helpers_units.py` `881cedb11ef8c879…` — 21 functions / 37 cases (unit).
+- `tests/guard/test_guard_budget_helpers.py` `5517f04c2f6ef343…` — 13 functions (integration through `control.attempt`, `guard.record_review`, `guard.conclude`, `cancel.cancel`; run state seeded with a synthetic `state["helpers"]`; the `helper` Reviewer subject injected by wrapping `records.validate_review`, DEC-3). A file-level `# ruff: noqa: F811` replaces a `pyproject.toml` per-file-ignore (pyproject not touched).
+
+| AC / rule | Checks (new tests) |
+| --- | --- |
+| AC-002C-01h recorded with helpers (alone/mixed), dedupe | unit `test_01h_reviewer_attempt_records_helpers_alone_or_mixed`, `…deduplicated…`; integration `test_01h_guard_attempt_records_helpers_alone_or_mixed` |
+| 01h unknown helper / no or malformed `helpers` state (fail closed) / helpers on other kinds / covering nothing → `ATTEMPT_INVALID`, nothing recorded | unit `…unknown_helper…`, `…no_known_helpers_fails_closed` (8 states), `…malformed_helper_ids…`, `…other_kinds…`, `…internal_kinds…`, `…covering_nothing…`; integration `test_01h_refusals_record_nothing`, `test_01h_run_without_helpers_refuses_any_helper` |
+| 01h Reviewer record judging a helper outside coverage refused (service wiring DEC-3) | unit `test_01h_cite_refuses_…` (2); integration `test_01h_dec3_review_refuses_helper_subject_outside_attempt_coverage` (refused, no review stored, attempt stays unfinished) and `…accepts_helper_subject_inside…` |
+| 01h requests/records without helpers unchanged | unit `test_01h_record_shape_unchanged_when_no_helper_named`; integration `test_01h_requests_without_helpers_recorded_as_before` |
+| AC-002C-01i planned first / extra on re-coverage, mixed counting | unit `…first_coverage_planned_recoverage_extra`, `…mixed_coverage_counts_each_reviewer_item` |
+| 01i whatever earlier status (finished/cancelled/unfinished) | unit `test_01i_recoverage_extra_whatever_earlier_status` (3) |
+| 01i exhaustion names helper; first coverage still accepted | unit `…exhausted_names_helper…`, `…exhausted_message_orders…`; integration `test_01i_first_coverage_planned_recoverage_extra_and_exhaustion` |
+| 01i pause, time exhaustion, overrun, model usage, cancellation unchanged | unit `…pause_and_time_exhaustion_unchanged`, `…overrun_and_model_usage_unchanged`; integration `…pause_and_time_exhaustion…`, `…overrun_and_model_usage…`, `test_01i_cancel_marks_unfinished_helper_attempt_cancelled` |
+| 01i verifications opened before this change load and count as before | unit `…legacy_state_without_helpers…`, `…pre_budget_state_ensured…`, `…initial_budget_has_no_helpers_baseline`; integration `…opened_by_delivered_002c_counts_as_before`, `…pre_budget_verification_loads…` |
+| Report Covers column | integration `test_01i_report_attempts_table_lists_helpers` |
+
+**Commands** (from `ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts`; logs in the session folder `files/impl-cr077/`): `PYTHONDONTWRITEBYTECODE=1 UV_OFFLINE=1 uv run --offline python -m pytest -p no:cacheprovider -q -o addopts="" --basetemp=<session>/impl-cr077/tmp` and `uv run --offline ruff check --no-cache .`
+
+| Run | Revision | Result |
+| --- | --- | --- |
+| Baseline full suite (started before the change) | delivered code | 2511 passed, 4 skipped, 23 deselected; exit 1 only from the suite's write audit, because the source and new test files were edited while it ran — not a clean baseline, counts informational (`baseline.log`) |
+| RED (new files only) | product files at the "before" hashes; tests at final hashes | **37 failed, 15 passed**, exit 1 (`red.log`). Failures for the intended reasons: `covers has unknown fields: helpers`, old empty-coverage message, `cite` not refusing helpers (`DID NOT RAISE`), `KeyError: 'helpers'`, review accepted with an uncovered helper subject, report row without helper ids. The 15 passes are unchanged-behaviour guards (other kinds refused, malformed ids, record shape, pause/time, initial budget) |
+| GREEN targeted (new + delivered budget tests) | after hashes | 110 passed, exit 0 (`green-new.log`) |
+| GREEN full suite | after hashes | **2563 passed, 4 skipped, 23 deselected**, exit 0, write audit clean (`green-full.log`); 2563 = 2511 + 52 new cases |
+| ruff check `.` | after hashes | All checks passed, exit 0 (`ruff.log`) |
+| Coverage of changed lines (new tests only) | after hashes | every added/changed line in `budget.py` (177–207, 238, 244, 261, 331), `service.py` 413, `report.py` 553 executed (`coverage.log`; data file kept outside the toolkit and removed) |
+
+**Delivered tests byte-identical.** All 128 files under `scripts/tests` recorded before the change (`test-hashes-before.txt`) re-hashed after: identical (`delivered-before.list` = `delivered-after.list`). The only additions are the two new files above.
+
+**002-C black-box regression (host mode).** `TMPDIR=<session>/impl-cr077/bbtmp UV_OFFLINE=1 UV_REFRESH_PACKAGE=ai-secure-code-toolkit python3 acceptance/blackbox.py host` with the unchanged runner `34756ef97d07aa5e…`: TC-C-10 Pass, TC-C-09 Pass, 2/2, stderr empty, exit 0. Output byte-identical to the delivered `acceptance/evidence-host-macos.jsonl`. Container-only cases TC-C-01…TC-C-09 (container variant) were **not run**: they need `auth init` in a disposable HOME, which must never run on this host. They were not rerun in a container in this task. Black-box coverage of the helper path belongs to FEATURE-002-F acceptance (AC-002F-03c/03h), as decided.
+
+**Toolkit tree.** `cd ai-secure-code-toolkit; find . -type f` (excluding `.venv`, `__pycache__`, `.pytest_cache`, `.ruff_cache`, `.coverage*`) `-exec shasum -a 256 {} +`, strip `./`, `LC_ALL=C sort -k2`, `shasum -a 256` → **`b89a972fa0fe35007e6017519365e73ed0a2309005495178ec44b5a5d63c176a`** (242 files). This was the same before and after the black-box run. No cache, coverage or build files were left in the toolkit, and temp folders were removed.
+
+**State.** Engineering delivery verified for AC-002C-01h and AC-002C-01i at unit/integration level against a synthetic `state["helpers"]` (owner acceptance condition). Not done here: an independent code review, the 002-C container regression, the spec traceability row / design "not implemented" status text (left for the lifecycle owner), and FEATURE-002-F adoption of DEC-2. Stakeholder outcome: not measured.
