@@ -1,0 +1,28 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.6, pytest-9.1.1, pluggy-1.7.0 -- /Users/yzhang/Documents/projects/ai-secure-code-toolkit-v2/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/.venv/bin/python3
+rootdir: /Users/yzhang/Documents/projects/ai-secure-code-toolkit-v2/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collecting ... collected 19 items
+
+tests/knowledge/test_units.py::test_relations_are_references_only PASSED [  5%]
+tests/knowledge/test_units.py::test_similar_content_not_merged PASSED    [ 10%]
+tests/knowledge/test_knowledge.py::test_role_claims_in_content_grant_nothing PASSED [ 15%]
+tests/knowledge/test_knowledge.py::test_revoked_mid_batch_stops_writes PASSED [ 21%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[] PASSED [ 26%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[.] PASSED [ 31%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[..] PASSED [ 36%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[.hidden] PASSED [ 42%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[trail.] PASSED [ 47%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[CON] PASSED [ 52%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[nul] PASSED [ 57%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[Com1] PASSED [ 63%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[lpt9.txt] PASSED [ 68%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[a/b] PASSED [ 73%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[a b] PASSED [ 78%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[\xfc] PASSED [ 84%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx] PASSED [ 89%]
+tests/knowledge/test_units.py::test_invalid_components_rejected[a\\b] PASSED [ 94%]
+tests/knowledge/test_units.py::test_fingerprints_stable_across_line_shift_and_distinct_per_occurrence PASSED [100%]
+
+============================== 19 passed in 0.26s ==============================
