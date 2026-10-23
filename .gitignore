@@ -1,0 +1,31 @@
+# Secure-code knowledge, policies and toolkit state written by the toolkit in any project
+# (knowledge/, scopes, presets, tags, drafts, reports) — kept local (human instruction 2026-10-23)
+x-ipe-docs/secure-code/
+.x-ipe/
+
+# Internal-policy material — never committed (human instruction 2026-10-23)
+/demo/
+*[Cc][Cc][Ii][Ss][Oo]*
+*[Cc][Hh][Aa][Nn][Ee][Ll]*
+
+# Large local sample/study material and build artifacts
+/study-case/
+/dist/
+
+# Local tool configuration
+/.copilot/
+/instance/
+
+# Python / tooling caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+
+# OS files
+.DS_Store
+
+# Node dependencies (reinstallable)
+node_modules/

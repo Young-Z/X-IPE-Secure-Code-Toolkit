@@ -1,0 +1,358 @@
+---
+name: x-ipe-tool-brand-theme-creator
+description: Generate design-system.md and component-visualization.html files for custom X-IPE themes based on brand inputs. Extracts colors, typography, and UI component patterns from reference materials. Use when user wants to create a new theme, define brand colors, or build a design system. Triggers on requests like "create theme", "new brand theme", "generate design system", "add custom theme".
+---
+
+# X-IPE Brand Theme Creator
+
+## Purpose
+
+Transform brand colors, typography preferences, and style guidelines into a complete theme package by:
+1. Extracting brand identity from web links, images, or text descriptions
+2. Deriving a full color palette from minimal input (one accent color minimum)
+3. Extracting basic UI component patterns (buttons, cards, inputs, links, badges, navigation) when visible in source material
+4. Generating `design-system.md` with structured token definitions for AI agents
+5. Generating `component-visualization.html` with visual preview and JSON-LD
+
+---
+
+## About
+
+This meta skill produces theme packages consumed by the X-IPE theme system. Each theme lives in its own directory and contains two files: a markdown design system for agent consumption and an HTML visualization for human review.
+
+### Key Concepts
+
+- **Design System** - Structured token definitions (colors, typography, spacing, shadows, component specs) in markdown
+- **Component Visualization** - Self-contained HTML file with CSS variables, visual previews, and JSON-LD structured data
+- **Color Derivation** - Algorithmic expansion of a single accent color into a full palette using Tailwind CSS scales
+- **Component Extraction** - Identification and extraction of UI component patterns (button styles, card layouts, input treatments, link behaviors) from source materials, with sensible defaults as fallback
+
+### Scope
+
+```yaml
+operates_on:
+  - "Theme packages in x-ipe-docs/themes/theme-{name}/"
+  - "Design tokens (colors, typography, spacing, radius, shadows)"
+  - "UI component patterns (buttons, cards, inputs, links, badges, navigation)"
+
+does_not_handle:
+  - "Application-level CSS or component library code"
+  - "Runtime theme switching logic"
+  - "Complex component interactions or JavaScript behavior"
+```
+
+---
+
+## Important Notes
+
+BLOCKING: Output location is `x-ipe-docs/themes/theme-{name}/`. The folder name MUST start with `theme-` prefix (e.g., `theme-bilibili`, `theme-ocean`). The `ThemesService` only discovers folders with this prefix — folders without it will NOT appear in the Toolbox.
+
+CRITICAL: Both `design-system.md` and `component-visualization.html` must be generated. Never produce only one file.
+
+CRITICAL: Minimum input is one accent/brand color. All other tokens can be derived. See [references/color-derivation.md](.github/skills/x-ipe-tool-brand-theme-creator/references/color-derivation.md).
+
+CRITICAL: If the user provides a theme name without the `theme-` prefix, prepend it automatically (e.g., user says "bilibili-brand" → folder is `theme-bilibili-brand`).
+
+CRITICAL: Component extraction is best-effort. If the source material has no visible UI components, fall back to derived defaults from [references/component-extraction.md](.github/skills/x-ipe-tool-brand-theme-creator/references/component-extraction.md). Never block theme generation because components couldn't be extracted.
+
+**Note:** If Agent does not have skill capability, go to `.github/skills/` folder to learn skills. SKILL.md is the entry point.
+
+---
+
+## Anti-Patterns
+
+| Anti-Pattern | Why Bad | Do Instead |
+|--------------|---------|------------|
+| Blocking theme generation on failed component extraction | Theme can still be fully usable with derived defaults | Fall back to defaults, note in output metadata |
+| Generating only one file (design-system.md without visualization, or vice versa) | Consumers expect both files; partial output breaks theme discovery | Always generate both files together |
+| Using RGB/HSL color values in tokens | Inconsistent format breaks downstream parsing | Convert all colors to hex format |
+| Leaving `{{PLACEHOLDER}}` strings in generated output | Broken rendering and JSON-LD parsing failures | Verify all placeholders replaced before writing files |
+| Skipping user confirmation step | Users may reject extracted colors, causing rework | Always present palette and get confirmation first |
+| Omitting `theme-` prefix from folder name | `ThemesService` won't discover the theme | Auto-prepend prefix if missing |
+
+---
+
+## Input Parameters
+
+<input_init>
+  1. Read `theme_name` and `accent_color` from user request (required).
+  2. Determine `source_type` from context: if URL → `web_link`, if image path → `image`, if descriptive text → `text_description`, if hex only → `direct`.
+  3. Set `extract_components` to `true` unless user explicitly opts out.
+  4. Apply defaults for all optional parameters not provided by user.
+</input_init>
+
+```yaml
+input:
+  # Primary inputs
+  theme_name: "kebab-case name without 'theme-' prefix (e.g., ocean, corporate)"
+  accent_color: "hex color value (e.g., #3b82f6) OR derived from source"
+
+  # Input source (one of)
+  source_type: "web_link | image | text_description | direct"
+  source_value: "URL, image path, or text description"
+
+  # Optional overrides (with defaults)
+  primary_color: "derived: darken accent by 40%"
+  secondary_color: "derived: desaturate + darken by 20%"
+  neutral_color: "derived: very light tint of accent"
+  heading_font: "Inter"
+  body_font: "system-ui"
+  code_font: "JetBrains Mono"
+  border_radius_md: "8px"
+  extract_components: "true (default) — whether to extract UI component patterns from source"
+```
+
+For detailed extraction procedures per source type, see [references/input-sources.md](.github/skills/x-ipe-tool-brand-theme-creator/references/input-sources.md).
+
+---
+
+## Definition of Ready
+
+```xml
+<definition_of_ready>
+  <checkpoint required="true">
+    <name>Theme Name Provided</name>
+    <verification>User specified a theme name or one can be derived from input</verification>
+  </checkpoint>
+  <checkpoint required="true">
+    <name>Color Source Available</name>
+    <verification>At least one of: accent color hex, web URL, image, or text description provided</verification>
+  </checkpoint>
+  <checkpoint required="recommended">
+    <name>Reference Theme Accessible</name>
+    <verification>theme-default exists at x-ipe-docs/themes/theme-default/ for structural reference</verification>
+  </checkpoint>
+</definition_of_ready>
+```
+
+---
+
+## Execution Flow
+
+| Step | Name | Action | Gate |
+|------|------|--------|------|
+| 1 | Extract Brand Identity | Process input source for colors AND component patterns | Identity extracted |
+| 2 | Confirm with User | Present extracted palette and component findings for approval | User confirms |
+| 3 | Derive Full Palette + Components | Apply derivation rules for missing tokens and component defaults | All tokens resolved |
+| 4 | Generate design-system.md | Fill design system template with token values and component specs | File written |
+| 5 | Generate visualization | Fill HTML template, replace all placeholders | File written |
+| 6 | Create Theme Folder | Write both files to `x-ipe-docs/themes/theme-{name}/` | Files on disk |
+| 7 | Validate | Verify DoD checkpoints | DoD validated |
+
+---
+
+## Execution Procedure
+
+```xml
+<procedure name="brand-theme-creator">
+  <execute_dor_checks_before_starting/>
+  <schedule_dod_checks_with_sub_agent_before_starting/>
+
+  <step_1>
+    <name>Extract Brand Identity</name>
+    <action>
+      1. Determine input source type (web link, image, text, or direct hex)
+      2. Extract colors based on source type:
+         IF source_type = web_link: use web_fetch to retrieve page, extract from CSS variables, meta tags, header/nav/CTA colors
+         ELSE IF source_type = image: use vision capabilities to identify dominant + accent colors by area coverage
+         ELSE IF source_type = text_description: parse brand adjectives, map to color direction and typography per interpretation guide
+         ELSE: use provided hex values directly
+      3. Map extracted values to theme tokens (primary, secondary, accent, neutral)
+      4. IF extract_components == true AND source provides visible UI patterns:
+         Extract component patterns per source type (see references/component-extraction.md):
+         - Buttons: background, border-radius, padding, font-weight, hover style
+         - Cards: border, shadow, padding, border-radius
+         - Form inputs: border, border-radius, padding, focus ring style
+         - Links: color, hover color, underline behavior, transition
+         - Badges: background, padding, border-radius, font-size
+         - Navigation: height, background, padding, item spacing
+      5. Record which components were extracted vs which need defaults
+    </action>
+    <constraints>
+      - BLOCKING: For web links, always use web_fetch — never guess colors
+      - CRITICAL: Extract hex values only; no RGB or HSL in theme tokens
+      - Component extraction is best-effort; missing components use defaults from Step 3
+    </constraints>
+    <output>Extracted color values and component patterns mapped to theme token roles</output>
+  </step_1>
+
+  <step_2>
+    <name>Confirm with User</name>
+    <action>
+      1. Present extracted/interpreted colors to user
+      2. IF components were extracted: present component findings summary (e.g., "Found: rounded buttons with 12px radius, elevated cards with large shadow")
+      3. Ask for theme name if not already provided
+      4. Validate theme name: IF name does not start with "theme-", prepend "theme-" prefix
+      5. Offer customization options (typography, border radius, component overrides)
+    </action>
+    <constraints>
+      - BLOCKING: Do not proceed to generation without user confirmation
+      - BLOCKING: Final folder name MUST start with "theme-" prefix. Auto-prepend if missing.
+    </constraints>
+    <output>Confirmed color palette, component patterns, and configuration</output>
+  </step_2>
+
+  <step_3>
+    <name>Derive Full Palette + Components</name>
+    <action>
+      1. Apply color derivation rules for any unspecified tokens
+      2. Select appropriate Tailwind neutral scale (slate, gray, zinc, stone, etc.)
+      3. Resolve semantic colors (success=#22c55e, warning=#f59e0b, error=#ef4444, info=#3b82f6)
+      4. Compute accent variants (light bg at 10% opacity, focus ring at 15% opacity)
+      5. Verify contrast ratios: primary/secondary on white >= 4.5:1, accent on white >= 3:1
+      6. For each component type NOT extracted in Step 1, apply defaults from references/component-extraction.md:
+         - Buttons: use accent color, border-radius from radius_md, standard padding
+         - Cards: use neutral scale borders, standard shadow, 24px padding
+         - Inputs: use neutral scale borders, radius_md, standard padding
+         - Links: use accent color, darken on hover
+         - Badges: use accent light bg, small radius, compact padding
+         - Navigation: derive from primary color and heading font
+      7. Merge extracted components with derived defaults (extracted values take precedence)
+    </action>
+    <output>Complete token set with all colors, typography, spacing, radius, shadows, and component specs</output>
+  </step_3>
+
+  <step_4>
+    <name>Generate design-system.md</name>
+    <action>
+      1. Load template from templates/design-system-template.md
+      2. Fill all token sections: colors, typography, spacing, radius, shadows
+      3. Fill component specs section with extracted or derived values for:
+         buttons, cards, form inputs, links, badges, navigation
+      4. Add CSS variables block including component-level variables
+    </action>
+    <output>Completed design-system.md content</output>
+  </step_4>
+
+  <step_5>
+    <name>Generate component-visualization.html</name>
+    <action>
+      1. Load template from templates/component-visualization-template.html
+      2. Replace all {{PLACEHOLDERS}} with resolved token values
+      3. Include JSON-LD structured data block with all tokens (including component specs)
+      4. Verify no unreplaced placeholder strings remain
+    </action>
+    <constraints>
+      - BLOCKING: All placeholders must be replaced; see references/template-placeholders.md
+      - CRITICAL: JSON-LD block must be present for AI parsing
+    </constraints>
+    <output>Completed component-visualization.html content</output>
+  </step_5>
+
+  <step_6>
+    <name>Create Theme Folder</name>
+    <action>
+      1. Verify theme name starts with "theme-" prefix. If not, prepend it.
+      2. Create directory x-ipe-docs/themes/theme-{name}/
+      3. Write design-system.md
+      4. Write component-visualization.html
+    </action>
+    <constraints>
+      - BLOCKING: Folder name MUST match pattern "theme-{name}". ThemesService rejects folders without this prefix.
+    </constraints>
+    <output>Theme directory with both files on disk</output>
+  </step_6>
+
+  <step_7>
+    <name>Validate</name>
+    <action>
+      1. Confirm theme directory exists with both files
+      2. Verify no {{PLACEHOLDER}} strings remain in generated files
+      3. Verify JSON-LD block is present in HTML file
+      4. Check that theme appears in /api/themes response
+      5. Test that 4 color swatches display correctly
+      6. Verify component specs section has at least buttons, cards, and inputs
+    </action>
+    <success_criteria>
+      - Both files exist at correct path
+      - No unreplaced placeholders
+      - Theme discoverable by API
+      - Component specs present with at least 3 component types
+    </success_criteria>
+    <output>Validated theme package</output>
+  </step_7>
+
+</procedure>
+```
+
+---
+
+## Output Result
+
+```yaml
+task_completion_output:
+  category: standalone
+  status: completed | blocked
+  next_task_based_skill: null
+  require_human_review: "yes"
+  task_output_links:
+    - "x-ipe-docs/themes/theme-{name}/design-system.md"
+    - "x-ipe-docs/themes/theme-{name}/component-visualization.html"
+  theme_name: "theme-{name}"
+  source_type: "web_link | image | text_description | direct"
+  colors_confirmed: "true | false"
+  components_extracted: "list of component types extracted from source"
+  components_derived: "list of component types using defaults"
+```
+
+---
+
+## Definition of Done
+
+CRITICAL: Use a sub-agent to validate DoD checkpoints independently.
+
+```xml
+<definition_of_done>
+  <checkpoint required="true">
+    <name>Design System Created</name>
+    <verification>design-system.md exists at x-ipe-docs/themes/theme-{name}/ with all token sections populated</verification>
+  </checkpoint>
+  <checkpoint required="true">
+    <name>Visualization Created</name>
+    <verification>component-visualization.html exists with no unreplaced {{PLACEHOLDER}} strings</verification>
+  </checkpoint>
+  <checkpoint required="true">
+    <name>JSON-LD Present</name>
+    <verification>component-visualization.html contains JSON-LD structured data block</verification>
+  </checkpoint>
+  <checkpoint required="true">
+    <name>Colors in Hex</name>
+    <verification>All color tokens use hex format (not RGB or HSL)</verification>
+  </checkpoint>
+  <checkpoint required="true">
+    <name>Contrast Verified</name>
+    <verification>Primary/secondary on white >= 4.5:1 ratio; accent on white >= 3:1</verification>
+  </checkpoint>
+  <checkpoint required="true">
+    <name>User Confirmed Palette</name>
+    <verification>Extracted/derived colors were presented to and confirmed by user before generation</verification>
+  </checkpoint>
+  <checkpoint required="true">
+    <name>Component Specs Present</name>
+    <verification>Component Specs section includes at least buttons, cards, and form inputs with either extracted or default values</verification>
+  </checkpoint>
+</definition_of_done>
+```
+
+---
+
+## Templates
+
+| File | Purpose | When to Use |
+|------|---------|-------------|
+| `templates/design-system-template.md` | Markdown design system structure with token placeholders | Generating design-system.md |
+| `templates/component-visualization-template.html` | HTML preview with CSS variables and JSON-LD | Generating component-visualization.html |
+
+---
+
+## Examples
+
+See [references/examples.md](.github/skills/x-ipe-tool-brand-theme-creator/references/examples.md) for concrete theme generation examples covering web link, image, text, and minimal input scenarios, including component extraction.
+
+### References
+
+- [references/input-sources.md](.github/skills/x-ipe-tool-brand-theme-creator/references/input-sources.md) - Detailed extraction procedures per source type
+- [references/color-derivation.md](.github/skills/x-ipe-tool-brand-theme-creator/references/color-derivation.md) - Color derivation rules, defaults, and Tailwind scale mapping
+- [references/color-scales.md](.github/skills/x-ipe-tool-brand-theme-creator/references/color-scales.md) - Full Tailwind CSS color scale values
+- [references/template-placeholders.md](.github/skills/x-ipe-tool-brand-theme-creator/references/template-placeholders.md) - Complete placeholder table and output file structure
+- [references/component-extraction.md](.github/skills/x-ipe-tool-brand-theme-creator/references/component-extraction.md) - Component extraction patterns, defaults, and override logic

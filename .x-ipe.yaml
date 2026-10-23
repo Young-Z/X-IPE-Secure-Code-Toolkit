@@ -1,0 +1,23 @@
+# X-IPE Configuration
+version: 1
+
+paths:
+  project_root: "."
+  x_ipe_app: "."
+  docs: "x-ipe-docs"
+  skills: ".github/skills"
+  runtime: ".x-ipe"
+
+server:
+  host: "127.0.0.1"
+  port: 6060
+  debug: false
+
+git:
+  strategy: "main-branch-only"
+
+console:
+  auto_execute_prompt: false
+
+cli: "copilot"
+language: "en"
