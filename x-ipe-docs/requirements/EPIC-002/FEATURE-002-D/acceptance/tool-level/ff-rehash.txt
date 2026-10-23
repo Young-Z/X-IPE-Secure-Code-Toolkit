@@ -1,0 +1,8 @@
+sh: 1: free: not found
+dropped
+sh: 1: free: not found
+{"case": "rehash-after-vm-page-cache-drop-pass1", "components": {"vulnerability_db": {"files": 2, "bytes": 1627238552, "seconds": 0.54, "MB_per_s": 2993.0}, "java_db": {"files": 2, "bytes": 1559470233, "seconds": 0.51, "MB_per_s": 3029.4}, "checks_bundle": {"files": 642, "bytes": 1056303, "seconds": 0.03, "MB_per_s": 37.5}}}
+{"case": "rehash-warm-pass2", "components": {"vulnerability_db": {"files": 2, "bytes": 1627238552, "seconds": 0.52, "MB_per_s": 3157.1}, "java_db": {"files": 2, "bytes": 1559470233, "seconds": 0.49, "MB_per_s": 3171.6}, "checks_bundle": {"files": 642, "bytes": 1056303, "seconds": 0.01, "MB_per_s": 155.4}}}
+{"case": "rehash-warm-pass3", "components": {"vulnerability_db": {"files": 2, "bytes": 1627238552, "seconds": 0.52, "MB_per_s": 3156.9}, "java_db": {"files": 2, "bytes": 1559470233, "seconds": 0.49, "MB_per_s": 3159.6}, "checks_bundle": {"files": 642, "bytes": 1056303, "seconds": 0.01, "MB_per_s": 152.1}}}
+1627238400 bytes (1.6 GB, 1.5 GiB) copied, 0.188746 s, 8.6 GB/s
+1559470080 bytes (1.6 GB, 1.5 GiB) copied, 0.188895 s, 8.3 GB/s

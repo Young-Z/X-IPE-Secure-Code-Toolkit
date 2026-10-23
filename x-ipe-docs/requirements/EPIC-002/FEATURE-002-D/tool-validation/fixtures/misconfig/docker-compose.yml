@@ -1,0 +1,7 @@
+# Self-authored misconfiguration fixture
+services:
+  web:
+    image: nginx:latest
+    privileged: true
+    ports:
+      - "80:80"

@@ -1,0 +1,533 @@
+EEEEEEEEEEEEEEEEEEEEEEE                                                  [100%]
+==================================== ERRORS ====================================
+______________ ERROR at setup of test_control_windows_are_silent _______________
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_________________ ERROR at setup of test_register_real_binary __________________
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+____________ ERROR at setup of test_open_verification_for_the_gate _____________
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_provisioning_contacts_exactly_the_known_hosts[vulnerability_db-mirror.gcr.io] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_provisioning_contacts_exactly_the_known_hosts[vulnerability_db-ghcr.io] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_provisioning_contacts_exactly_the_known_hosts[java_db-mirror.gcr.io] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_provisioning_contacts_exactly_the_known_hosts[java_db-ghcr.io] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_provisioning_contacts_exactly_the_known_hosts[checks_bundle-mirror.gcr.io] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_provisioning_contacts_exactly_the_known_hosts[checks_bundle-ghcr.io] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_refused_repository_fails_without_fallback[vulnerability_db] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_refused_repository_fails_without_fallback[checks_bundle] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_scans_are_offline_and_match_the_validation[C1-scanners0-filesystem-targets0] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_scans_are_offline_and_match_the_validation[C2-scanners1-filesystem-targets1] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_scans_are_offline_and_match_the_validation[C3-scanners2-filesystem-targets2] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_scans_are_offline_and_match_the_validation[C4-scanners3-filesystem-targets3] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_scans_are_offline_and_match_the_validation[C5-scanners4-filesystem-targets4] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_scans_are_offline_and_match_the_validation[C6-scanners5-filesystem-targets5] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_scans_are_offline_and_match_the_validation[C7-scanners6-image_archive-targets6] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_scans_are_offline_and_match_the_validation[C8-scanners7-image_archive-targets7] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_ ERROR at setup of test_scans_are_offline_and_match_the_validation[C9-scanners8-image_archive-targets8] _
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_________ ERROR at setup of test_network_none_scan_and_timeouts_mapped _________
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+_____ ERROR at setup of test_secret_never_stored_and_components_unchanged ______
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+___________ ERROR at setup of test_config_types_equal_the_help_list ____________
+
+    @pytest.fixture(scope="module")
+    def gate():
+        g = Gate()
+>       g.check()
+
+tests/guard/test_trivy_real.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/guard/test_trivy_real.py:91: in check
+    _need(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = "the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)"
+
+    def _need(condition: bool, message: str) -> None:
+        if not condition:
+>           pytest.fail(f"real-binary gate prerequisite missing: {message}")
+E           Failed: real-binary gate prerequisite missing: the user's recorded download authorization (SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1)
+
+tests/guard/test_trivy_real.py:67: Failed
+=========================== short test summary info ============================
+ERROR tests/guard/test_trivy_real.py::test_control_windows_are_silent - Faile...
+ERROR tests/guard/test_trivy_real.py::test_register_real_binary - Failed: rea...
+ERROR tests/guard/test_trivy_real.py::test_open_verification_for_the_gate - F...
+ERROR tests/guard/test_trivy_real.py::test_provisioning_contacts_exactly_the_known_hosts[vulnerability_db-mirror.gcr.io]
+ERROR tests/guard/test_trivy_real.py::test_provisioning_contacts_exactly_the_known_hosts[vulnerability_db-ghcr.io]
+ERROR tests/guard/test_trivy_real.py::test_provisioning_contacts_exactly_the_known_hosts[java_db-mirror.gcr.io]
+ERROR tests/guard/test_trivy_real.py::test_provisioning_contacts_exactly_the_known_hosts[java_db-ghcr.io]
+ERROR tests/guard/test_trivy_real.py::test_provisioning_contacts_exactly_the_known_hosts[checks_bundle-mirror.gcr.io]
+ERROR tests/guard/test_trivy_real.py::test_provisioning_contacts_exactly_the_known_hosts[checks_bundle-ghcr.io]
+ERROR tests/guard/test_trivy_real.py::test_refused_repository_fails_without_fallback[vulnerability_db]
+ERROR tests/guard/test_trivy_real.py::test_refused_repository_fails_without_fallback[checks_bundle]
+ERROR tests/guard/test_trivy_real.py::test_scans_are_offline_and_match_the_validation[C1-scanners0-filesystem-targets0]
+ERROR tests/guard/test_trivy_real.py::test_scans_are_offline_and_match_the_validation[C2-scanners1-filesystem-targets1]
+ERROR tests/guard/test_trivy_real.py::test_scans_are_offline_and_match_the_validation[C3-scanners2-filesystem-targets2]
+ERROR tests/guard/test_trivy_real.py::test_scans_are_offline_and_match_the_validation[C4-scanners3-filesystem-targets3]
+ERROR tests/guard/test_trivy_real.py::test_scans_are_offline_and_match_the_validation[C5-scanners4-filesystem-targets4]
+ERROR tests/guard/test_trivy_real.py::test_scans_are_offline_and_match_the_validation[C6-scanners5-filesystem-targets5]
+ERROR tests/guard/test_trivy_real.py::test_scans_are_offline_and_match_the_validation[C7-scanners6-image_archive-targets6]
+ERROR tests/guard/test_trivy_real.py::test_scans_are_offline_and_match_the_validation[C8-scanners7-image_archive-targets7]
+ERROR tests/guard/test_trivy_real.py::test_scans_are_offline_and_match_the_validation[C9-scanners8-image_archive-targets8]
+ERROR tests/guard/test_trivy_real.py::test_network_none_scan_and_timeouts_mapped
+ERROR tests/guard/test_trivy_real.py::test_secret_never_stored_and_components_unchanged
+ERROR tests/guard/test_trivy_real.py::test_config_types_equal_the_help_list
+23 errors in 0.17s

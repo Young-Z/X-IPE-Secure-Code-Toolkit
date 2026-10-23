@@ -1,0 +1,2 @@
+{"case": "x86-emulated-fs-vuln", "results": [{"Target": "requirements.txt", "Class": "lang-pkgs", "vulnerabilities": 5, "MisconfSummary": null}]}
+{"case": "x86-emulated-fs-misconfig", "results": [{"Target": "requirements.txt", "Class": "lang-pkgs", "vulnerabilities": 0, "MisconfSummary": null}, {"Target": "Dockerfile", "Class": "config", "vulnerabilities": 0, "MisconfSummary": {"Successes": 24, "Failures": 3}}]}

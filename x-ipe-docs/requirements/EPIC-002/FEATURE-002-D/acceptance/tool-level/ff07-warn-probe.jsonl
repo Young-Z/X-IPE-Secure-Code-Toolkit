@@ -1,0 +1,7 @@
+{"case": "pip-requests", "exit": 0, "results": [["requirements.txt", 1, 5]], "warn": ["[pip] Unable to find python `site-packages` directory. License detection is skipped."], "skipped": []}
+{"case": "pip-urllib3", "exit": 0, "results": [["requirements.txt", 1, 13]], "warn": ["[pip] Unable to find python `site-packages` directory. License detection is skipped."], "skipped": []}
+{"case": "npm-lodash", "exit": 0, "results": [["package-lock.json", 1, 10]], "warn": [], "skipped": []}
+{"case": "npm-minimist", "exit": 0, "results": [["package-lock.json", 1, 2]], "warn": [], "skipped": []}
+{"case": "cargo-smallvec", "exit": 0, "results": [["Cargo.lock", 1, 5]], "warn": [], "skipped": []}
+{"case": "composer-guzzle", "exit": 0, "results": [["composer.lock", 1, 14]], "warn": ["Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/docs/v0.76/guide/scanner/vulnerability#severity-selection for details."], "skipped": []}
+{"case": "gem-rack", "exit": 0, "results": [["Gemfile.lock", 1, 36]], "warn": [], "skipped": []}
