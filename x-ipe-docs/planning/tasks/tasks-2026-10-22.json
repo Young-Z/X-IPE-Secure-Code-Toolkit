@@ -153,7 +153,7 @@
     },
     {
       "task_type": "Feature Acceptance Test",
-      "description": "Acceptance test FEATURE-002-D (Trivy Adapter): offline black-box in local Linux container with real Trivy v0.76.1 and pre-provisioned components (DAO-002), mandatory real-binary gate, regressions 002-A/002-B/002-C/003-A; live provisioning through the adapter not executed pending human B9",
+      "description": "Acceptance test FEATURE-002-D (Trivy Adapter): offline black-box in local Linux container with real Trivy v0.76.1 and pre-provisioned components (DAO-002), mandatory real-binary gate, regressions 002-A/002-B/002-C/003-A; B9=A (DB download via tool_update) and B10=A (x86-64 accepted limit) granted, but the TASK-058/059 Docker assets (official binary volume, uv cache, images) were removed; re-acquisition is outside B9 → parked on human B17 (DAO-004 feature_acceptance_test). Nothing run at resumption 2026-10-24.",
       "role": "Sage",
       "status": "blocked",
       "output_links": [
@@ -162,7 +162,7 @@
       ],
       "next_task": "Resume after human B9 (live provisioning + real-binary gate) and B10 (x86-64); then Feature Closing FEATURE-002-D",
       "created_at": "2026-10-22T20:34:02.854306+00:00",
-      "last_updated": "2026-10-22T23:22:31.164258+00:00",
+      "last_updated": "2026-10-23T21:16:29.335043+00:00",
       "task_id": "TASK-058"
     },
     {
