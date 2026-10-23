@@ -1,0 +1,13 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.6, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/yzhang/Documents/projects/ai-secure-code-toolkit-v2/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collected 14 items
+
+tests/test_auth_service.py .........                                     [ 64%]
+tests/test_skill_skeletons.py ...                                        [ 85%]
+tests/test_status.py .                                                   [ 92%]
+tests/test_project_init.py .                                             [100%]
+
+============================== 14 passed in 0.25s ==============================
