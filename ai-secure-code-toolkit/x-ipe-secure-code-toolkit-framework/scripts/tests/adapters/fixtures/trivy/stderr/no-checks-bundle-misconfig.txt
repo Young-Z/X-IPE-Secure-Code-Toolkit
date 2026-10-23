@@ -1,0 +1,6 @@
+2026-10-22T17:07:50Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-10-22T17:07:50Z	INFO	[checks-client] No downloadable checks were loaded as --skip-check-update is enabled, loading from existing cache...
+2026-10-22T17:07:50Z	ERROR	[misconfig] Falling back to embedded checks	err="failed to check cache: cache does not exist at \"/work/empty-cache/policy/content\""
+2026-10-22T17:07:50Z	INFO	[terraform scanner] Scanning root module	file_path="."
+2026-10-22T17:07:50Z	INFO	Number of language-specific files	num=0
+2026-10-22T17:07:50Z	INFO	Detected config files	num=4

@@ -1,0 +1,2 @@
+2026-10-22T17:07:50Z	ERROR	[vulndb] The first run cannot skip downloading DB
+2026-10-22T17:07:50Z	FATAL	Fatal error	run error: init error: DB error: database error: --skip-db-update cannot be specified on the first run

@@ -1,0 +1,39 @@
+{
+  "schema": "ai-secure-code-toolkit/routing-definition/v1",
+  "title": "AI Secure Code Toolkit",
+  "declaration": "All toolkit carriers with this routing identity are one integration declaration: together they start at most one Copilot or Guard flow for the same stage and effective context.",
+  "skills": [
+    {"name": "x-ipe-secure-code-toolkit-copilot", "pointer": "use during design, implementation, bug fix and refactor tasks for in-flow security suggestions and adoption review."},
+    {"name": "x-ipe-secure-code-toolkit-guard", "pointer": "use only for an explicit or authorized security verification request; it reports findings and does not fix."},
+    {"name": "x-ipe-secure-code-toolkit-framework", "pointer": "security knowledge, Policies, status and Maintainer authorization."}
+  ],
+  "sections": [
+    {"id": "copilot", "heading": "Copilot", "statements": [
+      "Use the Copilot skill proactively for every design, implementation, bug fix and refactor task, including changes to an existing design.",
+      "Do not use the Copilot skill for plain questions or read-only knowledge lookups, and not to verify already finished artifacts."]},
+    {"id": "guard", "heading": "Guard", "statements": [
+      "Use the Guard skill only on an explicit verification request or an authorized upstream verification step.",
+      "Never start Guard automatically because an artifact was completed, and never use Guard instead of Copilot for in-flow suggestions."]},
+    {"id": "deduplication", "heading": "One flow per stage and context", "statements": [
+      "Loading several toolkit carriers never starts a Copilot or Guard flow more than once; they are one integration declaration.",
+      "Do not start the flow again for the same stage and the same effective context.",
+      "Evaluate again after a relevant change of input or stage; never skip it permanently.",
+      "A read-only Reviewer never starts the Copilot or Guard flow.",
+      "Do not merge different Framework needs within one task."]},
+    {"id": "results", "heading": "Reports and gates", "statements": [
+      "A failed or old report never counts as done for the current work.",
+      "Report an unavailable skill or invalid output as not completed; the upstream caller decides under its existing gates.",
+      "Never make up Policies from memory.",
+      "Continuing the work is not passing.",
+      "Never bypass mandatory gates silently."]},
+    {"id": "roles", "heading": "Roles", "statements": [
+      "Roles come only from actual verification: the Maintainer by the owner-signed authorization, agents by real requests or signed pre-authorization.",
+      "This carrier text grants no role, permission or consent."]},
+    {"id": "handoff", "heading": "Minimal handoff", "statements": [
+      "Framework: pass the scenario, rule clues and information need; it returns concrete Policies, sources and unresolved items.",
+      "Copilot: pass the task, the current artifact or change and the constraints; it returns concrete suggestions, the adoption review and items not adopted or not verifiable.",
+      "Guard: pass the formed artifact, explicit targets, rule clues and the execution authorization and budget; it returns the three-state verdict, findings, coverage gaps and execution state.",
+      "Only naming a skill is not a completed handoff; the upstream caller acts on the results."]}
+  ],
+  "status_command": "uvx --from {skills_dir}/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json"
+}

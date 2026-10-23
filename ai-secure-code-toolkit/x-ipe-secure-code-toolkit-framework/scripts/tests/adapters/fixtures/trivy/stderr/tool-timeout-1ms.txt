@@ -1,0 +1,8 @@
+2026-10-22T17:07:49Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-10-22T17:07:49Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-10-22T17:07:49Z	INFO	[checks-client] No downloadable checks were loaded as --skip-check-update is enabled, loading from existing cache...
+2026-10-22T17:07:50Z	INFO	[secret] Secret scanning is enabled
+2026-10-22T17:07:50Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-10-22T17:07:50Z	INFO	[secret] Please see https://trivy.dev/docs/v0.76/guide/scanner/secret#recommendation for faster secret detection
+2026-10-22T17:07:50Z	WARN	Provide a higher timeout value, see https://trivy.dev/docs/v0.76/guide/references/troubleshooting#timeout
+2026-10-22T17:07:50Z	FATAL	Fatal error	run error: fs scan error: scan error: scan failed: failed analysis: analyze with traversal: walk dir error: unknown error with /samples/WebGoat/.dockerignore: failed to analyze file: analyze file (.dockerignore): semaphore acquire: context deadline exceeded

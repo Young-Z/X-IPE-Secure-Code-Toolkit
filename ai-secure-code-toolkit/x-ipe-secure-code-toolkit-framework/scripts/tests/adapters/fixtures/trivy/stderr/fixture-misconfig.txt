@@ -1,0 +1,5 @@
+2026-10-22T17:07:48Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-10-22T17:07:48Z	INFO	[checks-client] No downloadable checks were loaded as --skip-check-update is enabled, loading from existing cache...
+2026-10-22T17:07:48Z	INFO	[terraform scanner] Scanning root module	file_path="."
+2026-10-22T17:07:48Z	INFO	Number of language-specific files	num=0
+2026-10-22T17:07:48Z	INFO	Detected config files	num=4

@@ -1,0 +1,80 @@
+{
+  "schema": "ai-secure-code-toolkit/result/v1",
+  "command": "policy resolve",
+  "ok": true,
+  "data": {
+    "notices": [],
+    "status": "complete",
+    "mode": "clues",
+    "library_size": 3,
+    "pending_count": 0,
+    "counts": {
+      "requested": 2,
+      "available": 2,
+      "missing": 0,
+      "unclear": 0
+    },
+    "adopted": [],
+    "adoption": "nothing adopted yet — the user must confirm, then: secure-code scope save --confirmed",
+    "proposal_digest": "sha256:74579fe5aa78a86df24c1fe88819354e225e9872dbef34bae2b7f1658c92cbe4",
+    "entries": [
+      {
+        "requested": "CWE/4.14/CWE-79",
+        "rule": "CWE/4.14/CWE-79",
+        "availability": "available",
+        "name": "Output encoding",
+        "kind": "institutional",
+        "requirement": "Rule CWE-79 body.\n",
+        "applicability": [
+          "java",
+          "python"
+        ],
+        "language_note": "matches",
+        "examples": [
+          "general",
+          "python"
+        ],
+        "relations": [
+          "CWE/4.14/CWE-22",
+          "CWE/4.14/CWE-79"
+        ],
+        "source_evidence": {
+          "source_location": "https://example.org/CWE-79",
+          "source_documents": [
+            "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+          ],
+          "state_digest": "sha256:783f8acd683ecee2d57495a07fda97a24d1adafbecb5b575223575a4f4191106",
+          "last_changed_at": "2026-10-22T08:00:00Z"
+        },
+        "other_versions": [],
+        "retrieval_status": "retrieved",
+        "unresolved": []
+      },
+      {
+        "requested": "CWE/4.14/CWE-22",
+        "rule": "CWE/4.14/CWE-22",
+        "availability": "available",
+        "name": null,
+        "kind": "institutional",
+        "requirement": "Rule CWE-22 body.\n",
+        "applicability": "unknown",
+        "language_note": "unknown",
+        "examples": [],
+        "relations": [],
+        "source_evidence": {
+          "source_location": "https://example.org/CWE-22",
+          "source_documents": [],
+          "state_digest": "sha256:206f739064aa2a4d1056cdafef5fb1b25969c304e70a3ad009a7643a393d1d73",
+          "last_changed_at": "2026-10-22T08:00:00Z"
+        },
+        "other_versions": [],
+        "retrieval_status": "retrieved",
+        "unresolved": []
+      }
+    ]
+  },
+  "problems": [],
+  "next_steps": [
+    "Ask the user to confirm the scope, then run: secure-code scope save --decisions FILE --confirmed"
+  ]
+}

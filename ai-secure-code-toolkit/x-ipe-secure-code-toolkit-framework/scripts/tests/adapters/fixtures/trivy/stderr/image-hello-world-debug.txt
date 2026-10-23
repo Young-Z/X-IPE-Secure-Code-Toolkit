@@ -1,0 +1,15 @@
+ content_len=680 num_rules=105
+2026-10-22T17:07:49Z	DEBUG	[secret] Skipped secret scanning as non-compliant to the rule	file_path="config.json" rule_id="maven-settings-password"
+2026-10-22T17:07:49Z	DEBUG	[secret] Skipped secret scanning as non-compliant to the rule	file_path="config.json" rule_id="maven-settings-passphrase"
+2026-10-22T17:07:49Z	DEBUG	[secret] Skipped secret scanning as non-compliant to the rule	file_path="config.json" rule_id="maven-settings-security-master"
+2026-10-22T17:07:49Z	DEBUG	[secret] scanChunk called	file_path="config.json" content_len=680 num_rules=105
+2026-10-22T17:07:49Z	DEBUG	[secret] Skipped secret scanning as non-compliant to the rule	file_path="config.json" rule_id="maven-settings-password"
+2026-10-22T17:07:49Z	DEBUG	[secret] Skipped secret scanning as non-compliant to the rule	file_path="config.json" rule_id="maven-settings-passphrase"
+2026-10-22T17:07:49Z	DEBUG	[secret] Skipped secret scanning as non-compliant to the rule	file_path="config.json" rule_id="maven-settings-security-master"
+2026-10-22T17:07:49Z	DEBUG	No secrets found in container image config
+2026-10-22T17:07:49Z	DEBUG	OS is not detected.
+2026-10-22T17:07:49Z	DEBUG	Detected OS: unknown
+2026-10-22T17:07:49Z	INFO	Number of language-specific files	num=0
+2026-10-22T17:07:49Z	DEBUG	Specified ignore file does not exist	file=".trivyignore"
+2026-10-22T17:07:49Z	DEBUG	[vex] VEX filtering is disabled
+2026-10-22T17:07:49Z	DEBUG	Cleaning up temp directory	path="/work/tmp/trivy-2814982268"

@@ -1,0 +1,179 @@
+{
+ "sequences": {
+  "claude-code": [
+   {
+    "exit": 0,
+    "host": "<!-- BEGIN ai-secure-code-toolkit: managed fragment, edits are reported not overwritten -->\n## AI Secure Code Toolkit\n\nThis project uses the AI secure-code toolkit skills in `.claude/skills/`:\n\n- `x-ipe-secure-code-toolkit-copilot`: use during design, implementation, bug fix and refactor tasks for in-flow security suggestions and adoption review.\n- `x-ipe-secure-code-toolkit-guard`: use only for an explicit or authorized security verification request; it reports findings and does not fix.\n- `x-ipe-secure-code-toolkit-framework`: security knowledge, Policies, status and Maintainer authorization.\n\nCheck status: `uvx --from .claude/skills/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json`\n<!-- END ai-secure-code-toolkit -->\n",
+    "record": {
+     "environment": "claude-code",
+     "files": "<94 files>",
+     "fragment_sha256": "23e9061f9c1f24ee5a3a4382a3b66f91991f1abaa0fe3ecb8def72d04bb83d37",
+     "host_entry": "CLAUDE.md",
+     "initialized_at": "<TS>",
+     "schema": "ai-secure-code-toolkit/install-record/v1",
+     "skills_dir": ".claude/skills",
+     "toolkit_version": "0.1.0",
+     "updated_at": "<TS>"
+    },
+    "stdout": "{\n  \"schema\": \"ai-secure-code-toolkit/result/v1\",\n  \"command\": \"init\",\n  \"ok\": true,\n  \"data\": {\n    \"root\": \"<ROOT>\",\n    \"environment\": \"claude-code\",\n    \"skills_dir\": \".claude/skills\",\n    \"host_entry\": \"CLAUDE.md\",\n    \"files\": {\n      \"created\": \"<94 files>\",\n      \"updated\": \"<0 files>\",\n      \"current\": \"<0 files>\",\n      \"locally_edited\": \"<0 files>\",\n      \"replaced\": \"<0 files>\",\n      \"conflicts\": \"<0 files>\",\n      \"unsafe\": \"<0 files>\"\n    },\n    \"fragment\": \"create_file\",\n    \"layout_created\": [\n      \"x-ipe-docs/secure-code/knowledge/local\",\n      \"x-ipe-docs/secure-code/knowledge/reference\",\n      \"x-ipe-docs/secure-code/presets\",\n      \"x-ipe-docs/secure-code/tags\",\n      \"x-ipe-docs/secure-code/improvements\",\n      \"x-ipe-docs/secure-code/reports/copilot\",\n      \"x-ipe-docs/secure-code/reports/guard\"\n    ],\n    \"record\": \".x-ipe/private/secure-code/install-record.json\",\n    \"already_current\": false\n  },\n  \"problems\": [],\n  \"next_steps\": [\n    \"Owner runs 'secure-code auth init' in a terminal if not yet authorized\",\n    \"Check status: secure-code status --project <ROOT>\"\n  ]\n}",
+    "step": "fresh"
+   },
+   {
+    "exit": 0,
+    "host": "<!-- BEGIN ai-secure-code-toolkit: managed fragment, edits are reported not overwritten -->\n## AI Secure Code Toolkit\n\nThis project uses the AI secure-code toolkit skills in `.claude/skills/`:\n\n- `x-ipe-secure-code-toolkit-copilot`: use during design, implementation, bug fix and refactor tasks for in-flow security suggestions and adoption review.\n- `x-ipe-secure-code-toolkit-guard`: use only for an explicit or authorized security verification request; it reports findings and does not fix.\n- `x-ipe-secure-code-toolkit-framework`: security knowledge, Policies, status and Maintainer authorization.\n\nCheck status: `uvx --from .claude/skills/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json`\n<!-- END ai-secure-code-toolkit -->\n",
+    "record": {
+     "environment": "claude-code",
+     "files": "<94 files>",
+     "fragment_sha256": "23e9061f9c1f24ee5a3a4382a3b66f91991f1abaa0fe3ecb8def72d04bb83d37",
+     "host_entry": "CLAUDE.md",
+     "initialized_at": "<TS>",
+     "schema": "ai-secure-code-toolkit/install-record/v1",
+     "skills_dir": ".claude/skills",
+     "toolkit_version": "0.1.0",
+     "updated_at": "<TS>"
+    },
+    "stdout": "{\n  \"schema\": \"ai-secure-code-toolkit/result/v1\",\n  \"command\": \"init\",\n  \"ok\": true,\n  \"data\": {\n    \"root\": \"<ROOT>\",\n    \"environment\": \"claude-code\",\n    \"skills_dir\": \".claude/skills\",\n    \"host_entry\": \"CLAUDE.md\",\n    \"files\": {\n      \"created\": \"<0 files>\",\n      \"updated\": \"<0 files>\",\n      \"current\": \"<94 files>\",\n      \"locally_edited\": \"<0 files>\",\n      \"replaced\": \"<0 files>\",\n      \"conflicts\": \"<0 files>\",\n      \"unsafe\": \"<0 files>\"\n    },\n    \"fragment\": \"current\",\n    \"layout_created\": [],\n    \"record\": \".x-ipe/private/secure-code/install-record.json\",\n    \"already_current\": true\n  },\n  \"problems\": [],\n  \"next_steps\": [\n    \"Owner runs 'secure-code auth init' in a terminal if not yet authorized\",\n    \"Check status: secure-code status --project <ROOT>\"\n  ]\n}",
+    "step": "rerun"
+   },
+   {
+    "exit": 0,
+    "host": "<!-- BEGIN ai-secure-code-toolkit: managed fragment, edits are reported not overwritten -->\n## AI Secure Code Toolkit\n\nThis project uses the AI secure-code toolkit skills in `.claude/skills/`:\n\n- `x-ipe-secure-code-toolkit-copilot`: use during design, implementation, bug fix and refactor tasks for in-flow security suggestions and adoption review.\n- `x-ipe-secure-code-toolkit-guard`: use only for an explicit or authorized security verification request; it reports findings and does not fix.\n- `x-ipe-secure-code-toolkit-framework`: security knowledge, Policies, status and Maintainer authorization.\n\nCheck status: `uvx --from .claude/skills/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json`\n<!-- END ai-secure-code-toolkit -->\n",
+    "record": {
+     "environment": "claude-code",
+     "files": "<94 files>",
+     "fragment_sha256": "23e9061f9c1f24ee5a3a4382a3b66f91991f1abaa0fe3ecb8def72d04bb83d37",
+     "host_entry": "CLAUDE.md",
+     "initialized_at": "<TS>",
+     "schema": "ai-secure-code-toolkit/install-record/v1",
+     "skills_dir": ".claude/skills",
+     "toolkit_version": "0.1.0",
+     "updated_at": "<TS>"
+    },
+    "stdout": "init: OK\nroot: <ROOT>\nenvironment: claude-code\nskills_dir: .claude/skills\nhost_entry: CLAUDE.md\nfiles:\n  created:\n    (none)\n  updated:\n    (none)\n  current:\n    - <94 files>\n  locally_edited:\n    (none)\n  replaced:\n    (none)\n  conflicts:\n    (none)\n  unsafe:\n    (none)\nfragment: current\nlayout_created:\n  (none)\nrecord: .x-ipe/private/secure-code/install-record.json\nalready_current: True\nNext steps:\n  - Owner runs 'secure-code auth init' in a terminal if not yet authorized\n  - Check status: secure-code status --project <ROOT>",
+    "step": "rerun_text"
+   },
+   {
+    "exit": 0,
+    "host": "<!-- BEGIN ai-secure-code-toolkit: managed fragment, edits are reported not overwritten -->\n## AI Secure Code Toolkit\n\nThis project uses the AI secure-code toolkit skills in `.claude/skills/`:\n\n- `x-ipe-secure-code-toolkit-copilot`: use during design, implementation, bug fix and refactor tasks for IN-FLOW security suggestions and adoption review.\n- `x-ipe-secure-code-toolkit-guard`: use only for an explicit or authorized security verification request; it reports findings and does not fix.\n- `x-ipe-secure-code-toolkit-framework`: security knowledge, Policies, status and Maintainer authorization.\n\nCheck status: `uvx --from .claude/skills/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json`\n<!-- END ai-secure-code-toolkit -->\n",
+    "record": {
+     "environment": "claude-code",
+     "files": "<94 files>",
+     "fragment_sha256": "23e9061f9c1f24ee5a3a4382a3b66f91991f1abaa0fe3ecb8def72d04bb83d37",
+     "host_entry": "CLAUDE.md",
+     "initialized_at": "<TS>",
+     "schema": "ai-secure-code-toolkit/install-record/v1",
+     "skills_dir": ".claude/skills",
+     "toolkit_version": "0.1.0",
+     "updated_at": "<TS>"
+    },
+    "stdout": "{\n  \"schema\": \"ai-secure-code-toolkit/result/v1\",\n  \"command\": \"init\",\n  \"ok\": true,\n  \"data\": {\n    \"root\": \"<ROOT>\",\n    \"environment\": \"claude-code\",\n    \"skills_dir\": \".claude/skills\",\n    \"host_entry\": \"CLAUDE.md\",\n    \"files\": {\n      \"created\": \"<0 files>\",\n      \"updated\": \"<0 files>\",\n      \"current\": \"<94 files>\",\n      \"locally_edited\": \"<0 files>\",\n      \"replaced\": \"<0 files>\",\n      \"conflicts\": \"<0 files>\",\n      \"unsafe\": \"<0 files>\"\n    },\n    \"fragment\": \"edited_kept\",\n    \"layout_created\": [],\n    \"record\": \".x-ipe/private/secure-code/install-record.json\",\n    \"already_current\": true\n  },\n  \"problems\": [\n    {\n      \"code\": \"FRAGMENT_EDITED\",\n      \"message\": \"The toolkit fragment was edited locally and was kept; re-run with --replace <host entry file> to take the toolkit version\"\n    }\n  ],\n  \"next_steps\": [\n    \"Review the kept local edits; re-run with --replace PATH for each file that should take the toolkit version\",\n    \"Owner runs 'secure-code auth init' in a terminal if not yet authorized\",\n    \"Check status: secure-code status --project <ROOT>\"\n  ]\n}",
+    "step": "edited"
+   },
+   {
+    "exit": 0,
+    "host": "<!-- BEGIN ai-secure-code-toolkit: managed fragment, edits are reported not overwritten -->\n## AI Secure Code Toolkit\n\nThis project uses the AI secure-code toolkit skills in `.claude/skills/`:\n\n- `x-ipe-secure-code-toolkit-copilot`: use during design, implementation, bug fix and refactor tasks for in-flow security suggestions and adoption review.\n- `x-ipe-secure-code-toolkit-guard`: use only for an explicit or authorized security verification request; it reports findings and does not fix.\n- `x-ipe-secure-code-toolkit-framework`: security knowledge, Policies, status and Maintainer authorization.\n\nCheck status: `uvx --from .claude/skills/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json`\n<!-- END ai-secure-code-toolkit -->\n",
+    "record": {
+     "environment": "claude-code",
+     "files": "<94 files>",
+     "fragment_sha256": "23e9061f9c1f24ee5a3a4382a3b66f91991f1abaa0fe3ecb8def72d04bb83d37",
+     "host_entry": "CLAUDE.md",
+     "initialized_at": "<TS>",
+     "schema": "ai-secure-code-toolkit/install-record/v1",
+     "skills_dir": ".claude/skills",
+     "toolkit_version": "0.1.0",
+     "updated_at": "<TS>"
+    },
+    "stdout": "{\n  \"schema\": \"ai-secure-code-toolkit/result/v1\",\n  \"command\": \"init\",\n  \"ok\": true,\n  \"data\": {\n    \"root\": \"<ROOT>\",\n    \"environment\": \"claude-code\",\n    \"skills_dir\": \".claude/skills\",\n    \"host_entry\": \"CLAUDE.md\",\n    \"files\": {\n      \"created\": \"<0 files>\",\n      \"updated\": \"<0 files>\",\n      \"current\": \"<94 files>\",\n      \"locally_edited\": \"<0 files>\",\n      \"replaced\": \"<0 files>\",\n      \"conflicts\": \"<0 files>\",\n      \"unsafe\": \"<0 files>\"\n    },\n    \"fragment\": \"replaced\",\n    \"layout_created\": [],\n    \"record\": \".x-ipe/private/secure-code/install-record.json\",\n    \"already_current\": false\n  },\n  \"problems\": [],\n  \"next_steps\": [\n    \"Owner runs 'secure-code auth init' in a terminal if not yet authorized\",\n    \"Check status: secure-code status --project <ROOT>\"\n  ]\n}",
+    "step": "replace"
+   }
+  ],
+  "github-copilot": [
+   {
+    "exit": 0,
+    "host": "<!-- BEGIN ai-secure-code-toolkit: managed fragment, edits are reported not overwritten -->\n## AI Secure Code Toolkit\n\nThis project uses the AI secure-code toolkit skills in `.github/skills/`:\n\n- `x-ipe-secure-code-toolkit-copilot`: use during design, implementation, bug fix and refactor tasks for in-flow security suggestions and adoption review.\n- `x-ipe-secure-code-toolkit-guard`: use only for an explicit or authorized security verification request; it reports findings and does not fix.\n- `x-ipe-secure-code-toolkit-framework`: security knowledge, Policies, status and Maintainer authorization.\n\nCheck status: `uvx --from .github/skills/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json`\n<!-- END ai-secure-code-toolkit -->\n",
+    "record": {
+     "environment": "github-copilot",
+     "files": "<94 files>",
+     "fragment_sha256": "66f74e93ad3c9a60e579c81ba7b0544254cb2bbde245e7b5c48d16b013a0b9f2",
+     "host_entry": "AGENTS.md",
+     "initialized_at": "<TS>",
+     "schema": "ai-secure-code-toolkit/install-record/v1",
+     "skills_dir": ".github/skills",
+     "toolkit_version": "0.1.0",
+     "updated_at": "<TS>"
+    },
+    "stdout": "{\n  \"schema\": \"ai-secure-code-toolkit/result/v1\",\n  \"command\": \"init\",\n  \"ok\": true,\n  \"data\": {\n    \"root\": \"<ROOT>\",\n    \"environment\": \"github-copilot\",\n    \"skills_dir\": \".github/skills\",\n    \"host_entry\": \"AGENTS.md\",\n    \"files\": {\n      \"created\": \"<94 files>\",\n      \"updated\": \"<0 files>\",\n      \"current\": \"<0 files>\",\n      \"locally_edited\": \"<0 files>\",\n      \"replaced\": \"<0 files>\",\n      \"conflicts\": \"<0 files>\",\n      \"unsafe\": \"<0 files>\"\n    },\n    \"fragment\": \"create_file\",\n    \"layout_created\": [\n      \"x-ipe-docs/secure-code/knowledge/local\",\n      \"x-ipe-docs/secure-code/knowledge/reference\",\n      \"x-ipe-docs/secure-code/presets\",\n      \"x-ipe-docs/secure-code/tags\",\n      \"x-ipe-docs/secure-code/improvements\",\n      \"x-ipe-docs/secure-code/reports/copilot\",\n      \"x-ipe-docs/secure-code/reports/guard\"\n    ],\n    \"record\": \".x-ipe/private/secure-code/install-record.json\",\n    \"already_current\": false\n  },\n  \"problems\": [],\n  \"next_steps\": [\n    \"Owner runs 'secure-code auth init' in a terminal if not yet authorized\",\n    \"Check status: secure-code status --project <ROOT>\"\n  ]\n}",
+    "step": "fresh"
+   },
+   {
+    "exit": 0,
+    "host": "<!-- BEGIN ai-secure-code-toolkit: managed fragment, edits are reported not overwritten -->\n## AI Secure Code Toolkit\n\nThis project uses the AI secure-code toolkit skills in `.github/skills/`:\n\n- `x-ipe-secure-code-toolkit-copilot`: use during design, implementation, bug fix and refactor tasks for in-flow security suggestions and adoption review.\n- `x-ipe-secure-code-toolkit-guard`: use only for an explicit or authorized security verification request; it reports findings and does not fix.\n- `x-ipe-secure-code-toolkit-framework`: security knowledge, Policies, status and Maintainer authorization.\n\nCheck status: `uvx --from .github/skills/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json`\n<!-- END ai-secure-code-toolkit -->\n",
+    "record": {
+     "environment": "github-copilot",
+     "files": "<94 files>",
+     "fragment_sha256": "66f74e93ad3c9a60e579c81ba7b0544254cb2bbde245e7b5c48d16b013a0b9f2",
+     "host_entry": "AGENTS.md",
+     "initialized_at": "<TS>",
+     "schema": "ai-secure-code-toolkit/install-record/v1",
+     "skills_dir": ".github/skills",
+     "toolkit_version": "0.1.0",
+     "updated_at": "<TS>"
+    },
+    "stdout": "{\n  \"schema\": \"ai-secure-code-toolkit/result/v1\",\n  \"command\": \"init\",\n  \"ok\": true,\n  \"data\": {\n    \"root\": \"<ROOT>\",\n    \"environment\": \"github-copilot\",\n    \"skills_dir\": \".github/skills\",\n    \"host_entry\": \"AGENTS.md\",\n    \"files\": {\n      \"created\": \"<0 files>\",\n      \"updated\": \"<0 files>\",\n      \"current\": \"<94 files>\",\n      \"locally_edited\": \"<0 files>\",\n      \"replaced\": \"<0 files>\",\n      \"conflicts\": \"<0 files>\",\n      \"unsafe\": \"<0 files>\"\n    },\n    \"fragment\": \"current\",\n    \"layout_created\": [],\n    \"record\": \".x-ipe/private/secure-code/install-record.json\",\n    \"already_current\": true\n  },\n  \"problems\": [],\n  \"next_steps\": [\n    \"Owner runs 'secure-code auth init' in a terminal if not yet authorized\",\n    \"Check status: secure-code status --project <ROOT>\"\n  ]\n}",
+    "step": "rerun"
+   },
+   {
+    "exit": 0,
+    "host": "<!-- BEGIN ai-secure-code-toolkit: managed fragment, edits are reported not overwritten -->\n## AI Secure Code Toolkit\n\nThis project uses the AI secure-code toolkit skills in `.github/skills/`:\n\n- `x-ipe-secure-code-toolkit-copilot`: use during design, implementation, bug fix and refactor tasks for in-flow security suggestions and adoption review.\n- `x-ipe-secure-code-toolkit-guard`: use only for an explicit or authorized security verification request; it reports findings and does not fix.\n- `x-ipe-secure-code-toolkit-framework`: security knowledge, Policies, status and Maintainer authorization.\n\nCheck status: `uvx --from .github/skills/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json`\n<!-- END ai-secure-code-toolkit -->\n",
+    "record": {
+     "environment": "github-copilot",
+     "files": "<94 files>",
+     "fragment_sha256": "66f74e93ad3c9a60e579c81ba7b0544254cb2bbde245e7b5c48d16b013a0b9f2",
+     "host_entry": "AGENTS.md",
+     "initialized_at": "<TS>",
+     "schema": "ai-secure-code-toolkit/install-record/v1",
+     "skills_dir": ".github/skills",
+     "toolkit_version": "0.1.0",
+     "updated_at": "<TS>"
+    },
+    "stdout": "init: OK\nroot: <ROOT>\nenvironment: github-copilot\nskills_dir: .github/skills\nhost_entry: AGENTS.md\nfiles:\n  created:\n    (none)\n  updated:\n    (none)\n  current:\n    - <94 files>\n  locally_edited:\n    (none)\n  replaced:\n    (none)\n  conflicts:\n    (none)\n  unsafe:\n    (none)\nfragment: current\nlayout_created:\n  (none)\nrecord: .x-ipe/private/secure-code/install-record.json\nalready_current: True\nNext steps:\n  - Owner runs 'secure-code auth init' in a terminal if not yet authorized\n  - Check status: secure-code status --project <ROOT>",
+    "step": "rerun_text"
+   },
+   {
+    "exit": 0,
+    "host": "<!-- BEGIN ai-secure-code-toolkit: managed fragment, edits are reported not overwritten -->\n## AI Secure Code Toolkit\n\nThis project uses the AI secure-code toolkit skills in `.github/skills/`:\n\n- `x-ipe-secure-code-toolkit-copilot`: use during design, implementation, bug fix and refactor tasks for IN-FLOW security suggestions and adoption review.\n- `x-ipe-secure-code-toolkit-guard`: use only for an explicit or authorized security verification request; it reports findings and does not fix.\n- `x-ipe-secure-code-toolkit-framework`: security knowledge, Policies, status and Maintainer authorization.\n\nCheck status: `uvx --from .github/skills/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json`\n<!-- END ai-secure-code-toolkit -->\n",
+    "record": {
+     "environment": "github-copilot",
+     "files": "<94 files>",
+     "fragment_sha256": "66f74e93ad3c9a60e579c81ba7b0544254cb2bbde245e7b5c48d16b013a0b9f2",
+     "host_entry": "AGENTS.md",
+     "initialized_at": "<TS>",
+     "schema": "ai-secure-code-toolkit/install-record/v1",
+     "skills_dir": ".github/skills",
+     "toolkit_version": "0.1.0",
+     "updated_at": "<TS>"
+    },
+    "stdout": "{\n  \"schema\": \"ai-secure-code-toolkit/result/v1\",\n  \"command\": \"init\",\n  \"ok\": true,\n  \"data\": {\n    \"root\": \"<ROOT>\",\n    \"environment\": \"github-copilot\",\n    \"skills_dir\": \".github/skills\",\n    \"host_entry\": \"AGENTS.md\",\n    \"files\": {\n      \"created\": \"<0 files>\",\n      \"updated\": \"<0 files>\",\n      \"current\": \"<94 files>\",\n      \"locally_edited\": \"<0 files>\",\n      \"replaced\": \"<0 files>\",\n      \"conflicts\": \"<0 files>\",\n      \"unsafe\": \"<0 files>\"\n    },\n    \"fragment\": \"edited_kept\",\n    \"layout_created\": [],\n    \"record\": \".x-ipe/private/secure-code/install-record.json\",\n    \"already_current\": true\n  },\n  \"problems\": [\n    {\n      \"code\": \"FRAGMENT_EDITED\",\n      \"message\": \"The toolkit fragment was edited locally and was kept; re-run with --replace <host entry file> to take the toolkit version\"\n    }\n  ],\n  \"next_steps\": [\n    \"Review the kept local edits; re-run with --replace PATH for each file that should take the toolkit version\",\n    \"Owner runs 'secure-code auth init' in a terminal if not yet authorized\",\n    \"Check status: secure-code status --project <ROOT>\"\n  ]\n}",
+    "step": "edited"
+   },
+   {
+    "exit": 0,
+    "host": "<!-- BEGIN ai-secure-code-toolkit: managed fragment, edits are reported not overwritten -->\n## AI Secure Code Toolkit\n\nThis project uses the AI secure-code toolkit skills in `.github/skills/`:\n\n- `x-ipe-secure-code-toolkit-copilot`: use during design, implementation, bug fix and refactor tasks for in-flow security suggestions and adoption review.\n- `x-ipe-secure-code-toolkit-guard`: use only for an explicit or authorized security verification request; it reports findings and does not fix.\n- `x-ipe-secure-code-toolkit-framework`: security knowledge, Policies, status and Maintainer authorization.\n\nCheck status: `uvx --from .github/skills/x-ipe-secure-code-toolkit-framework/scripts secure-code status --project . --json`\n<!-- END ai-secure-code-toolkit -->\n",
+    "record": {
+     "environment": "github-copilot",
+     "files": "<94 files>",
+     "fragment_sha256": "66f74e93ad3c9a60e579c81ba7b0544254cb2bbde245e7b5c48d16b013a0b9f2",
+     "host_entry": "AGENTS.md",
+     "initialized_at": "<TS>",
+     "schema": "ai-secure-code-toolkit/install-record/v1",
+     "skills_dir": ".github/skills",
+     "toolkit_version": "0.1.0",
+     "updated_at": "<TS>"
+    },
+    "stdout": "{\n  \"schema\": \"ai-secure-code-toolkit/result/v1\",\n  \"command\": \"init\",\n  \"ok\": true,\n  \"data\": {\n    \"root\": \"<ROOT>\",\n    \"environment\": \"github-copilot\",\n    \"skills_dir\": \".github/skills\",\n    \"host_entry\": \"AGENTS.md\",\n    \"files\": {\n      \"created\": \"<0 files>\",\n      \"updated\": \"<0 files>\",\n      \"current\": \"<94 files>\",\n      \"locally_edited\": \"<0 files>\",\n      \"replaced\": \"<0 files>\",\n      \"conflicts\": \"<0 files>\",\n      \"unsafe\": \"<0 files>\"\n    },\n    \"fragment\": \"replaced\",\n    \"layout_created\": [],\n    \"record\": \".x-ipe/private/secure-code/install-record.json\",\n    \"already_current\": false\n  },\n  \"problems\": [],\n  \"next_steps\": [\n    \"Owner runs 'secure-code auth init' in a terminal if not yet authorized\",\n    \"Check status: secure-code status --project <ROOT>\"\n  ]\n}",
+    "step": "replace"
+   }
+  ]
+ },
+ "source": "baseline code (host_fragment a14b9b85, project_init 7bfe353e), --toolkit-source = 001A-era copy"
+}

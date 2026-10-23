@@ -1,0 +1,47 @@
+{
+  "schema": "ai-secure-code-toolkit/result/v1",
+  "command": "knowledge links",
+  "ok": true,
+  "data": {
+    "broken_relations": [
+      {
+        "source": "CWE/4.14/CWE-79-NEW",
+        "source_state": "active",
+        "target": "CWE/4.14/CWE-79",
+        "reason": "renamed",
+        "renamed_to": "CWE/4.14/CWE-79-NEW"
+      },
+      {
+        "source": "CWE/4.14/CWE-89",
+        "source_state": "active",
+        "target": "CWE/4.14/CWE-79",
+        "reason": "renamed",
+        "renamed_to": "CWE/4.14/CWE-79-NEW"
+      }
+    ],
+    "scopes": [
+      {
+        "scope_id": "sha256:1d68eb25ed6b797119f485375e1929787896c0763609e802aba024b789df6245",
+        "rule": "CWE/4.14/CWE-79",
+        "reason": "renamed",
+        "renamed_to": "CWE/4.14/CWE-79-NEW"
+      },
+      {
+        "scope_id": "sha256:7dabc5a1b831703afc78d84be68f0f14b65b58da0177ed50b6d6d7c76c61e0b1",
+        "rule": "CWE/4.14/CWE-79",
+        "reason": "renamed",
+        "renamed_to": "CWE/4.14/CWE-79-NEW"
+      }
+    ],
+    "unreadable_sources": [],
+    "unreadable_scopes": [],
+    "counts": {
+      "broken_relations": 2,
+      "scopes": 2
+    }
+  },
+  "problems": [],
+  "next_steps": [
+    "Repairing references is a separate, explicit decision by an authorized person"
+  ]
+}

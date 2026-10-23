@@ -1,0 +1,1 @@
+2026-10-22T17:07:50Z	FATAL	Fatal error	run error: init error: DB error: error in vulnerability DB initialization: failed to open db: invalid database

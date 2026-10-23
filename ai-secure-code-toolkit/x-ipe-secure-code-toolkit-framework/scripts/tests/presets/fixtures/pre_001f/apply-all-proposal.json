@@ -1,0 +1,114 @@
+{
+  "schema": "ai-secure-code-toolkit/result/v1",
+  "command": "policy resolve",
+  "ok": true,
+  "data": {
+    "notices": [
+      {
+        "code": "APPLY_ALL_PROPOSED",
+        "message": "No clues and no default Preset — Apply All proposed: every formal Local Policy. This is the Policy scope only; the artifact scope is decided separately.",
+        "default_preset_exists": false
+      }
+    ],
+    "status": "complete",
+    "mode": "apply_all",
+    "library_size": 3,
+    "pending_count": 0,
+    "counts": {
+      "requested": 3,
+      "available": 3,
+      "missing": 0,
+      "unclear": 0
+    },
+    "adopted": [],
+    "adoption": "nothing adopted yet — the user must confirm, then: secure-code scope save --confirmed",
+    "proposal_digest": "sha256:9fdd7c9ba64c7f9132e9590d67ac3b64fe0cd0ec106480f9455d344e6dee9c94",
+    "entries": [
+      {
+        "requested": "CWE/4.14/CWE-22",
+        "rule": "CWE/4.14/CWE-22",
+        "availability": "available",
+        "name": null,
+        "kind": "institutional",
+        "requirement": "Rule CWE-22 body.\n",
+        "applicability": "unknown",
+        "language_note": "unknown",
+        "examples": [],
+        "relations": [],
+        "source_evidence": {
+          "source_location": "https://example.org/CWE-22",
+          "source_documents": [],
+          "state_digest": "sha256:206f739064aa2a4d1056cdafef5fb1b25969c304e70a3ad009a7643a393d1d73",
+          "last_changed_at": "2026-10-22T08:00:00Z"
+        },
+        "other_versions": [],
+        "retrieval_status": "retrieved",
+        "unresolved": []
+      },
+      {
+        "requested": "CWE/4.14/CWE-79",
+        "rule": "CWE/4.14/CWE-79",
+        "availability": "available",
+        "name": "Output encoding",
+        "kind": "institutional",
+        "requirement": "Rule CWE-79 body.\n",
+        "applicability": [
+          "java",
+          "python"
+        ],
+        "language_note": "matches",
+        "examples": [
+          "general",
+          "python"
+        ],
+        "relations": [
+          "CWE/4.14/CWE-22",
+          "CWE/4.14/CWE-79"
+        ],
+        "source_evidence": {
+          "source_location": "https://example.org/CWE-79",
+          "source_documents": [
+            "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+          ],
+          "state_digest": "sha256:783f8acd683ecee2d57495a07fda97a24d1adafbecb5b575223575a4f4191106",
+          "last_changed_at": "2026-10-22T08:00:00Z"
+        },
+        "other_versions": [],
+        "retrieval_status": "retrieved",
+        "unresolved": []
+      },
+      {
+        "requested": "CWE/4.14/CWE-89",
+        "rule": "CWE/4.14/CWE-89",
+        "availability": "available",
+        "name": null,
+        "kind": "institutional",
+        "requirement": "Rule CWE-89 body.\n",
+        "applicability": "unknown",
+        "language_note": "unknown",
+        "examples": [],
+        "relations": [
+          "CWE/4.14/CWE-79"
+        ],
+        "source_evidence": {
+          "source_location": "https://example.org/CWE-89",
+          "source_documents": [],
+          "state_digest": "sha256:974a5e152d64a0a9a350d8345880d6bd99a5f58fceabaee301780be7a415539a",
+          "last_changed_at": "2026-10-22T08:00:00Z"
+        },
+        "other_versions": [],
+        "retrieval_status": "retrieved",
+        "unresolved": []
+      }
+    ],
+    "inactive": {
+      "deactivated": 0,
+      "deleted": 0,
+      "renamed": 0
+    }
+  },
+  "problems": [],
+  "next_steps": [
+    "Ask the user to confirm the scope, then run: secure-code scope save --decisions FILE --confirmed"
+  ]
+}

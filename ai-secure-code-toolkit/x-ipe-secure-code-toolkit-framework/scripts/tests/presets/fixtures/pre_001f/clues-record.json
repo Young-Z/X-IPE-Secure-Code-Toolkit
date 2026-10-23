@@ -1,0 +1,27 @@
+{
+  "adopted": [
+    {
+      "note": null,
+      "requested": "CWE/4.14/CWE-22",
+      "rule": "CWE/4.14/CWE-22",
+      "state_digest": "sha256:206f739064aa2a4d1056cdafef5fb1b25969c304e70a3ad009a7643a393d1d73"
+    },
+    {
+      "note": null,
+      "requested": "CWE/4.14/CWE-79",
+      "rule": "CWE/4.14/CWE-79",
+      "state_digest": "sha256:783f8acd683ecee2d57495a07fda97a24d1adafbecb5b575223575a4f4191106"
+    }
+  ],
+  "artifact_scope": "not determined by the Policy scope",
+  "clues": "registration change",
+  "confirmation_note": "Maintainer explicitly confirmed scope",
+  "created_at": "2026-10-22T08:00:00Z",
+  "language_context": [
+    "python"
+  ],
+  "mode": "clues",
+  "not_adopted": [],
+  "schema": "ai-secure-code-toolkit/scope-record/v1",
+  "scope_id": "sha256:7dabc5a1b831703afc78d84be68f0f14b65b58da0177ed50b6d6d7c76c61e0b1"
+}

@@ -1,0 +1,37 @@
+2026-10-22T17:07:46Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-10-22T17:07:46Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-10-22T17:07:46Z	INFO	[secret] Secret scanning is enabled
+2026-10-22T17:07:46Z	DEBUG	Default config file "file_path=trivy.yaml" not found, using built in values
+2026-10-22T17:07:46Z	DEBUG	[secret] Using streaming scanner	file_path=".dockerignore"
+2026-10-22T17:07:46Z	DEBUG	[secret] Using streaming scanner	file_path=".editorconfig"
+2026-10-22T17:07:46Z	DEBUG	[secret] Using streaming scanner	file_path=".github/FUNDING.yml"
+2026-10-22T17:07:46Z	DEBUG	[secret] Using streaming scanner	file_path=".github/actions/java-setup/action.yml"
+2026-10-22T17:07:46Z	DEBUG	[rego] Embedded libraries are loaded	count=17
+2026-10-22T17:07:46Z	DEBUG	[rego] Embedded checks are loaded	count=563
+2026-10-22T17:07:46Z	DEBUG	[rego] Checks from disk are loaded	count=580
+2026-10-22T17:07:46Z	DEBUG	[pom] Fetching the remote pom.xml is skipped
+2026-10-22T17:07:46Z	DEBUG	[pom] Fetching the remote pom.xml is skipped
+2026-10-22T17:07:46Z	DEBUG	[pom] Fetching the remote pom.xml is skipped
+2026-10-22T17:07:46Z	DEBUG	[pom] Fetching the remote pom.xml is skipped
+2026-10-22T17:07:46Z	DEBUG	[pom] Skipping vulnerability scan as no version is detected for the package	name="com.fasterxml.jackson.core:jackson-databind"
+2026-10-22T17:07:46Z	DEBUG	[pom] Skipping vulnerability scan as no version is detected for the package	name="com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+2026-10-22T17:07:46Z	DEBUG	[pom] Skipping vulnerability scan as no version is detected for the package	name="com.sun.xml.bind:jaxb-impl"
+2026-10-22T17:07:46Z	DEBUG	[pom] Skipping vulnerability scan as no version is detected for the package	name="jakarta.servlet:jakarta.servlet-api"
+2026-10-22T17:07:46Z	WARN	[pom] Dependency version cannot be determined. Child dependencies will not be found.	details="https://trivy.dev/docs/v0.76/guide/coverage/language/java#empty-dependency-version"
+2026-10-22T17:07:46Z	DEBUG	[pom] Dependency version cannot be determined.	GroupID="org.springframework.boot" ArtifactID="spring-boot-starter-validation"
+2026-10-22T17:07:46Z	DEBUG	[pom] Dependency version cannot be determined.	GroupID="org.springframework.boot" ArtifactID="spring-boot-starter-webmvc"
+2026-10-22T17:07:46Z	DEBUG	[pom] Dependency version cannot be determined.	GroupID="com.fasterxml.jackson.core" ArtifactID="jackson-databind"
+2026-10-22T17:07:46Z	INFO	Number of language-specific files	num=1
+2026-10-22T17:07:47Z	DEBUG	[pom] Skipping vulnerability scan as no version is detected for the package	name="org.springframework.boot:spring-boot-starter-webmvc"
+2026-10-22T17:07:47Z	DEBUG	[pom] Skipping vulnerability scan as no version is detected for the package	name="org.thymeleaf.extras:thymeleaf-extras-springsecurity6"
+2026-10-22T17:07:47Z	INFO	Detected config files	num=1
+2026-10-22T17:07:47Z	DEBUG	Scanned config file	file_path="Dockerfile"
+2026-10-22T17:07:47Z	DEBUG	Secret file	file_path="src/it/java/org/owasp/webgoat/playwright/webwolf/JwtUITest.java"
+2026-10-22T17:07:47Z	DEBUG	Secret file	file_path="src/main/resources/lessons/jwt/documentation/JWT_libraries.adoc"
+2026-10-22T17:07:47Z	DEBUG	Secret file	file_path="src/main/resources/lessons/jwt/documentation/JWT_libraries_assignment.adoc"
+2026-10-22T17:07:47Z	DEBUG	Secret file	file_path="src/main/resources/lessons/jwt/documentation/JWT_signing_solution.adoc"
+2026-10-22T17:07:47Z	DEBUG	Secret file	file_path="src/main/resources/lessons/jwt/html/JWT.html"
+2026-10-22T17:07:47Z	DEBUG	Secret file	file_path="src/main/resources/lessons/jwt/images/logs.txt"
+2026-10-22T17:07:47Z	DEBUG	Specified ignore file does not exist	file=".trivyignore"
+2026-10-22T17:07:47Z	DEBUG	[vex] VEX filtering is disabled
+2026-10-22T17:07:47Z	DEBUG	Cleaning up temp directory	path="/work/tmp/trivy-772391935"
