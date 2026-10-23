@@ -269,11 +269,11 @@ class _Writer:
         if not self.created:
             return
         try:  # only while it is still the same, empty entry under reports/guard/ (never by path elsewhere)
+            identity = self.created_id
             if self.cfd is not None:
                 held = os.fstat(self.cfd)
-                identity: tuple[int, int] | None = (held.st_dev, held.st_ino)
-            else:
-                identity = self.created_id
+                if (held.st_dev, held.st_ino) != identity:
+                    identity = None  # the held folder is not the one this command created
             info = durable.entry(self.reports_fd, COMPARISONS)
             same = identity is not None and info is not None and (info.st_dev, info.st_ino) == identity
             if same and stat.S_ISDIR(info.st_mode):

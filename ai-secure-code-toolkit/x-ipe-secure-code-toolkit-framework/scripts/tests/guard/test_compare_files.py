@@ -680,3 +680,33 @@ def test_07j_failure_right_after_folder_creation_removes_it(tmp_path, monkeypatc
     refused(env, "PATH_UNSAFE" if failure == "folder_open_unsafe" else "COMPARISON_WRITE_FAILED")
     assert not (root / COMPARISONS).exists()
     assert manifest(root) == before
+
+
+# AC-002G-07i/07j (closing re-review, TASK-092): a folder swapped in by another process between the
+# command's mkdir and its folder open is never removed by the command's cleanup (identity of the folder
+# the command created is required on every cleanup path).
+def test_07j_cleanup_never_removes_a_swapped_in_folder(tmp_path, monkeypatch):
+    from x_ipe_secure_code.knowledge import durable
+
+    root = project(tmp_path)
+    real_dir = durable.Tree.dir
+
+    swapped = []
+
+    def tree_dir(self, rel, **kw):
+        if rel.endswith("/comparisons") and not swapped:
+            swapped.append(True)
+            made = root / COMPARISONS
+            made.rename(made.with_name("comparisons-moved-aside"))
+            made.mkdir()  # another process's empty folder under the same name, before the first open
+        return real_dir(self, rel, **kw)
+
+    def link(*args, **kw):
+        raise OSError(errno.EIO, "injected link failure")
+
+    monkeypatch.setattr(durable.Tree, "dir", tree_dir)
+    monkeypatch.setattr(os, "link", link)
+    env, _ = run_compare(root)
+    assert env["ok"] is False, env
+    assert (root / COMPARISONS).is_dir(), "the swapped-in folder must not be removed"
+    assert list((root / COMPARISONS).iterdir()) == []
