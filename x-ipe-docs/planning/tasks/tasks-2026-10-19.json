@@ -1,0 +1,386 @@
+{
+  "_version": "1.0",
+  "tasks": [
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-001-A (Toolkit Install, Signed Owner Initialization & Status)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A/technical-design.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A/specification.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A"
+      ],
+      "next_task": "x-ipe-task-based-code-implementation",
+      "created_at": "2026-10-19T00:59:33.275311+00:00",
+      "last_updated": "2026-10-19T01:42:51.636581+00:00",
+      "task_id": "TASK-005"
+    },
+    {
+      "task_type": "Code Implementation",
+      "description": "Implement FEATURE-001-A (Toolkit Install, Signed Owner Initialization & Status) as skill-creator candidate packages with the secure-code CLI in the Framework skill scripts",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A/technical-design.md"
+      ],
+      "next_task": "x-ipe-task-based-feature-acceptance-test",
+      "created_at": "2026-10-19T01:43:00.114616+00:00",
+      "last_updated": "2026-10-19T02:52:44.822163+00:00",
+      "task_id": "TASK-006"
+    },
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance test FEATURE-001-A (Toolkit Install, Signed Owner Initialization & Status) against all specification ACs; Windows excluded for now by user decision",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A/acceptance-test-cases.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A/acceptance"
+      ],
+      "next_task": "x-ipe-task-based-feature-closing",
+      "created_at": "2026-10-19T02:52:44.851622+00:00",
+      "last_updated": "2026-10-19T03:02:49.807332+00:00",
+      "task_id": "TASK-007"
+    },
+    {
+      "task_type": "Feature Closing",
+      "description": "Close FEATURE-001-A (Toolkit Install, Signed Owner Initialization & Status) with goal/AC-to-evidence verification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A/closing-report.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A"
+      ],
+      "next_task": "x-ipe-task-based-feature-refinement",
+      "created_at": "2026-10-19T03:02:49.836692+00:00",
+      "last_updated": "2026-10-19T03:06:52.513302+00:00",
+      "task_id": "TASK-008"
+    },
+    {
+      "task_type": "Feature Refinement",
+      "description": "Refine FEATURE-001-B (Local Knowledge Maintenance & Changelog) into a specification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-B/specification.md"
+      ],
+      "next_task": "x-ipe-task-based-technical-design",
+      "created_at": "2026-10-19T03:07:01.207896+00:00",
+      "last_updated": "2026-10-19T03:23:31.227555+00:00",
+      "task_id": "TASK-009"
+    },
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-001-B (Local Knowledge Maintenance & Changelog)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-B/technical-design.md"
+      ],
+      "next_task": "x-ipe-task-based-code-implementation",
+      "created_at": "2026-10-19T03:23:31.257332+00:00",
+      "last_updated": "2026-10-19T03:34:20.627742+00:00",
+      "task_id": "TASK-010"
+    },
+    {
+      "task_type": "Code Implementation",
+      "description": "Implement FEATURE-001-B (Local Knowledge Maintenance & Changelog) in the secure-code toolkit Framework scripts",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/knowledge",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/knowledge",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-B/technical-design.md"
+      ],
+      "next_task": "x-ipe-task-based-feature-acceptance-test",
+      "created_at": "2026-10-19T03:34:20.655997+00:00",
+      "last_updated": "2026-10-19T03:52:46.966704+00:00",
+      "task_id": "TASK-011"
+    },
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance test FEATURE-001-B (Local Knowledge Maintenance & Changelog) against all specification ACs",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-B/acceptance-test-cases.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-B/acceptance"
+      ],
+      "next_task": "x-ipe-task-based-feature-closing",
+      "created_at": "2026-10-19T05:09:47.209281+00:00",
+      "last_updated": "2026-10-19T05:14:10.528156+00:00",
+      "task_id": "TASK-012"
+    },
+    {
+      "task_type": "Feature Closing",
+      "description": "Close FEATURE-001-B (Local Knowledge Maintenance & Changelog) with goal/AC-to-evidence verification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-B/closing-report.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-B/"
+      ],
+      "next_task": "Feature Refinement FEATURE-001-C",
+      "created_at": "2026-10-19T05:14:10.557378+00:00",
+      "last_updated": "2026-10-19T05:45:16.807917+00:00",
+      "task_id": "TASK-013"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-001-B: knowledge check/list crash on LockHeld (no result envelope); old-format document-index entries lose unidentified failures",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-B/bug-report-TASK-014.md"
+      ],
+      "next_task": "",
+      "created_at": "2026-10-19T05:21:03.080404+00:00",
+      "last_updated": "2026-10-19T05:39:56.602059+00:00",
+      "task_id": "TASK-014"
+    },
+    {
+      "task_type": "Feature Refinement",
+      "description": "Refine FEATURE-001-C (Policy Resolution & Adoption Scope Selection) into a testable specification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-C/specification.md"
+      ],
+      "next_task": "Technical Design FEATURE-001-C",
+      "created_at": "2026-10-19T05:45:19.393140+00:00",
+      "last_updated": "2026-10-19T05:58:17.789530+00:00",
+      "task_id": "TASK-015"
+    },
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-001-C (Policy Resolution & Adoption Scope Selection)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-C/technical-design.md"
+      ],
+      "next_task": "Code Implementation FEATURE-001-C",
+      "created_at": "2026-10-19T05:58:17.818285+00:00",
+      "last_updated": "2026-10-19T06:07:23.154169+00:00",
+      "task_id": "TASK-016"
+    },
+    {
+      "task_type": "Code Implementation",
+      "description": "Implement FEATURE-001-C (Policy Resolution & Adoption Scope Selection) test-first",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/policy/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/policy/"
+      ],
+      "next_task": "Acceptance Test FEATURE-001-C",
+      "created_at": "2026-10-19T06:07:23.184822+00:00",
+      "last_updated": "2026-10-19T06:55:42.505765+00:00",
+      "task_id": "TASK-017"
+    },
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance test FEATURE-001-C (Policy Resolution & Adoption Scope Selection)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-C/acceptance-test-cases.md"
+      ],
+      "next_task": "Feature Closing FEATURE-001-C",
+      "created_at": "2026-10-19T06:55:42.536616+00:00",
+      "last_updated": "2026-10-19T07:00:36.749240+00:00",
+      "task_id": "TASK-018"
+    },
+    {
+      "task_type": "Feature Closing",
+      "description": "Close FEATURE-001-C (Policy Resolution & Adoption Scope Selection) with goal/AC-to-evidence verification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-C/closing-report.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-C/"
+      ],
+      "next_task": "Feature Refinement FEATURE-002-A",
+      "created_at": "2026-10-19T07:00:36.778359+00:00",
+      "last_updated": "2026-10-19T07:19:12.932520+00:00",
+      "task_id": "TASK-019"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-001-C: non-UTF-8-encodable text (lone surrogates) crashes policy resolve / scope save / scope show with traceback; add 05f removed-rule acceptance check",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-C/bug-report-TASK-020.md",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/policy/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/policy/test_policy.py"
+      ],
+      "next_task": "",
+      "created_at": "2026-10-19T07:04:02.341179+00:00",
+      "last_updated": "2026-10-19T07:17:30.043218+00:00",
+      "task_id": "TASK-020"
+    },
+    {
+      "task_type": "Feature Refinement",
+      "description": "Refine FEATURE-002-A (Guard Semantic Verification & Verdict Reporting) into a testable specification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/specification.md"
+      ],
+      "next_task": "Technical Design FEATURE-002-A",
+      "created_at": "2026-10-19T07:19:12.961267+00:00",
+      "last_updated": "2026-10-19T11:03:49.653757+00:00",
+      "task_id": "TASK-021"
+    },
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-002-A (Guard Semantic Verification & Verdict Reporting)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/technical-design.md"
+      ],
+      "next_task": "Code Implementation FEATURE-002-A",
+      "created_at": "2026-10-19T11:03:53.061620+00:00",
+      "last_updated": "2026-10-19T12:44:43.384336+00:00",
+      "task_id": "TASK-022"
+    },
+    {
+      "task_type": "Code Implementation",
+      "description": "Implement FEATURE-002-A (Guard Semantic Verification & Verdict Reporting) test-first per technical design",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/guard/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-guard/SKILL.md",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-guard/references/guard-records.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/technical-design.md"
+      ],
+      "next_task": "Feature Acceptance Test FEATURE-002-A",
+      "created_at": "2026-10-19T12:44:43.414113+00:00",
+      "last_updated": "2026-10-19T13:18:33.921328+00:00",
+      "task_id": "TASK-023"
+    },
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance test FEATURE-002-A (Guard Semantic Verification & Verdict Reporting) with real uvx CLI black-box runner",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/acceptance-test-cases.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/acceptance/blackbox.py",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/acceptance/evidence-container-linux.jsonl",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/acceptance/evidence-host-macos.jsonl",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/acceptance/evidence-unit-library.log"
+      ],
+      "next_task": "Feature Closing FEATURE-002-A",
+      "created_at": "2026-10-19T13:18:33.949336+00:00",
+      "last_updated": "2026-10-19T13:34:36.618974+00:00",
+      "task_id": "TASK-024"
+    },
+    {
+      "task_type": "Feature Closing",
+      "description": "Close FEATURE-002-A (Guard Semantic Verification & Verdict Reporting): final verification, independent closing review, closing report",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/closing-report.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/bug-report-TASK-026.md"
+      ],
+      "next_task": "Feature Refinement FEATURE-002-B",
+      "created_at": "2026-10-19T13:34:36.647078+00:00",
+      "last_updated": "2026-10-19T14:26:31.347041+00:00",
+      "task_id": "TASK-025"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-002-A closing review: whole-project path role includes skipped toolkit folders (false Pass on Copilot report, BR-02); request paths in docs change whole-project digest; missing masking patterns (PGP, sk-proj/sk-ant, unquoted KEY=value); RecursionError on deeply nested request JSON",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/targets.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/mask.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/model.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/service.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/guard/test_guard.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/guard/test_guard_units.py",
+        "ai-secure-code-toolkit/README.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/bug-report-TASK-026.md"
+      ],
+      "next_task": "Resume Feature Closing TASK-025",
+      "created_at": "2026-10-19T13:47:33.169070+00:00",
+      "last_updated": "2026-10-19T14:05:29.633273+00:00",
+      "task_id": "TASK-026"
+    },
+    {
+      "task_type": "Feature Refinement",
+      "description": "Refine FEATURE-002-B (Adapter Contract & Opengrep Adapter) into a testable specification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/specification.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/tool-validation/README.md"
+      ],
+      "next_task": "Technical Design FEATURE-002-B",
+      "created_at": "2026-10-19T14:26:35.888561+00:00",
+      "last_updated": "2026-10-19T14:52:53.160962+00:00",
+      "task_id": "TASK-027"
+    },
+    {
+      "task_type": "Knowledge Seeding",
+      "description": "Seed real v2 local knowledge: extract Policies from security-policy websites the user will provide into v2 knowledge import batches (with source provenance) for Maintainer import into the MVP sample projects; do NOT convert the v1 study-case records (user decision 10-19-2026). Needed before FEATURE-003-C sample runs and the AC-33 smoke test.",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "demo/knowledge/cwe-top25.batch.json",
+        "demo/knowledge/owasp-top10-2025.batch.json",
+        "demo/knowledge/SOURCES.md",
+        "demo/knowledge/validation-container-linux.log"
+      ],
+      "next_task": "Regenerate CWE batch with live cwe.mitre.org digests/CWE List version when reachable (identity change)",
+      "created_at": "2026-10-19T14:52:53.104881+00:00",
+      "last_updated": "2026-10-23T05:12:54.637404+00:00",
+      "task_id": "TASK-028"
+    },
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-002-B (Adapter Contract & Opengrep Adapter)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/technical-design.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/tool-validation/fixtures/"
+      ],
+      "next_task": "Code Implementation FEATURE-002-B",
+      "created_at": "2026-10-19T14:52:53.187779+00:00",
+      "last_updated": "2026-10-19T15:27:28.771627+00:00",
+      "task_id": "TASK-029"
+    },
+    {
+      "task_type": "Code Implementation",
+      "description": "Implement FEATURE-002-B (Adapter Contract & Opengrep Adapter) test-first per technical design",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/adapters/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/toolrun.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/tools_service.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/adapters/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/guard/test_guard_tool.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-guard/SKILL.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/technical-design.md"
+      ],
+      "next_task": "Feature Acceptance Test FEATURE-002-B",
+      "created_at": "2026-10-19T15:27:28.800064+00:00",
+      "last_updated": "2026-10-20T04:28:13.160087+00:00",
+      "task_id": "TASK-030"
+    }
+  ]
+}

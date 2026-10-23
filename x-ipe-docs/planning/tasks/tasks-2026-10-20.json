@@ -1,0 +1,115 @@
+{
+  "_version": "1.0",
+  "tasks": [
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance test FEATURE-002-B (Adapter Contract & Opengrep Adapter) with the real Opengrep v1.31.0 binary in the offline container, plus FEATURE-002-A runner rerun",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/acceptance-test-cases.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/acceptance/blackbox.py",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/acceptance/evidence-container-linux.jsonl",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/acceptance/evidence-host-macos.jsonl",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/acceptance/evidence-unit-library.log"
+      ],
+      "next_task": "",
+      "created_at": "2026-10-20T04:28:13.188256+00:00",
+      "last_updated": "2026-10-20T09:59:53.789553+00:00",
+      "task_id": "TASK-031"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-002-B acceptance (TASK-031): Opengrep v1.31.0 exits 0 with empty output when its cache dir (XDG_CACHE_HOME / HOME/.cache) path has non-ASCII characters; the tool HOME is staged inside the project, so every tool run in a non-ASCII project path fails",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/toolrun.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/guard/test_guard_tool.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/adapters/fake_opengrep.py",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/technical-design.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/bug-report-TASK-032.md"
+      ],
+      "next_task": "Resume Feature Acceptance Test TASK-031",
+      "created_at": "2026-10-20T04:57:18.364859+00:00",
+      "last_updated": "2026-10-20T09:51:17.193979+00:00",
+      "task_id": "TASK-032"
+    },
+    {
+      "task_type": "Feature Closing",
+      "description": "Close FEATURE-002-B (Adapter Contract & Opengrep Adapter): final verification, independent closing review, closing report",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/closing-report.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/bug-report-TASK-034.md"
+      ],
+      "next_task": "Feature Refinement FEATURE-002-C",
+      "created_at": "2026-10-20T10:00:00.633328+00:00",
+      "last_updated": "2026-10-20T14:52:05.527183+00:00",
+      "task_id": "TASK-033"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-002-B closing review TASK-033 findings: (1) copy_hash ignores short os.write → staged bytes may differ from recorded digest; (2) record digest of each executed re-serialized single-rule config bound to rule id; (3) strengthen acceptance runner clean-scan checks with manifest/output; (4) docs: tool home in system temp, TOOL_HOME_UNSUPPORTED, no-output gap, kill cleanup limit; acceptance map wording",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/adapters/safe_io.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/toolrun.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/adapters/test_adapters_units.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/guard/test_guard_tool.py",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/acceptance/blackbox.py",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/bug-report-TASK-034.md"
+      ],
+      "next_task": "Feature Closing FEATURE-002-B (resume TASK-033)",
+      "created_at": "2026-10-20T14:01:16.184169+00:00",
+      "last_updated": "2026-10-20T14:34:57.472946+00:00",
+      "task_id": "TASK-034"
+    },
+    {
+      "task_type": "Feature Refinement",
+      "description": "Refine FEATURE-002-C (Verification Budget, Cancel & Data-Egress Control) into a testable specification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/specification.md"
+      ],
+      "next_task": "Technical Design FEATURE-002-C",
+      "created_at": "2026-10-20T14:52:10.388319+00:00",
+      "last_updated": "2026-10-20T16:08:19.292673+00:00",
+      "task_id": "TASK-035"
+    },
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-002-C (Verification Budget, Cancel & Data-Egress Control)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/technical-design.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/specification.md"
+      ],
+      "next_task": "Code Implementation FEATURE-002-C",
+      "created_at": "2026-10-20T16:08:19.321673+00:00",
+      "last_updated": "2026-10-20T16:49:45.668435+00:00",
+      "task_id": "TASK-036"
+    },
+    {
+      "task_type": "Code Implementation",
+      "description": "Implement FEATURE-002-C (budget, attempts, pause, extension, cancel, egress) test-first per technical design",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-guard/SKILL.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/technical-design.md"
+      ],
+      "next_task": "Feature Acceptance Test FEATURE-002-C",
+      "created_at": "2026-10-20T16:49:45.697157+00:00",
+      "last_updated": "2026-10-21T13:53:01.231856+00:00",
+      "task_id": "TASK-037"
+    }
+  ]
+}

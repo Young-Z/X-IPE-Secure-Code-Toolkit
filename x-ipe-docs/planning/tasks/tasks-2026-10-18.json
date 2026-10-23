@@ -1,0 +1,48 @@
+{
+  "_version": "1.0",
+  "tasks": [
+    {
+      "task_type": "Requirement Gathering",
+      "description": "Gather requirements for AI-secure-code-toolkit-v2 from refined idea summary v2 (Draft Idea - 10142026 153612) into EPIC-001, defining the MVP vertical slice and phased acceptance",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/requirement-details.md",
+        "x-ipe-docs/requirements/EPIC-001/"
+      ],
+      "next_task": "x-ipe-task-based-feature-breakdown",
+      "created_at": "2026-10-18T14:24:27.117164+00:00",
+      "last_updated": "2026-10-18T16:37:19.834748+00:00",
+      "task_id": "TASK-002"
+    },
+    {
+      "task_type": "Feature Breakdown",
+      "description": "Break EPIC-001 (AI-secure-code-toolkit-v2) requirements into MVP-first features with dependencies and board registration",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/requirement-details.md",
+        "x-ipe-docs/requirements",
+        "x-ipe-docs/planning/features/features.json"
+      ],
+      "next_task": "x-ipe-task-based-feature-refinement",
+      "created_at": "2026-10-18T16:37:25.536174+00:00",
+      "last_updated": "2026-10-18T17:10:48.923059+00:00",
+      "task_id": "TASK-003"
+    },
+    {
+      "task_type": "Feature Refinement",
+      "description": "Refine FEATURE-001-A (Toolkit Install, Signed Owner Initialization & Status) into a specification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A/specification.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A"
+      ],
+      "next_task": "x-ipe-task-based-technical-design",
+      "created_at": "2026-10-18T17:11:03.797747+00:00",
+      "last_updated": "2026-10-19T00:59:10.033635+00:00",
+      "task_id": "TASK-004"
+    }
+  ]
+}

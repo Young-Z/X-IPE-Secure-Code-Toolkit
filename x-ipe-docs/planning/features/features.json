@@ -1,0 +1,276 @@
+{
+  "_version": "1.0",
+  "features": [
+    {
+      "feature_id": "FEATURE-001-A",
+      "epic_id": "EPIC-001",
+      "title": "Toolkit Install, Signed Owner Initialization & Status",
+      "version": "v1.0",
+      "status": "Completed",
+      "description": "Initializes a project for the agent-specified environment: places the pre-generated Framework, Copilot and Guard skills, creates the empty layout and host-entry fragment, lets the owner explicitly initialize signed Maintainer authorization, and reports status separately.",
+      "dependencies": [],
+      "created_at": "2026-10-18T16:59:48.131942+00:00",
+      "last_updated": "2026-10-19T03:06:52.484034+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-001/FEATURE-001-A/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-001-B",
+      "epic_id": "EPIC-001",
+      "title": "Local Knowledge Maintenance & Changelog",
+      "version": "v1.0",
+      "status": "Completed",
+      "description": "Authorized Maintainers import and edit Local rules by namespace/source-version/rule-ID with one current content, full changelog, examples, partial and idempotent batch import, pre-check and consistent single-record writes.",
+      "dependencies": [
+        "FEATURE-001-A"
+      ],
+      "created_at": "2026-10-18T16:59:48.191016+00:00",
+      "last_updated": "2026-10-19T05:45:16.778737+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-001/FEATURE-001-B/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-001-C",
+      "epic_id": "EPIC-001",
+      "title": "Policy Resolution & Adoption Scope Selection",
+      "version": "v1.0",
+      "status": "Completed",
+      "description": "Resolves formal Local Policies into structured output, checks availability, and lets the user confirm the adopted scope via clues, no clues, or Apply All without Presets.",
+      "dependencies": [
+        "FEATURE-001-B"
+      ],
+      "created_at": "2026-10-18T16:59:48.247743+00:00",
+      "last_updated": "2026-10-19T07:19:12.902569+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-001/FEATURE-001-C/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-001-D",
+      "epic_id": "EPIC-001",
+      "title": "Knowledge Exit Impact & Broken-Link Handling",
+      "version": "v1.0",
+      "status": "Completed",
+      "description": "Maintainer-initiated deactivate, delete or rename shows an impact list first, reports broken references without silent substitution, invalidates known dependent caches and leaves historical reports untouched.",
+      "dependencies": [
+        "FEATURE-001-B"
+      ],
+      "created_at": "2026-10-18T16:59:48.303700+00:00",
+      "last_updated": "2026-10-22T14:08:12.330882+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-001-E",
+      "epic_id": "EPIC-001",
+      "title": "Reference Knowledge Exploration & Cache",
+      "version": "v1.0",
+      "status": "Planned",
+      "description": "Phase 2: explores maintained Reference sources only within registered domains, prefers formal Local content, and caches results for 7 days with explicit refresh.",
+      "dependencies": [
+        "FEATURE-001-C"
+      ],
+      "created_at": "2026-10-18T16:59:48.359926+00:00",
+      "last_updated": "2026-10-18T16:59:48.359926+00:00"
+    },
+    {
+      "feature_id": "FEATURE-001-F",
+      "epic_id": "EPIC-001",
+      "title": "Presets & Tags",
+      "version": "v1.0",
+      "status": "Completed",
+      "description": "Phase 2: reusable Presets holding concrete rule references with query intent and snapshot_at, plus JSON tags for lookup that never change severity or Presets implicitly.",
+      "dependencies": [
+        "FEATURE-001-C",
+        "FEATURE-001-D"
+      ],
+      "created_at": "2026-10-18T16:59:48.415527+00:00",
+      "last_updated": "2026-10-23T10:23:20.114798+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-001/FEATURE-001-F/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-001-G",
+      "epic_id": "EPIC-001",
+      "title": "AI-assisted Knowledge Drafting",
+      "version": "v1.0",
+      "status": "Designed",
+      "description": "Phase 2: AI drafts examples and explanations for specified rules, clearly labelled, validated and approved by a Maintainer before entering formal knowledge.",
+      "dependencies": [
+        "FEATURE-001-B"
+      ],
+      "created_at": "2026-10-18T16:59:48.470877+00:00",
+      "last_updated": "2026-10-23T13:36:26.970952+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-001/FEATURE-001-G/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-002-A",
+      "epic_id": "EPIC-002",
+      "title": "Guard Semantic Verification & Verdict Reporting",
+      "version": "v1.0",
+      "status": "Completed",
+      "description": "Guard verifies formed artifacts against adopted Policies through a check plan and semantic review, re-checks findings with an independent Reviewer, and reports a three-state verdict with a four-state ledger and evidence.",
+      "dependencies": [
+        "FEATURE-001-C"
+      ],
+      "created_at": "2026-10-18T16:59:48.526043+00:00",
+      "last_updated": "2026-10-19T14:26:31.318477+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-002/FEATURE-002-A/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-002-B",
+      "epic_id": "EPIC-002",
+      "title": "Adapter Contract & Opengrep Adapter",
+      "version": "v1.0",
+      "status": "Completed",
+      "description": "Defines the shared Adapter contract in Framework scripts and delivers the Opengrep Adapter with pre-check, typed parameters and normalized results, measured on the MVP samples.",
+      "dependencies": [
+        "FEATURE-002-A"
+      ],
+      "created_at": "2026-10-18T16:59:48.582155+00:00",
+      "last_updated": "2026-10-20T14:52:05.495536+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-002/FEATURE-002-B/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-002-C",
+      "epic_id": "EPIC-002",
+      "title": "Verification Budget, Cancel & Data-Egress Control",
+      "version": "v1.0",
+      "status": "Completed",
+      "description": "One shared budget per verification, user cancellation with honest partial results, and purpose-specific network and data-submission authorization for every outbound call.",
+      "dependencies": [
+        "FEATURE-002-A"
+      ],
+      "created_at": "2026-10-18T16:59:48.637669+00:00",
+      "last_updated": "2026-10-21T15:12:18.998254+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-002-D",
+      "epic_id": "EPIC-002",
+      "title": "Trivy Adapter",
+      "version": "v1.0",
+      "status": "Implemented",
+      "description": "Trivy Adapter for dependency, container, configuration and secret checks under the shared contract, with vulnerability-DB updates only under explicit update authorization.",
+      "dependencies": [
+        "FEATURE-002-B",
+        "FEATURE-002-C"
+      ],
+      "created_at": "2026-10-18T16:59:48.694736+00:00",
+      "last_updated": "2026-10-22T20:34:02.797285+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-002-E",
+      "epic_id": "EPIC-002",
+      "title": "Strix Adapter with Original-Project Protection",
+      "version": "v1.0",
+      "status": "Planned",
+      "description": "Strix Adapter that first proves read-only access to the original project or else runs on an explicit working copy, within budget and egress authorization.",
+      "dependencies": [
+        "FEATURE-002-B",
+        "FEATURE-002-C"
+      ],
+      "created_at": "2026-10-18T16:59:48.751370+00:00",
+      "last_updated": "2026-10-18T16:59:48.751370+00:00"
+    },
+    {
+      "feature_id": "FEATURE-002-F",
+      "epic_id": "EPIC-002",
+      "title": "Temporary Check Scripts",
+      "version": "v1.0",
+      "status": "Designed",
+      "description": "Phase 2: one-off helper check scripts generated only for real gaps, reviewed with known positive/negative samples and executed under actual limits.",
+      "dependencies": [
+        "FEATURE-002-A",
+        "FEATURE-002-C"
+      ],
+      "created_at": "2026-10-18T16:59:48.807023+00:00",
+      "last_updated": "2026-10-23T13:50:08.779329+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-002/FEATURE-002-F/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-002-G",
+      "epic_id": "EPIC-002",
+      "title": "Cross-run Report Comparison",
+      "version": "v1.0",
+      "status": "Implemented",
+      "description": "Phase 3: on explicit request compares two specified Guard reports as new, still present, not observed this time, or not comparable.",
+      "dependencies": [
+        "FEATURE-002-A"
+      ],
+      "created_at": "2026-10-18T16:59:48.862963+00:00",
+      "last_updated": "2026-10-23T14:34:25.052762+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-002/FEATURE-002-G/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-003-A",
+      "epic_id": "EPIC-003",
+      "title": "Copilot In-flow Suggestions & Adoption Review",
+      "version": "v1.0",
+      "status": "Completed",
+      "description": "Copilot gives concrete Policy-based suggestions during design, implementation, bug fix and refactor, then an independent read-only Reviewer checks adoption and the result is reported.",
+      "dependencies": [
+        "FEATURE-001-C",
+        "FEATURE-002-A"
+      ],
+      "created_at": "2026-10-18T16:59:48.918761+00:00",
+      "last_updated": "2026-10-22T01:03:10.973453+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-003/FEATURE-003-A/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-003-B",
+      "epic_id": "EPIC-003",
+      "title": "Single-source Host Integration Carriers",
+      "version": "v1.0",
+      "status": "Implemented",
+      "description": "Generates system-prompt fragment, AGENTS.md entry and GitHub instructions from one routing definition, extending the minimal fragment written by FEATURE-001-A, with maintainer-decided differences.",
+      "dependencies": [
+        "FEATURE-002-A",
+        "FEATURE-003-A"
+      ],
+      "created_at": "2026-10-18T16:59:48.975390+00:00",
+      "last_updated": "2026-10-23T03:33:32.529210+00:00",
+      "specification_link": "x-ipe-docs/requirements/EPIC-003/FEATURE-003-B/specification.md"
+    },
+    {
+      "feature_id": "FEATURE-003-C",
+      "epic_id": "EPIC-003",
+      "title": "Development Sandbox & MVP Acceptance Harness",
+      "version": "v1.0",
+      "status": "Planned",
+      "description": "Maintainer sandbox for candidate skills plus fixed normal and negative acceptance cases and cross-Adapter evaluation on the marathon and WebGoat samples.",
+      "dependencies": [
+        "FEATURE-001-C",
+        "FEATURE-002-B",
+        "FEATURE-002-C",
+        "FEATURE-002-D",
+        "FEATURE-002-E"
+      ],
+      "created_at": "2026-10-18T16:59:49.030997+00:00",
+      "last_updated": "2026-10-18T17:02:00.139286+00:00"
+    },
+    {
+      "feature_id": "FEATURE-004-A",
+      "epic_id": "EPIC-004",
+      "title": "Bounded Improvement Suggestions & Lessons",
+      "version": "v1.0",
+      "status": "Planned",
+      "description": "Phase 3: strictly admitted improvement suggestions, at most 10 active, 30-day expiry and terminal retention, mandatory review of user suggestions.",
+      "dependencies": [
+        "FEATURE-002-A",
+        "FEATURE-003-A"
+      ],
+      "created_at": "2026-10-18T16:59:49.085937+00:00",
+      "last_updated": "2026-10-18T16:59:49.085937+00:00"
+    },
+    {
+      "feature_id": "FEATURE-004-B",
+      "epic_id": "EPIC-004",
+      "title": "Controlled Autonomous Optimization",
+      "version": "v1.0",
+      "status": "Planned",
+      "description": "Phase 3: explicitly triggered optimization from at most 3 Lessons under a separately signed autonomy policy; only low-risk local changes auto-apply, others stay candidates.",
+      "dependencies": [
+        "FEATURE-004-A",
+        "FEATURE-003-C"
+      ],
+      "created_at": "2026-10-18T16:59:49.141774+00:00",
+      "last_updated": "2026-10-18T16:59:49.141774+00:00"
+    }
+  ]
+}

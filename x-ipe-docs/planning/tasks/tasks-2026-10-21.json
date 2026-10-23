@@ -1,0 +1,158 @@
+{
+  "_version": "1.0",
+  "tasks": [
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance test FEATURE-002-C (budget, cancel, egress) with black-box CLI runs (container + host), regression of 002-A/002-B runners",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/acceptance-test-cases.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/acceptance/blackbox.py",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/acceptance/evidence-container-linux.jsonl",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/acceptance/evidence-host-macos.jsonl",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/acceptance/evidence-unit-integration.log"
+      ],
+      "next_task": "Feature Closing FEATURE-002-C",
+      "created_at": "2026-10-21T13:53:01.260292+00:00",
+      "last_updated": "2026-10-21T14:23:21.295316+00:00",
+      "task_id": "TASK-038"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-002-C acceptance TASK-038: cancelling a real Opengrep run reports termination not confirmed although the tool stopped (worker children still exiting / zombies counted by the signal-0 group probe). Fix: bounded wait for the group, zombies count as exited (/proc or ps), conservative fallback",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/adapters/process.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/adapters/test_adapters_units.py",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/bug-report-TASK-039.md"
+      ],
+      "next_task": "Feature Acceptance Test FEATURE-002-C (resume TASK-038)",
+      "created_at": "2026-10-21T14:01:34.911623+00:00",
+      "last_updated": "2026-10-21T14:19:30.752237+00:00",
+      "task_id": "TASK-039"
+    },
+    {
+      "task_type": "Feature Closing",
+      "description": "Close FEATURE-002-C (Verification Budget, Cancel & Data-Egress Control): final verification, independent closing review, closing report",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/closing-report.md"
+      ],
+      "next_task": "Feature Refinement (next MVP feature)",
+      "created_at": "2026-10-21T14:23:21.323926+00:00",
+      "last_updated": "2026-10-21T15:12:19.027438+00:00",
+      "task_id": "TASK-040"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-002-C closing review TASK-040: run-bound attempt ids; remove orphan evidence on lost commit; decoded-URL credential check; budget status in all run results/refusals; acceptance assertions (pause matrix, extension consumption, declaration ids); docs: cooperative interactive gate, process-group termination wording, conclude/cancel linearization test",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/acceptance/blackbox.py",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/bug-report-TASK-041.md"
+      ],
+      "next_task": "Feature Closing FEATURE-002-C (resume TASK-040)",
+      "created_at": "2026-10-21T14:35:42.168050+00:00",
+      "last_updated": "2026-10-21T14:50:31.768416+00:00",
+      "task_id": "TASK-041"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-002-C closing re-review TASK-040: lost-commit cleanup (toolrun + record) could follow a swapped evidence-folder symlink and delete outside files; record path also masked RUN_CANCELLED with PATH_UNSAFE. Fix: exact-name no-follow removal via directory descriptor (runs.remove_evidence_files)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/runs.py",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-C/bug-report-TASK-042.md"
+      ],
+      "next_task": "Feature Closing FEATURE-002-C (resume TASK-040)",
+      "created_at": "2026-10-21T15:00:05.355785+00:00",
+      "last_updated": "2026-10-21T15:07:33.544238+00:00",
+      "task_id": "TASK-042"
+    },
+    {
+      "task_type": "Feature Refinement",
+      "description": "Refine FEATURE-003-A (Copilot In-flow Suggestions & Adoption Review) into a complete specification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-003/FEATURE-003-A/specification.md"
+      ],
+      "next_task": "Technical Design FEATURE-003-A",
+      "created_at": "2026-10-21T15:12:26.694684+00:00",
+      "last_updated": "2026-10-21T15:36:35.733074+00:00",
+      "task_id": "TASK-043"
+    },
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-003-A (Copilot In-flow Suggestions & Adoption Review)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-003/FEATURE-003-A/technical-design.md"
+      ],
+      "next_task": "Code Implementation FEATURE-003-A",
+      "created_at": "2026-10-21T15:36:43.815003+00:00",
+      "last_updated": "2026-10-21T15:50:55.248975+00:00",
+      "task_id": "TASK-044"
+    },
+    {
+      "task_type": "Code Implementation",
+      "description": "Implement FEATURE-003-A (Copilot In-flow Suggestions & Adoption Review) test-first per technical design",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/copilot/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-copilot/SKILL.md"
+      ],
+      "next_task": "Feature Acceptance Test FEATURE-003-A",
+      "created_at": "2026-10-21T15:50:55.278003+00:00",
+      "last_updated": "2026-10-21T16:37:55.428154+00:00",
+      "task_id": "TASK-045"
+    },
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance test FEATURE-003-A (Copilot In-flow Suggestions & Adoption Review): black-box CLI on marathon sample (container + host), structured skill review, regressions 002-A/002-B",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-003/FEATURE-003-A/acceptance-test-cases.md"
+      ],
+      "next_task": "Feature Closing FEATURE-003-A",
+      "created_at": "2026-10-21T17:05:50.048511+00:00",
+      "last_updated": "2026-10-21T17:39:15.259105+00:00",
+      "task_id": "TASK-046"
+    },
+    {
+      "task_type": "Feature Closing",
+      "description": "Close FEATURE-003-A (Copilot In-flow Suggestions & Adoption Review): final verification, independent closing review, closing report",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-003/FEATURE-003-A/closing-report.md"
+      ],
+      "next_task": "Feature Refinement (next MVP feature)",
+      "created_at": "2026-10-21T17:39:15.289533+00:00",
+      "last_updated": "2026-10-22T01:03:11.001732+00:00",
+      "task_id": "TASK-047"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-003-A closing review TASK-047: Markdown report must render full Reviewer records (reviewed files+digests, subjects with results/basis, times) identical to JSON (AC-003A-05a); acceptance runner gains assertions for untested AC branches (01d,02b,02d,03a,04b,04f,06f) and full Reviewer-record equivalence; AC-003A-06a clarified (lock file) by user decision",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-003/FEATURE-003-A/bug-report-TASK-048.md"
+      ],
+      "next_task": "Feature Closing FEATURE-003-A (resume TASK-047)",
+      "created_at": "2026-10-21T17:46:58.367620+00:00",
+      "last_updated": "2026-10-21T18:10:43.090003+00:00",
+      "task_id": "TASK-048"
+    }
+  ]
+}

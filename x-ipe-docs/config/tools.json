@@ -1,0 +1,131 @@
+{
+  "feedback_retention_days": 7,
+  "selected-theme": {
+    "theme-folder-path": "x-ipe-docs/themes/theme-default",
+    "theme-name": "theme-default"
+  },
+  "stages": {
+    "ideation": {
+      "architecture": {
+        "_order": 3,
+        "excalidraw": false,
+        "mermaid": false,
+        "x-ipe-tool-architecture-dsl": true,
+        "x-ipe-tool-draw-layered-architecture": true,
+        "x-ipe-tool-draw-system-landscape": true
+      },
+      "ideation": {
+        "_extra_instruction": "- for mermaid tool: just use it in workflow, sequence diagram\n- for Architecture DSL tool: embed ```architecture-dsl code blocks directly in markdown (IPE renders natively). Use for layered architecture, module views, and system landscapes.",
+        "_order": 1,
+        "x-ipe-tool-infographic-syntax": false,
+        "x-ipe-tool-web-search": true,
+        "mermaid": true,
+        "x-ipe-tool-architecture-dsl": true
+      },
+      "mockup": {
+        "_order": 2,
+        "x-ipe-tool-frontend-design": true
+      },
+      "sharing": {
+        "_order": 4
+      }
+    },
+    "requirement": {
+      "analysis": {
+        "_order": 2
+      },
+      "gathering": {
+        "_order": 1
+      }
+    },
+    "implement": {
+      "technical_design": {
+        "_order": 3,
+        "_extra_instruction": "Consultation mode: read tool capabilities for informational use only. Do not invoke tools for code execution.",
+        "x-ipe-tool-implementation-python": true,
+        "x-ipe-tool-implementation-html5": true,
+        "x-ipe-tool-implementation-typescript": true,
+        "x-ipe-tool-implementation-java": true,
+        "x-ipe-tool-implementation-mcp": true,
+        "x-ipe-tool-implementation-general": true
+      },
+      "code_implementation": {
+        "_order": 2,
+        "_extra_instruction": "",
+        "x-ipe-tool-implementation-python": true,
+        "x-ipe-tool-implementation-html5": true,
+        "x-ipe-tool-implementation-typescript": true,
+        "x-ipe-tool-implementation-java": true,
+        "x-ipe-tool-implementation-mcp": true,
+        "x-ipe-tool-implementation-general": true
+      }
+    },
+    "feedback": {
+      "bug_fix": {
+        "_order": 5,
+        "_extra_instruction": "Bug fix mode: TDD gate required — test must fail before fix. Tool skill receives operation 'fix' with mini AAA scenarios from bug context.",
+        "x-ipe-tool-ui-testing-via-chrome-mcp": true,
+        "x-ipe-tool-implementation-python": true,
+        "x-ipe-tool-implementation-typescript": true,
+        "x-ipe-tool-implementation-html5": true,
+        "x-ipe-tool-implementation-java": true,
+        "x-ipe-tool-implementation-mcp": true,
+        "x-ipe-tool-implementation-general": true
+      },
+      "human_playground": {
+        "_order": 4,
+        "_extra_instruction": "Playground mode: create self-contained runnable examples for human validation. File extension and run command determined by matched tool.",
+        "x-ipe-tool-implementation-python": true,
+        "x-ipe-tool-implementation-typescript": true,
+        "x-ipe-tool-implementation-html5": true,
+        "x-ipe-tool-implementation-java": true,
+        "x-ipe-tool-implementation-mcp": true,
+        "x-ipe-tool-implementation-general": true
+      },
+      "change_request": {}
+    },
+    "validation": {
+      "acceptance_test": {
+        "_order": 1,
+        "_extra_instruction": "Testing mode: route test execution to appropriate tools by test type. Chrome DevTools MCP for frontend-ui browser tests. x-ipe-tool-ui-testing-via-chrome-mcp skill for structured UI test execution. Tool skills for backend/unit/integration test code generation.",
+        "chrome-devtools-mcp": true,
+        "x-ipe-tool-ui-testing-via-chrome-mcp": true,
+        "x-ipe-tool-implementation-python": true,
+        "x-ipe-tool-implementation-typescript": true,
+        "x-ipe-tool-implementation-html5": true,
+        "x-ipe-tool-implementation-java": true,
+        "x-ipe-tool-implementation-mcp": true,
+        "x-ipe-tool-implementation-general": true
+      },
+      "code_refactor": {
+        "_order": 2,
+        "_extra_instruction": "Refactor mode: preserve behavior, structure changes only. Tool skill receives operation 'refactor' with per-phase AAA scenarios. Orchestrator manages git checkpoints.",
+        "x-ipe-tool-implementation-python": true,
+        "x-ipe-tool-implementation-typescript": true,
+        "x-ipe-tool-implementation-html5": true,
+        "x-ipe-tool-implementation-java": true,
+        "x-ipe-tool-implementation-mcp": true,
+        "x-ipe-tool-implementation-general": true
+      },
+      "refactoring_analysis": {
+        "_order": 2,
+        "_extra_instruction": "Refactor mode: preserve behavior, structure changes only. Tool skill receives operation 'refactor' with per-phase AAA scenarios. Orchestrator manages git checkpoints.",
+        "x-ipe-tool-implementation-python": true,
+        "x-ipe-tool-implementation-typescript": true,
+        "x-ipe-tool-implementation-html5": true,
+        "x-ipe-tool-implementation-java": true,
+        "x-ipe-tool-implementation-mcp": true,
+        "x-ipe-tool-implementation-general": true
+      }
+    }
+  },
+  "tracing_enabled": false,
+  "tracing_ignored_apis": [
+    "/api/project/structure",
+    "/api/config/copilot/prompt",
+    "/api/ideas/tree",
+    "/api/proxy"
+  ],
+  "tracing_stop_at": null,
+  "version": "3.2"
+}

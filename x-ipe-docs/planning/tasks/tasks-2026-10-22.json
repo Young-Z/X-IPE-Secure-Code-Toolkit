@@ -1,0 +1,215 @@
+{
+  "_version": "1.0",
+  "tasks": [
+    {
+      "task_type": "Feature Refinement",
+      "description": "Refine FEATURE-001-D (Knowledge Exit Impact & Broken-Link Handling) into a complete specification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/specification.md"
+      ],
+      "next_task": "Technical Design FEATURE-001-D",
+      "created_at": "2026-10-22T01:03:16.550208+00:00",
+      "last_updated": "2026-10-22T01:53:14.620969+00:00",
+      "task_id": "TASK-049"
+    },
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-001-D (Knowledge Exit Impact & Broken-Link Handling)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/technical-design.md"
+      ],
+      "next_task": "Code Implementation FEATURE-001-D",
+      "created_at": "2026-10-22T01:53:14.649058+00:00",
+      "last_updated": "2026-10-22T08:00:04.217524+00:00",
+      "task_id": "TASK-050"
+    },
+    {
+      "task_type": "Code Implementation",
+      "description": "Implement FEATURE-001-D (Knowledge Exit Impact & Broken-Link Handling) test-first per confirmed technical design",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/knowledge/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/policy/resolve.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/policy/scope.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/policy/service.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/copilot/service.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/cli.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/knowledge/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/policy/test_policy_exit.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/policy/test_exit_runs.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/SKILL.md",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/references/cli-contract.md",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/references/knowledge-batch.md",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/references/policy-selection.md",
+        "ai-secure-code-toolkit/README.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/technical-design.md"
+      ],
+      "next_task": "Feature Acceptance Test FEATURE-001-D",
+      "created_at": "2026-10-22T08:00:04.303916+00:00",
+      "last_updated": "2026-10-22T12:19:42.556500+00:00",
+      "task_id": "TASK-051"
+    },
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance test FEATURE-001-D (Knowledge Exit Impact & Broken-Link Handling): black-box CLI runs (container + host) incl. rename scenario, regression of 001-B/001-C/002-A/003-A acceptance",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/acceptance-test-cases.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/acceptance/"
+      ],
+      "next_task": "Feature Closing FEATURE-001-D",
+      "created_at": "2026-10-22T12:19:51.142370+00:00",
+      "last_updated": "2026-10-22T13:21:58.504184+00:00",
+      "task_id": "TASK-052"
+    },
+    {
+      "task_type": "Feature Closing",
+      "description": "Close FEATURE-001-D (Knowledge Exit Impact & Broken-Link Handling): final verification, independent closing review, closing report",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/closing-report.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/"
+      ],
+      "next_task": "Feature Refinement FEATURE-002-D",
+      "created_at": "2026-10-22T13:21:58.622215+00:00",
+      "last_updated": "2026-10-22T14:08:12.301627+00:00",
+      "task_id": "TASK-053"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-001-D closing review TASK-053: exit rename collision lookup path-based (find_collision via Path/scandir can list a swapped outside knowledge/local) -> handle-relative lookup via the command Tree with RED-first swap regression; acceptance runner: full byte-level crash-matrix preservation checks (AC-06a), exact reactivate impact assertions, consistent pass-rate counting and 06c wording; rerun suite + container/host acceptance",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/knowledge/exit.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/knowledge/store.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/knowledge/test_exit_bugfix_task054.py",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/bug-report-TASK-054.md",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/acceptance/blackbox.py",
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/acceptance-test-cases.md"
+      ],
+      "next_task": "Feature Closing FEATURE-001-D (resume TASK-053)",
+      "created_at": "2026-10-22T13:31:58.357303+00:00",
+      "last_updated": "2026-10-22T14:08:12.273549+00:00",
+      "task_id": "TASK-054"
+    },
+    {
+      "task_type": "Feature Refinement",
+      "description": "Refine FEATURE-002-D (Trivy Adapter) into a complete specification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/specification.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/tool-validation/README.md"
+      ],
+      "next_task": "Technical Design FEATURE-002-D",
+      "created_at": "2026-10-22T14:08:22.204379+00:00",
+      "last_updated": "2026-10-22T15:48:46.793132+00:00",
+      "task_id": "TASK-055"
+    },
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-002-D (Trivy Adapter)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/technical-design.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/specification.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/tool-validation/README.md",
+        "x-ipe-docs/dao/26-10-23/decisions_made_technical_design.md"
+      ],
+      "next_task": "Code Implementation FEATURE-002-D",
+      "created_at": "2026-10-22T15:48:46.877822+00:00",
+      "last_updated": "2026-10-22T17:35:55.896242+00:00",
+      "task_id": "TASK-056"
+    },
+    {
+      "task_type": "Code Implementation",
+      "description": "Implement FEATURE-002-D (Trivy Adapter) test-first per confirmed technical design (DAO-002: additive 002-B/002-C changes only)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/adapters/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/guard/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/adapters/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/guard/",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/SKILL.md",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/references/cli-contract.md",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-guard/SKILL.md",
+        "ai-secure-code-toolkit/README.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/technical-design.md"
+      ],
+      "next_task": "Feature Acceptance Test FEATURE-002-D",
+      "created_at": "2026-10-22T17:35:55.951643+00:00",
+      "last_updated": "2026-10-22T20:34:02.768514+00:00",
+      "task_id": "TASK-057"
+    },
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance test FEATURE-002-D (Trivy Adapter): offline black-box in local Linux container with real Trivy v0.76.1 and pre-provisioned components (DAO-002), mandatory real-binary gate, regressions 002-A/002-B/002-C/003-A; live provisioning through the adapter not executed pending human B9",
+      "role": "Sage",
+      "status": "blocked",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/acceptance-test-cases.md",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/acceptance/"
+      ],
+      "next_task": "Resume after human B9 (live provisioning + real-binary gate) and B10 (x86-64); then Feature Closing FEATURE-002-D",
+      "created_at": "2026-10-22T20:34:02.854306+00:00",
+      "last_updated": "2026-10-22T23:22:31.164258+00:00",
+      "task_id": "TASK-058"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-002-D acceptance TASK-058: F-1 accepted misconfiguration types must equal real Trivy v0.76.1 help list (9 incl. ansible); F-2 benign WARNs (license detection skipped; severities from other vendors) misclassified as degrading — exact version-pinned allow-list (DAO acceptance decision)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/adapters/trivy.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/adapters/trivy_log.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/src/x_ipe_secure_code/adapters/trivy_run.py",
+        "ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/tests/guard/test_trivy_bugfix_task059.py",
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/bug-report-TASK-059.md"
+      ],
+      "next_task": "Feature Acceptance Test FEATURE-002-D (resume TASK-058)",
+      "created_at": "2026-10-22T22:08:14.902710+00:00",
+      "last_updated": "2026-10-22T23:22:31.134007+00:00",
+      "task_id": "TASK-059"
+    },
+    {
+      "task_type": "Feature Refinement",
+      "description": "Refine FEATURE-003-B (Single-source Host Integration Carriers) into a complete specification",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-003/FEATURE-003-B/specification.md",
+        "x-ipe-docs/dao/26-10-23/decisions_made_feature_refinement.md"
+      ],
+      "next_task": "Technical Design FEATURE-003-B",
+      "created_at": "2026-10-22T23:22:38.411348+00:00",
+      "last_updated": "2026-10-22T23:44:12.394871+00:00",
+      "task_id": "TASK-060"
+    },
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-003-B (Single-source Host Integration Carriers)",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-003/FEATURE-003-B/technical-design.md",
+        "x-ipe-docs/requirements/EPIC-003/FEATURE-003-B/specification.md",
+        "x-ipe-docs/dao/26-10-23/decisions_made_technical_design.md"
+      ],
+      "next_task": "Code Implementation FEATURE-003-B",
+      "created_at": "2026-10-22T23:44:12.453462+00:00",
+      "last_updated": "2026-10-23T00:36:24.374672+00:00",
+      "task_id": "TASK-061"
+    }
+  ]
+}

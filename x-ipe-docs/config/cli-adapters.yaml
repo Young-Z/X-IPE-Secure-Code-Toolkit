@@ -1,0 +1,48 @@
+adapters:
+  copilot:
+    display_name: "GitHub Copilot CLI"
+    command: "copilot"
+    run_args: "--allow-all-tools --allow-all-paths"
+    inline_prompt_flag: "-i"
+    prompt_format: '{command} {run_args} {inline_prompt_flag} "{escaped_prompt}"'
+    instructions_file: ".github/copilot-instructions.md"
+    skills_folder: ".github/skills/"
+    mcp_config_path: ".copilot/mcp-config.json"
+    mcp_config_format: "project"
+    detection_command: "copilot"
+
+  opencode:
+    display_name: "OpenCode CLI"
+    command: "opencode"
+    run_args: ""
+    inline_prompt_flag: "--prompt"
+    prompt_format: '{command} {inline_prompt_flag} "{escaped_prompt}"'
+    instructions_file: "Agents.md"
+    skills_folder: ".opencode/skills/"
+    mcp_config_path: "opencode.json"
+    mcp_config_format: "nested"
+    detection_command: "opencode"
+
+  claude-code:
+    display_name: "Claude Code CLI"
+    command: "claude"
+    run_args: "--permission-mode bypassPermissions"
+    inline_prompt_flag: ""
+    prompt_format: '{command} {run_args} "{escaped_prompt}"'
+    instructions_file: ".claude/CLAUDE.md"
+    skills_folder: ".claude/skills/"
+    mcp_config_path: ".mcp.json"
+    mcp_config_format: "project"
+    detection_command: "claude"
+
+  codex:
+    display_name: "Codex CLI"
+    command: "codex"
+    run_args: "exec --dangerously-bypass-approvals-and-sandbox"
+    inline_prompt_flag: ""
+    prompt_format: '{command} {run_args} "{escaped_prompt}"'
+    instructions_file: "AGENTS.md"
+    skills_folder: ".codex/skills/"
+    mcp_config_path: "~/.codex/config.toml"
+    mcp_config_format: "codex-toml"
+    detection_command: "codex"
