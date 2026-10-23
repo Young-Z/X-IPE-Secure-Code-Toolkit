@@ -1,6 +1,6 @@
 """FEATURE-001-F Integration: a Preset as 001-C scope input and the single Preset scope-save path.
 
-AC-001F-04a…04c, 04e, 04g, 04i…04k, 09a, 09e, 09g; DAO-006 (1) parity of the copied 001-C save
+AC-001F-04a…04c, 04e, 04g, 04i…04l, 09a, 09e, 09g; DAO-006 (1) parity of the copied 001-C save
 sequence (review R-6) and the explicit default orchestration (review R-7).
 """
 
@@ -80,6 +80,75 @@ def test_preset_resolve_001c_contract_clue_and_unchanged_digest(env):
     assert any(n["code"] == "PRESET_PROPOSED" for n in data["notices"])
     steps = " ".join(result.next_steps).lower()
     assert "preset scope-save web-input" in steps and "applicability summary" in steps
+
+
+PRESET_RESOLVE_KEYS = ["notices", "status", "mode", "library_size", "pending_count", "counts", "adopted",
+                       "adoption", "proposal_digest", "entries", "preset"]
+PLAIN_ADOPTION = "nothing adopted yet — the user must confirm, then: secure-code scope save --confirmed"
+
+
+def preset_adoption(name):
+    return ("nothing adopted yet — the user must confirm, then: "
+            f"secure-code preset scope-save {name} --decisions FILE --confirmed")
+
+
+# AC-001F-04l (CR-TASK-078): the adoption value names `preset scope-save NAME`; nothing else changes.
+# Adoption values are collected and compared last so every other assertion runs first.
+def test_preset_resolve_adoption_names_preset_scope_save(env, tmp_path):
+    adoptions = {}
+    absent = env.presolve(None)
+    assert absent.ok and absent.data["status"] == "no_default_preset"
+    assert absent.data["adoption"] == "nothing proposed — no default Preset"
+
+    assert env.psave().ok
+    result = env.presolve()
+    assert result.ok, result.to_dict()
+    data = result.data
+    plain = policy.resolve_policies(str(env.project), [R1, R2], False, ["python"])
+    assert plain.ok and plain.data["adoption"] == PLAIN_ADOPTION
+    assert [k for k in data if k in plain.data] == list(plain.data)
+    assert list(data) == PRESET_RESOLVE_KEYS
+    assert data["proposal_digest"] == plain.data["proposal_digest"]
+    assert data["entries"] == plain.data["entries"]
+    save = "Ask the user to confirm the scope, then run: " \
+           "secure-code preset scope-save web-input --decisions FILE --confirmed"
+    assert result.next_steps == [
+        "Compare the applicability summary with the current task before asking for confirmation",
+        *(save if s.startswith("Ask the user to confirm the scope") else s for s in plain.next_steps)]
+    adoptions["named"] = data["adoption"]
+
+    out = tmp_path / "preset-proposal.json"
+    written = env.pscope.resolve_preset(str(env.project), "web-input", ["python"], output=str(out))
+    assert written.ok, written.to_dict()
+    assert written.data["output_file"] == str(out)
+    stored = json.loads(out.read_text())
+    assert set(stored) == {"schema", "command", *PRESET_RESOLVE_KEYS}
+    assert stored["proposal_digest"] == data["proposal_digest"]
+    adoptions["output_result"] = written.data["adoption"]
+    adoptions["output_file"] = stored["adoption"]
+
+    assert env.psave("default", [R1, R3]).ok
+    default = env.presolve(None)
+    assert default.ok and default.data["preset"]["name"] == "default"
+    assert list(default.data) == PRESET_RESOLVE_KEYS
+    adoptions["default"] = default.data["adoption"]
+
+    assert env.psave("stale", [R2]).ok
+    env.exit("delete", R2)
+    stale = env.presolve("stale")
+    assert not stale.ok and stale.problems[0].code == "MAINTENANCE_NEEDED"
+    assert stale.data["status"] == "maintenance_needed"
+    assert list(stale.data) == PRESET_RESOLVE_KEYS
+    adoptions["maintenance_needed"] = stale.data["adoption"]
+
+    assert policy.resolve_policies(str(env.project), [R1], False, []).data["adoption"] == PLAIN_ADOPTION
+    assert adoptions == {
+        "named": preset_adoption("web-input"),
+        "output_result": preset_adoption("web-input"),
+        "output_file": preset_adoption("web-input"),
+        "default": preset_adoption("default"),
+        "maintenance_needed": preset_adoption("stale"),
+    }
 
 
 # AC-001F-04b

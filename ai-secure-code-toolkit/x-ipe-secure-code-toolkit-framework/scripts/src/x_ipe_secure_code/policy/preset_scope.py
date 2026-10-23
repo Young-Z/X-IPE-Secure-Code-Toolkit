@@ -34,6 +34,10 @@ DEFAULT_STEP = (
 NO_DEFAULT_STEP = "No default Preset: propose Apply All with secure-code policy resolve --all"
 CLUE_STEP = "Copy the clue exactly from preset resolve (preset:<name>@sha256:<digest>) and use mode 'clues'"
 CLUE = re.compile(r"preset:([a-z0-9-]{1,64})@sha256:[0-9a-f]{64}")
+ADOPTION = (
+    "nothing adopted yet — the user must confirm, then: "
+    "secure-code preset scope-save {} --decisions FILE --confirmed"
+)
 
 
 def _proposal(
@@ -42,6 +46,7 @@ def _proposal(
     entry = catalog.read_one(session.tree, PRESET, name)
     lib = resolve.snapshot(session.tree)
     data = resolve.build(lib, entry.rels, False, languages)
+    data["adoption"] = ADOPTION.format(name)
     doc = entry.data
     data["preset"] = {
         "name": name,

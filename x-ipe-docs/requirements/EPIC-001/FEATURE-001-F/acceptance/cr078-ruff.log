@@ -1,0 +1,164 @@
+All checks passed!
+unformatted: File would be reformatted
+   --> tests/presets/test_preset_scope.py:31:18
+    |
+30  |
+    - PROPOSAL_KEYS = {"notices", "status", "mode", "library_size", "pending_count", "counts", "adopted",
+    -                  "adoption", "proposal_digest", "entries"}
+    - RECORD_KEYS = {"schema", "mode", "clues", "language_context", "adopted", "not_adopted", "artifact_scope",
+    -                "confirmation_note", "created_at", "scope_id"}
+31  + PROPOSAL_KEYS = {
+32  +     "notices",
+33  +     "status",
+34  +     "mode",
+35  +     "library_size",
+36  +     "pending_count",
+37  +     "counts",
+38  +     "adopted",
+39  +     "adoption",
+40  +     "proposal_digest",
+41  +     "entries",
+42  + }
+43  + RECORD_KEYS = {
+44  +     "schema",
+45  +     "mode",
+46  +     "clues",
+47  +     "language_context",
+48  +     "adopted",
+49  +     "not_adopted",
+50  +     "artifact_scope",
+51  +     "confirmation_note",
+52  +     "created_at",
+53  +     "scope_id",
+54  + }
+55  | REPAIR = "repair the default preset or choose another scope"
+56  | EXPLICIT = "apply all only if the user explicitly chooses it"
+    - FORBIDDEN = ("is bound", "verified", "tamper-evident", "tamper evident", "still exists", "still matches",
+    -              "structured field", "binding")
+57  + FORBIDDEN = (
+58  +     "is bound",
+59  +     "verified",
+60  +     "tamper-evident",
+61  +     "tamper evident",
+62  +     "still exists",
+63  +     "still matches",
+64  +     "structured field",
+65  +     "binding",
+66  + )
+67  |
+--------------------------------------------------------------------------------
+112 |
+    - PRESET_RESOLVE_KEYS = ["notices", "status", "mode", "library_size", "pending_count", "counts", "adopted",
+    -                        "adoption", "proposal_digest", "entries", "preset"]
+113 + PRESET_RESOLVE_KEYS = [
+114 +     "notices",
+115 +     "status",
+116 +     "mode",
+117 +     "library_size",
+118 +     "pending_count",
+119 +     "counts",
+120 +     "adopted",
+121 +     "adoption",
+122 +     "proposal_digest",
+123 +     "entries",
+124 +     "preset",
+125 + ]
+126 | PLAIN_ADOPTION = "nothing adopted yet — the user must confirm, then: secure-code scope save --confirmed"
+127 |
+128 |
+129 | def preset_adoption(name):
+    -     return ("nothing adopted yet — the user must confirm, then: "
+    -             f"secure-code preset scope-save {name} --decisions FILE --confirmed")
+130 +     return (
+131 +         "nothing adopted yet — the user must confirm, then: "
+132 +         f"secure-code preset scope-save {name} --decisions FILE --confirmed"
+133 +     )
+134 |
+--------------------------------------------------------------------------------
+153 |     assert data["entries"] == plain.data["entries"]
+    -     save = "Ask the user to confirm the scope, then run: " \
+    -            "secure-code preset scope-save web-input --decisions FILE --confirmed"
+154 +     save = (
+155 +         "Ask the user to confirm the scope, then run: "
+156 +         "secure-code preset scope-save web-input --decisions FILE --confirmed"
+157 +     )
+158 |     assert result.next_steps == [
+159 |         "Compare the applicability summary with the current task before asking for confirmation",
+    -         *(save if s.startswith("Ask the user to confirm the scope") else s for s in plain.next_steps)]
+160 +         *(save if s.startswith("Ask the user to confirm the scope") else s for s in plain.next_steps),
+161 +     ]
+162 |     adoptions["named"] = data["adoption"]
+--------------------------------------------------------------------------------
+224 |     assert {a["rule"]: a["state_digest"] for a in record["adopted"]} == {
+    -         e["rule"]: e["source_evidence"]["state_digest"] for e in proposal.data["entries"]}
+225 +         e["rule"]: e["source_evidence"]["state_digest"] for e in proposal.data["entries"]
+226 +     }
+227 |     original = path.read_bytes()
+--------------------------------------------------------------------------------
+284 |     assert not result.ok, result.to_dict()
+    -     expected = {"malformed": "PRESET_INVALID", "schema": "PRESET_INVALID", "link": "PATH_UNSAFE",
+    -                 "all_missing": "MAINTENANCE_NEEDED"}[case]
+285 +     expected = {
+286 +         "malformed": "PRESET_INVALID",
+287 +         "schema": "PRESET_INVALID",
+288 +         "link": "PATH_UNSAFE",
+289 +         "all_missing": "MAINTENANCE_NEEDED",
+290 +     }[case]
+291 |     assert result.problems[0].code == expected
+--------------------------------------------------------------------------------
+316 |     real_build = resolve.build
+    -     monkeypatch.setattr(resolve, "build", lambda lib, texts, apply_all, *a, **k: (
+    -         built.append(apply_all), real_build(lib, texts, apply_all, *a, **k))[1])
+317 +     monkeypatch.setattr(
+318 +         resolve,
+319 +         "build",
+320 +         lambda lib, texts, apply_all, *a, **k: (
+321 +             built.append(apply_all),
+322 +             real_build(lib, texts, apply_all, *a, **k),
+323 +         )[1],
+324 +     )
+325 |     monkeypatch.setattr(policy, "resolve_policies", lambda *a, **k: pytest.fail("Apply All built"))
+--------------------------------------------------------------------------------
+344 |     lookalike = "preset:ghost@sha256:" + "a" * 64
+    -     path = env.req({
+    -         "schema": scope.DECISIONS_SCHEMA, "mode": "clues", "considered": [R1],
+    -         "proposal_digest": policy.resolve_policies(str(env.project), [R1], False, [])
+    -         .data["proposal_digest"],
+    -         "clues": lookalike, "language_context": [],
+    -         "decisions": [{"ref": R1, "decision": "adopted", "state_digest": env.show(R1).data["state_digest"]}],
+    -         "confirmation_note": "User confirmed",
+    -     })
+345 +     path = env.req(
+346 +         {
+347 +             "schema": scope.DECISIONS_SCHEMA,
+348 +             "mode": "clues",
+349 +             "considered": [R1],
+350 +             "proposal_digest": policy.resolve_policies(str(env.project), [R1], False, []).data[
+351 +                 "proposal_digest"
+352 +             ],
+353 +             "clues": lookalike,
+354 +             "language_context": [],
+355 +             "decisions": [
+356 +                 {"ref": R1, "decision": "adopted", "state_digest": env.show(R1).data["state_digest"]}
+357 +             ],
+358 +             "confirmation_note": "User confirmed",
+359 +         }
+360 +     )
+361 |     saved = policy.save_scope(str(env.project), path, True)
+--------------------------------------------------------------------------------
+410 |     assert {a["rule"]: a["state_digest"] for a in record["adopted"]} == {
+    -         e["rule"]: e["source_evidence"]["state_digest"] for e in proposal.data["entries"]}
+411 +         e["rule"]: e["source_evidence"]["state_digest"] for e in proposal.data["entries"]
+412 +     }
+413 |     assert record["clues"] == proposal.data["preset"]["clue"]
+--------------------------------------------------------------------------------
+465 |     assert code(free) == "DECISIONS_INVALID"
+    -     absent = env.pscope_save("missing-preset", env.pdecisions(
+    -         proposal, clue="preset:missing-preset@sha256:" + "a" * 64))
+466 +     absent = env.pscope_save(
+467 +         "missing-preset", env.pdecisions(proposal, clue="preset:missing-preset@sha256:" + "a" * 64)
+468 +     )
+469 |     assert code(absent) == "PRESET_NOT_FOUND"
+    |
+
+1 file would be reformatted, 1 file already formatted

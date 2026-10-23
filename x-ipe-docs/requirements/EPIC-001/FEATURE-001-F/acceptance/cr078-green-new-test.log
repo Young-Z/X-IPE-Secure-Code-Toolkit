@@ -1,0 +1,14 @@
+   Building ai-secure-code-toolkit @ file:///Users/yzhang/Documents/projects/ai-secure-code-toolkit-v2/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts
+      Built ai-secure-code-toolkit @ file:///Users/yzhang/Documents/projects/ai-secure-code-toolkit-v2/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts
+Uninstalled 1 package in 0.69ms
+Installed 1 package in 2ms
+============================= test session starts ==============================
+platform darwin -- Python 3.14.6, pytest-9.1.1, pluggy-1.7.0 -- /Users/yzhang/Documents/projects/ai-secure-code-toolkit-v2/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/.venv/bin/python3
+rootdir: /Users/yzhang/Documents/projects/ai-secure-code-toolkit-v2/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collecting ... collected 33 items / 32 deselected / 1 selected
+
+tests/presets/test_preset_scope.py::test_preset_resolve_adoption_names_preset_scope_save PASSED [100%]
+
+======================= 1 passed, 32 deselected in 0.26s =======================
