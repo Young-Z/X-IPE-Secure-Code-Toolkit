@@ -12,7 +12,7 @@ from . import __version__, routing
 from .atomic import LockHeld, LockUnavailable, ProjectLock, atomic_write_bytes
 from .carrier_view import MASK_LABEL, masked_diff, omit_if_unused
 from .environments import PROFILES, EnvError, Profile, lookup
-from .host_fragment import fragment_text, plan_upsert, render_minimal_body, sha256_text
+from .host_fragment import FragmentPlan, fragment_text, plan_upsert, render_minimal_body, sha256_text
 from .install_record import RECORD_REL, InstallRecord, RecordError, load, save, sha256_file
 from .paths import RootError, safe_relative, unsafe_component, validate_root
 from .payload import PayloadError, files, locate
@@ -165,11 +165,19 @@ def _plan_and_apply(root: Path, profile: Profile, replace: set[str], payload: di
         problems.append(Problem("PATH_UNSAFE", f"Host entry file: {host_unsafe}"))
         fragment = None
     else:
-        data = host.read_bytes() if host.exists() else None
+        try:
+            data, read_error = (host.read_bytes() if host.exists() else None), None
+        except OSError as exc:  # exists but cannot be opened: refused like a non-UTF-8 host entry
+            data, read_error = None, exc
         body, identity = _host_body(root, profile, plans, payload_defn)
-        fragment = plan_upsert(data, body, recorded_fragment, profile.host_entry in replace)
-        fragment, member = _accepted_exception(root, record, profile, data, body, identity, fragment,
-                                               replace, member, exception)
+        if read_error is not None:
+            fragment = FragmentPlan("unreadable", None, sha256_text(body), Problem(
+                "HOST_ENTRY_UNREADABLE", f"Host entry file {profile.host_entry} cannot be read "
+                                         f"({read_error.strerror or read_error})"), True)
+        else:
+            fragment = plan_upsert(data, body, recorded_fragment, profile.host_entry in replace)
+            fragment, member = _accepted_exception(root, record, profile, data, body, identity, fragment,
+                                                   replace, member, exception)
         if fragment.problem:
             problems.append(fragment.problem)
     conflicts = [p.target_rel for p in plans if p.outcome == "conflict"]

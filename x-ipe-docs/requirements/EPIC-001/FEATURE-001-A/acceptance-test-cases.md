@@ -181,3 +181,5 @@ Pass Rate = 25 / 26 = **96.2%** (diagnostic, not goal achievement).
 ### Refactor / Closing Recommendation and App Gates
 
 Refactor need: none evidenced — modules ≤ 251 lines, ruff clean, 93% coverage, no duplication found by review; recommend **Feature Closing** (AC-001A-10a Windows gap dispositioned by CR-002). Free-mode: no application workflow mutation (`workflow_action_updated: false`).
+
+> **Note (2026-10-23, TASK-079):** after acceptance, bug fix TASK-079 made plain `init` refuse an unreadable host entry file with `HOST_ENTRY_UNREADABLE` (designed behaviour) instead of crashing. Regression evidence: `acceptance/regression-TASK-079-host-macos.jsonl` (13/13 Pass). The results above are unchanged.
