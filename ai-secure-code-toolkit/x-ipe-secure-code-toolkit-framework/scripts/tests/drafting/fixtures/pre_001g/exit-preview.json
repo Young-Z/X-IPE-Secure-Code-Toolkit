@@ -1,0 +1,80 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "knowledge exit-preview",
+    "ok": true,
+    "data": {
+      "impact": {
+        "relations": {
+          "count": 0,
+          "items": [],
+          "pointing_to_target": [],
+          "unreadable_sources": []
+        },
+        "scopes": {
+          "count": 0,
+          "items": [],
+          "unreadable": []
+        },
+        "guard_runs": {
+          "count": 0,
+          "items": [],
+          "unreadable": []
+        },
+        "copilot_collaborations": {
+          "count": 0,
+          "items": [],
+          "unreadable": []
+        },
+        "pending_decisions": {
+          "count": 0,
+          "items": []
+        },
+        "document_index": {
+          "count": 0,
+          "items": [],
+          "unreadable": null
+        },
+        "presets": {
+          "count": 0,
+          "items": [],
+          "unreadable": []
+        },
+        "tags": {
+          "count": 0,
+          "items": [],
+          "unreadable": []
+        },
+        "reference_cache": "not checked in this version"
+      },
+      "action": "deactivate",
+      "rule": "CWE/Top25-2025/CWE-78",
+      "target": null,
+      "reason": "fixture reason",
+      "rule_state": {
+        "consistent": true,
+        "state": "active",
+        "revision": 0,
+        "state_digest": "sha256:0f7159b9a3901ae8648368be086e90702f601595bc0b7e3e1cec6058cae3398c",
+        "fingerprint": "sha256:de8b5b75abafad991657d829503cb0a295671a3b18b1a837614f8b206c500971",
+        "special_entries": [],
+        "pending_commit": false
+      },
+      "will": [
+        "mark CWE/Top25-2025/CWE-78 deactivated (content and changelog are kept)",
+        "keep 0 pending decision(s)",
+        "invalidate 0 index entries",
+        "record the action in the changelog and increase the lifecycle revision 0 → 1",
+        "no other rule, scope record, run or report is changed; references are reported broken"
+      ],
+      "impact_digest": "sha256:a306742186df5e680db40b17709eda5cff16854ba9a08a8b28da5b5a0ed76daa",
+      "references_block": false
+    },
+    "problems": [],
+    "next_steps": [
+      "Show the whole impact to the Maintainer; references do not block the decision",
+      "Only after the Maintainer explicitly confirms: run secure-code knowledge exit-confirm with this impact_digest"
+    ]
+  }
+]

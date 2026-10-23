@@ -88,6 +88,32 @@ def build_parser() -> argparse.ArgumentParser:
     k_links.add_argument("--project")
     for sub in (k_check, k_import, k_update, k_list, k_show, *k_exits, k_links):
         sub.add_argument("--json", action="store_true")
+    # FEATURE-001-G: AI-assisted example drafting (no model, endpoint, key or credential option).
+    k_draft_check = k_commands.add_parser(
+        "draft-check", help="Check an AI example draft and preview the exact masked change (read-only)")
+    k_draft_check.add_argument("--project")
+    k_draft_check.add_argument("--draft", required=True, metavar="FILE")
+    k_draft_check.add_argument("--review", metavar="FILE", help="The Maintainer's review file")
+    k_draft_approve = k_commands.add_parser(
+        "draft-approve", help="Write a checked AI example draft through knowledge update (Maintainer)")
+    k_draft_approve.add_argument("--project")
+    k_draft_approve.add_argument("--draft", required=True, metavar="FILE")
+    k_draft_approve.add_argument("--review", required=True, metavar="FILE")
+    k_draft_approve.add_argument("--validation-digest", required=True, metavar="DIGEST")
+    k_draft_approve.add_argument("--false-positive", action="append", default=[], metavar="RULE:FINGERPRINT")
+    k_supplements = k_commands.add_parser("supplements", help="List AI-generated example blocks (read-only)")
+    k_supplements.add_argument("--project")
+    k_supplements.add_argument("--rule", metavar="NAMESPACE/VERSION/ID")
+    k_drafting_auth = k_commands.add_parser(
+        "drafting-authorize",
+        help="Record or revoke an internal drafting authorization (Maintainer at a terminal); "
+             "--list is read-only")
+    k_drafting_auth.add_argument("--project")
+    k_drafting_auth.add_argument("--list", action="store_true", help="List authorizations (read-only)")
+    k_drafting_auth.add_argument("--host", metavar="LABEL")
+    k_drafting_auth.add_argument("--revoke", action="store_true")
+    for sub in (k_draft_check, k_draft_approve, k_supplements, k_drafting_auth):
+        sub.add_argument("--json", action="store_true")
 
     policy = commands.add_parser("policy", help="Resolve formal Local Policies (read-only)")
     p_commands = policy.add_subparsers(dest="policy_command", required=True)
@@ -333,6 +359,8 @@ def _knowledge(args: argparse.Namespace) -> Result:
     from .knowledge import service
 
     cmd = args.knowledge_command
+    if cmd in DRAFTING_COMMANDS:
+        return _drafting(args)
     if cmd == "check":
         return service.check(args.project, args.input)
     if cmd == "import":
@@ -351,6 +379,28 @@ def _knowledge(args: argparse.Namespace) -> Result:
             return exits.preview(args.project, args.rule, args.action, args.to, args.reason)
         return exits.confirm(args.project, args.rule, args.action, args.to, args.reason, args.impact_digest)
     return service.show_rule(args.project, args.rule)
+
+
+DRAFTING_COMMANDS = ("draft-check", "draft-approve", "supplements", "drafting-authorize")
+
+
+def _drafting(args: argparse.Namespace) -> Result:
+    """FEATURE-001-G knowledge subcommands."""
+    cmd = args.knowledge_command
+    if cmd == "drafting-authorize":
+        from .knowledge import drafting_auth
+
+        return drafting_auth.run(args.project, args.list, args.host, args.revoke)
+    if cmd == "supplements":
+        from .knowledge import drafting_supplements
+
+        return drafting_supplements.list_supplements(args.project, args.rule)
+    from .knowledge import drafting_service
+
+    if cmd == "draft-check":
+        return drafting_service.draft_check(args.project, args.draft, args.review)
+    return drafting_service.draft_approve(args.project, args.draft, args.review, args.validation_digest,
+                                          args.false_positive)
 
 
 def _policy(args: argparse.Namespace) -> Result:

@@ -1,0 +1,16 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "knowledge check",
+    "ok": true,
+    "data": {
+      "items": {
+        "CWE/Top25-2025/CWE-89": "stored_changed"
+      },
+      "source_documents": {}
+    },
+    "problems": [],
+    "next_steps": []
+  }
+]

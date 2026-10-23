@@ -1,0 +1,26 @@
+{
+  "about": "AC-001G-04b/04c/04f and DEC-8 expected advisory lint results (FEATURE-001-G). 'expected' lists [line, term] pairs; an empty list means no warning. 'documented_miss' marks a known lint miss that only the Maintainer's non_normative attestation covers.",
+  "rule_lines": [
+    "- MUST pass every untrusted value as a bound parameter, never by string concatenation.",
+    "MUST NOT build SQL text from request data."
+  ],
+  "cases": [
+    {"id": "mixed_case_must", "language": "python", "text": "# Must use a bound parameter\nx = 1", "expected": [[1, "must"]]},
+    {"id": "fullwidth_must", "language": "python", "text": "# \uff2d\uff35\uff33\uff34 escape values", "expected": [[1, "must"]]},
+    {"id": "zero_width_inside_term", "language": "python", "text": "# mu\u200bst escape", "expected": [[1, "must"]]},
+    {"id": "longest_multiword_first", "language": "python", "text": "# you must not concatenate\n# the caller is required to check", "expected": [[1, "must not"], [2, "is required to"]]},
+    {"id": "all_en_terms", "language": "python", "text": "# shall shall not mandatory should should not always never ensure only required", "expected": [[1, "shall"], [1, "shall not"], [1, "mandatory"], [1, "should"], [1, "should not"], [1, "always"], [1, "never"], [1, "ensure"], [1, "only"], [1, "required"]]},
+    {"id": "word_boundaries", "language": "python", "text": "# ensures safety; mustard; onlyfans; must_check", "expected": []},
+    {"id": "code_and_strings_not_linted", "language": "python", "text": "must = 1\nprint('you must')\nnever = \"always\"", "expected": []},
+    {"id": "backtick_span_in_comment", "language": "python", "text": "# see `you must` in docs", "expected": []},
+    {"id": "fenced_code_in_comment", "language": "python", "text": "# ```must always```", "expected": []},
+    {"id": "zh_terms", "language": "python", "text": "# \u5fc5\u987b\u4f7f\u7528\u53c2\u6570\u5316\u67e5\u8be2\n# \u7981\u6b62\u62fc\u63a5\uff0c\u4e0d\u5f97\u8df3\u8fc7\uff0c\u4e25\u7981\u660e\u6587\uff0c\u52a1\u5fc5\u6821\u9a8c\uff0c\u5e94\u8be5\u8bb0\u5f55", "expected": [[1, "\u5fc5\u987b"], [2, "\u7981\u6b62"], [2, "\u4e0d\u5f97"], [2, "\u4e25\u7981"], [2, "\u52a1\u5fc5"], [2, "\u5e94\u8be5"]]},
+    {"id": "zh_non_hits", "language": "python", "text": "# \u54cd\u5e94\u8be5\u8bf7\u6c42\n# \u5e94\u7528\u53c2\u6570\n# \u5bf9\u5e94\u5b57\u6bb5", "expected": []},
+    {"id": "java_line_and_block_comments", "language": "java", "text": "// Should validate\nString s = \"must\"; /* never trust\n   always check */", "expected": [[1, "should"], [2, "never"], [3, "always"]]},
+    {"id": "javascript_template_string", "language": "javascript", "text": "const t = `// must`; // only here", "expected": [[1, "only"]]},
+    {"id": "permitted_quotation", "language": "python", "text": "# > MUST pass every untrusted value as a bound parameter, never by string concatenation.", "expected": []},
+    {"id": "quotation_not_matching_rule", "language": "python", "text": "# > MUST always be safe", "expected": [[1, "must"], [1, "always"]]},
+    {"id": "widening_prose_after_quotation", "language": "python", "text": "# > MUST NOT build SQL text from request data.\n# this also applies to all inputs", "expected": [], "documented_miss": true},
+    {"id": "tokenize_failure_fallback", "language": "python", "text": "# Must hold\nx = (\n", "expected": [[1, "must"]]}
+  ]
+}

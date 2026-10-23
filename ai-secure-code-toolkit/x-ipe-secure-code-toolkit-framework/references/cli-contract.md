@@ -16,6 +16,10 @@
 | `secure-code knowledge exit-preview` | `--project`, `--rule NS/VER/ID`, `--action deactivate\|reactivate\|delete\|rename`, `--to NS/VER/ID` (rename only), `--reason TEXT`, `--json` | Impact first, then what the action will do and `impact_digest`; writes nothing (Maintainer) — see [Exiting Knowledge](#exiting-knowledge) | 0 / 1 |
 | `secure-code knowledge exit-confirm` | the same + `--impact-digest DIGEST` | Performs the previewed exit through the exit journal; success only after the commit (Maintainer, explicit confirmation) | 0 / 1 |
 | `secure-code knowledge links` | `--project`, `--json` | Broken relations, scope references and (when Preset/tag files exist) `preset_tag_links` with reasons; never repairs (read-only, no authorization) | 0 / 1 |
+| `secure-code knowledge draft-check` | `--project`, `--draft FILE`, `--review FILE` (optional), `--json` | Runs V1…V13 on the stored rule, renders the canonical final payload, reports per-check/per-language results, warnings, masked preview (`final: false` unless `valid`), `review_required` and `validation_digest` (only when `valid`); writes nothing (read-only) — see [Drafting Examples](#drafting-examples-feature-001-g) | 0 `valid` · 1 otherwise · 2 usage |
+| `secure-code knowledge draft-approve` | `--project`, `--draft FILE`, `--review FILE`, `--validation-digest DIGEST`, `--false-positive RULE:FINGERPRINT` (repeatable), `--json` | Recomputes draft-check; refuses on any difference or failure; stages exactly the reviewed payload and calls the delivered `knowledge update` path (`update_rule`); reports the delivered update result plus `applied_blocks` (Maintainer) | 0 updated/unchanged · 1 refused |
+| `secure-code knowledge supplements` | `--project`, `--rule NS/VER/ID` (optional; all rules if absent), `--json` | Lists AI example blocks with state `intact`/`modified`/`malformed` and approval time from the changelog (read-only, no authorization) | 0 / 1 |
+| `secure-code knowledge drafting-authorize` | `--project`, exactly one of `--list` (optional `--host LABEL`) or `--host LABEL` (optional `--revoke`), `--json` | `--list`: read-only listing/status. `--host`: record (or `--revoke`) an internal-drafting authorization for the host label after typed confirmation (Maintainer at an interactive terminal) | 0 / 1 |
 | `secure-code policy resolve` | `--project`, `--rule REF` (repeatable) or `--all`, `--language L`, `--output FILE`, `--json` | Structured Policies, missing/unclear references, notices, proposal digest (read-only, no authorization) | 0 complete/partial · 1 maintenance_needed or refused |
 | `secure-code scope save` | `--project`, `--decisions FILE`, `--confirmed`, `--json` | Saves the user-confirmed adopted scope; returns `scope_id` ([policy selection](policy-selection.md)) | 0 / 1 |
 | `secure-code scope show` | `--project`, `--scope ID`, `--output FILE`, `--json` | Adopted / needs_reconfirmation / missing per Policy; `adopted_rules` | 0 complete/partial · 1 maintenance_needed or refused |
@@ -107,6 +111,12 @@ Trivy: `IMAGE_ARCHIVE_INVALID`, `IMAGE_ARCHIVE_TOO_LARGE`, `TRIVY_COMPONENT_MISS
 `TARGET_INVALID`, `ROLE_CONFLICT`, `REVIEW_INVALID`, `REVIEW_AUTHORITY`, `MAINTENANCE_NEEDED`, `SCOPE_PARTIAL`,
 `SCOPE_NOT_FOUND`, `PATH_UNSAFE`, `LOCKED`, `IO_ERROR`).
 
+drafting (FEATURE-001-G): `DRAFT_INVALID`, `DRAFT_REVIEW_INVALID`, `DRAFT_REVIEW_MISMATCH`, `REVIEW_INCOMPLETE`,
+`EXAMPLE_DECISION_MISSING`, `ATTESTATION_MISSING`, `DRAFT_CHECK_FAILED`, `PRESERVATION_FAILED`,
+`SUPPLEMENT_MARKERS_INVALID`, `STALE_BASE`, `STALE_VALIDATION`, `RULE_INACTIVE`, `PRECHECK_KEY_UNAVAILABLE`,
+`INTERNAL_DRAFTING_NOT_AUTHORIZED`, `CLASSIFICATION_DOWNGRADE`, `HOST_LABEL_INVALID`, `AUTHORIZATION_RECORD_INVALID`,
+`RECOVERY_PENDING`, `WRITE_MISMATCH`, `STAGING_CHANGED`, `MASKING_PARITY`.
+
 ## Host integration carriers (FEATURE-003-B)
 
 - `carriers` problem codes: `CARRIER_UNSUPPORTED` (unknown kind or not supported for the environment;
@@ -185,6 +195,29 @@ appended last; without Preset/tag files the output is unchanged.
 | `EXIT_MEMORY_INVALID` | exit memory unreadable on a write path (reads degrade with notice `EXIT_MEMORY_UNREADABLE`) | restore or inspect the memory file |
 | `PATH_UNSAFE` | a symbolic link or wrong kind on a used path | replace it with a real folder/file |
 | `LOCKED` / `IO_ERROR` | lock not obtained / OS error (also different devices before the commit) | retry / re-run any knowledge command, which completes the exit |
+
+## Drafting Examples (FEATURE-001-G)
+
+AI-assisted drafting of labelled unsafe/safe **examples** for one Local rule (explanations are not drafted
+in this version). Formats, page allowlist, block grammar, results, codes and limits:
+[knowledge drafting](knowledge-drafting.md).
+
+- The host agent writes only `x-ipe-docs/secure-code/drafts/<name>.draft.json`; the Maintainer writes the
+  review file `<name>.review.json`. Neither is read by Policy, scope, links, exit or Guard.
+- `draft-check` is read-only and never creates the pre-check key, the drafts folder or any lock; the
+  displayed preview is the deterministic masking of the unified diff of the exact payload, and
+  `validation_digest` binds the unmasked payload plus the draft, review, base state, validator version
+  and pre-check key.
+- `draft-approve` (Maintainer) writes through the unchanged delivered `knowledge update` path only, with
+  exactly the listed `--false-positive RULE:FINGERPRINT` declarations; all languages of a draft are
+  written together or not at all. It writes the reviewed payload bytes unless another process of the same
+  account modifies the owner-only staging file during approval; such a swap is detected after the write
+  and reported `WRITE_MISMATCH` (no automatic revert).
+- Internal (`@` or declared internal) drafts need an active authorization of the draft's host label,
+  recorded by the Maintainer at an interactive terminal (`drafting-authorize --host LABEL`); agents run
+  only `drafting-authorize --list`.
+- No drafting command accepts a model, endpoint, key, token or credential option, opens a network
+  connection or executes example code.
 
 ## Authorization model
 

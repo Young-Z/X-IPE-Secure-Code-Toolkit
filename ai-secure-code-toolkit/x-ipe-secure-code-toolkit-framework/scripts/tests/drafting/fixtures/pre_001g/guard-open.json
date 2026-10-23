@@ -1,0 +1,44 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "guard open",
+    "ok": true,
+    "data": {
+      "opened_at": "<time>",
+      "scope_id": "sha256:1abd63a750e049c4b0d0cddfea65e2e2a2c2c68a52985db035deca6a63d7624b",
+      "adopted_rules": [
+        "CWE/Top25-2025/CWE-78",
+        "CWE/Top25-2025/CWE-89"
+      ],
+      "whole_project": false,
+      "targets": [
+        {
+          "path": "src/entry.py",
+          "change": "modified",
+          "old_path": null,
+          "digest": "sha256:17fd0af17e4f343d6428b1b34b40713887c15c3746ca4e156ce12af1ca1e9588",
+          "incomplete": false
+        }
+      ],
+      "context": [],
+      "suggested": [],
+      "copilot_reports": [],
+      "budget": {
+        "total_seconds": 3600,
+        "extra_attempts": 3,
+        "defaulted": true,
+        "consumed_seconds": 0.0,
+        "remaining_seconds": 3600.0,
+        "extra_used": 0,
+        "extra_left": 3,
+        "paused": false,
+        "exhausted": null
+      }
+    },
+    "problems": [],
+    "next_steps": [
+      "Record the check plan: secure-code guard plan --run <run-id> --request .x-ipe/private/secure-code/tmp/plan.json"
+    ]
+  }
+]

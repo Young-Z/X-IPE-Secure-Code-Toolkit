@@ -1,0 +1,34 @@
+{
+  "schema": "ai-secure-code-toolkit/knowledge-batch/v1",
+  "items": [
+    {
+      "namespace": "CWE",
+      "version": "Top25-2025",
+      "rule_id": "CWE-89",
+      "name": "SQL Injection",
+      "source_location": "https://cwe.mitre.org/data/definitions/89.html",
+      "content": "# CWE-89 SQL Injection (test fixture)\n\nBuild database queries only with parameterized statements.\n\n- MUST pass every untrusted value as a bound parameter, never by string concatenation.\n- MUST NOT build SQL text from request data.\n",
+      "examples": {
+        "python": "# Fixture seed example (human-written)\nquery = \"SELECT id FROM users WHERE name = ?\"\nrows = connection.execute(query, (name,)).fetchall()\n"
+      },
+      "applicability": ["python", "java"]
+    },
+    {
+      "namespace": "CWE",
+      "version": "Top25-2025",
+      "rule_id": "CWE-78",
+      "name": "OS Command Injection",
+      "source_location": "https://cwe.mitre.org/data/definitions/78.html",
+      "content": "# CWE-78 OS Command Injection (test fixture)\n\n- MUST NOT pass untrusted input to a command interpreter.\n- MUST call programs with an argument list instead of a command string.\n",
+      "applicability": ["python"]
+    },
+    {
+      "namespace": "OWASP",
+      "version": "Top10-2025",
+      "rule_id": "A03",
+      "name": "Software Supply Chain Failures",
+      "source_location": "https://top10.owasp.org/2025/A03_2025-Software_Supply_Chain_Failures/",
+      "content": "# A03 Software Supply Chain Failures (test fixture)\n\n- MUST pin every third-party dependency to a reviewed version and digest.\n"
+    }
+  ]
+}

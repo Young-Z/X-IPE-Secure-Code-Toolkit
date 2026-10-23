@@ -1,0 +1,22 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "knowledge links",
+    "ok": true,
+    "data": {
+      "broken_relations": [],
+      "scopes": [],
+      "unreadable_sources": [],
+      "unreadable_scopes": [],
+      "counts": {
+        "broken_relations": 0,
+        "scopes": 0
+      }
+    },
+    "problems": [],
+    "next_steps": [
+      "Repairing references is a separate, explicit decision by an authorized person"
+    ]
+  }
+]

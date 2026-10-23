@@ -1,0 +1,13 @@
+{
+  "schema": "ai-secure-code-toolkit/knowledge-batch/v1",
+  "items": [
+    {
+      "namespace": "@SYNTH",
+      "version": "T-1.0",
+      "rule_id": "R-01",
+      "name": "Synthetic internal rule (test fixture only)",
+      "content": "# Synthetic internal rule R-01 (test fixture, not real internal content)\n\n- MUST record every administrative change together with its actor and time.\n",
+      "applicability": ["python"]
+    }
+  ]
+}

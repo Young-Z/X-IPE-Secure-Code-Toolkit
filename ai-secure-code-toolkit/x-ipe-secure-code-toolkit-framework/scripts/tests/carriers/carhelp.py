@@ -72,6 +72,17 @@ ERA_001A_REMOVED = (
     f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/compare_match.py",
     f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/compare_render.py",
     f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/compare_validate.py",
+    # FEATURE-001-G.
+    f"{FRAMEWORK}/references/knowledge-drafting.md",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_auth.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_blocks.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_checks.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_lint.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_mask.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_model.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_pipeline.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_service.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_supplements.py",
 )
 
 # FEATURE-001-A minimal fragment, byte for byte as written by host_fragment.py a14b9b85… (golden).

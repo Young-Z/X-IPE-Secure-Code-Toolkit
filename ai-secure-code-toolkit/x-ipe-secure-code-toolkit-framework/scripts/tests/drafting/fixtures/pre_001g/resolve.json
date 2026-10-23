@@ -1,0 +1,80 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "policy resolve",
+    "ok": true,
+    "data": {
+      "notices": [],
+      "status": "complete",
+      "mode": "clues",
+      "library_size": 3,
+      "pending_count": 0,
+      "counts": {
+        "requested": 2,
+        "available": 2,
+        "missing": 0,
+        "unclear": 0
+      },
+      "adopted": [],
+      "adoption": "nothing adopted yet — the user must confirm, then: secure-code scope save --confirmed",
+      "proposal_digest": "sha256:064ecd55e1d8945c30454c74e6615a409445ec34dd74e0a7e6f44a7a2af5e89e",
+      "entries": [
+        {
+          "requested": "CWE/Top25-2025/CWE-89",
+          "rule": "CWE/Top25-2025/CWE-89",
+          "availability": "available",
+          "name": "SQL Injection",
+          "kind": "institutional",
+          "requirement": "# CWE-89 SQL Injection (test fixture)\n\nBuild database queries only with parameterized statements.\n\n- MUST pass every untrusted value as a bound parameter, never by string concatenation.\n- MUST NOT build SQL text from request data.\n",
+          "applicability": [
+            "java",
+            "python"
+          ],
+          "language_note": "no_context",
+          "examples": [
+            "java",
+            "python"
+          ],
+          "relations": [],
+          "source_evidence": {
+            "source_location": "https://cwe.mitre.org/data/definitions/89.html",
+            "source_documents": [],
+            "state_digest": "sha256:732a9d1e86654b2ae461b06249b07e2579aea199ebf29385388db6b6f5b10486",
+            "last_changed_at": "<time>"
+          },
+          "other_versions": [],
+          "retrieval_status": "retrieved",
+          "unresolved": []
+        },
+        {
+          "requested": "CWE/Top25-2025/CWE-78",
+          "rule": "CWE/Top25-2025/CWE-78",
+          "availability": "available",
+          "name": "OS Command Injection",
+          "kind": "institutional",
+          "requirement": "# CWE-78 OS Command Injection (test fixture)\n\n- MUST NOT pass untrusted input to a command interpreter.\n- MUST call programs with an argument list instead of a command string.\n",
+          "applicability": [
+            "python"
+          ],
+          "language_note": "no_context",
+          "examples": [],
+          "relations": [],
+          "source_evidence": {
+            "source_location": "https://cwe.mitre.org/data/definitions/78.html",
+            "source_documents": [],
+            "state_digest": "sha256:0f7159b9a3901ae8648368be086e90702f601595bc0b7e3e1cec6058cae3398c",
+            "last_changed_at": "<time>"
+          },
+          "other_versions": [],
+          "retrieval_status": "retrieved",
+          "unresolved": []
+        }
+      ]
+    },
+    "problems": [],
+    "next_steps": [
+      "Ask the user to confirm the scope, then run: secure-code scope save --decisions FILE --confirmed"
+    ]
+  }
+]

@@ -1,0 +1,103 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "status",
+    "ok": true,
+    "data": {
+      "install": {
+        "root": "<golden project>",
+        "state": "installed",
+        "version": "0.1.0",
+        "environment": "github-copilot",
+        "skills_dir": ".github/skills",
+        "host_entry": "AGENTS.md",
+        "changed_toolkit_files": 0,
+        "next_step": "None"
+      },
+      "authorization": {
+        "role": "maintainer",
+        "state": "valid",
+        "reason": "signed Maintainer authorization is valid",
+        "created_at": "<time>",
+        "created_by": {
+          "host": "<hostname>",
+          "os_user": "<os-user>"
+        },
+        "next_step": "None - maintenance actions still re-verify each time"
+      },
+      "policies": {
+        "local": 3,
+        "reference": 0,
+        "next_step": "None"
+      },
+      "default_preset": {
+        "exists": false
+      },
+      "tools": {
+        "opengrep": {
+          "state": "provided",
+          "registered": false,
+          "check": "No opengrep binary is registered for this project",
+          "next_step": "A Maintainer registers the official binary: secure-code tools register --tool opengrep --path PATH"
+        },
+        "trivy": {
+          "state": "provided",
+          "registered": false,
+          "check": "No trivy binary is registered for this project",
+          "next_step": "A Maintainer registers the official binary: secure-code tools register --tool trivy --path PATH",
+          "execution": "not supported on this platform in this version",
+          "recovery_pending": false,
+          "components": {
+            "vulnerability_db": {
+              "state": "missing",
+              "reason": "not provisioned",
+              "next_step": "Ask the user for tool_update grants covering every known host of mirror.gcr.io/aquasec/trivy-db:2 (mirror.gcr.io), then a Maintainer runs secure-code tools provision --tool trivy --run <vid> --component vulnerability_db"
+            },
+            "java_db": {
+              "state": "missing",
+              "reason": "not provisioned",
+              "next_step": "Ask the user for tool_update grants covering every known host of mirror.gcr.io/aquasec/trivy-java-db:1 (mirror.gcr.io), then a Maintainer runs secure-code tools provision --tool trivy --run <vid> --component java_db"
+            },
+            "checks_bundle": {
+              "state": "missing",
+              "reason": "not provisioned",
+              "next_step": "Ask the user for tool_update grants covering every known host of mirror.gcr.io/aquasec/trivy-checks:2 (mirror.gcr.io), then a Maintainer runs secure-code tools provision --tool trivy --run <vid> --component checks_bundle"
+            }
+          },
+          "cache_disk_bytes_total": 0
+        },
+        "strix": {
+          "state": "adapter not provided by this toolkit version",
+          "next_step": "Use a toolkit version that provides this Adapter; no scanner is checked or installed automatically"
+        }
+      },
+      "host_integration": {
+        "environment": "github-copilot",
+        "host_entry": "AGENTS.md",
+        "fragment": "present",
+        "host_effect": "not verified",
+        "next_step": "None",
+        "routing_identity": "ai-secure-code-toolkit 0.1.0, definition sha256:66944ebff0a6c0921482843ab64a9432345a3e3b06b37a630da758dbb9baa928",
+        "carriers": [
+          {
+            "carrier": "host-entry",
+            "path": "AGENTS.md",
+            "selection": "selected",
+            "fragment": "present",
+            "identity": "current",
+            "front_matter": "n/a",
+            "user_content": "n/a",
+            "next_step": "None",
+            "host_effect": "not verified"
+          }
+        ],
+        "integration_declaration": "1 managed carrier has routing identity ai-secure-code-toolkit 0.1.0, definition sha256:66944ebff0a6c0921482843ab64a9432345a3e3b06b37a630da758dbb9baa928 and forms one integration declaration: AGENTS.md",
+        "differences": {}
+      },
+      "problems": []
+    },
+    "problems": [],
+    "next_steps": []
+  }
+]

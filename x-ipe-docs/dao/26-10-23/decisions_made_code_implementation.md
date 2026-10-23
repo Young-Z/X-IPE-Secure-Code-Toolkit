@@ -8,6 +8,7 @@
 | DAO-001 | 2026-10-23T11:11:10+08:00 | TASK-062 | x-ipe-task-based-code-implementation | approval | 0.82 | FEATURE-003-B: status._host unreadable-AGENTS.md change accepted as a defect fix (A) with conditions: correct next step for the OSError case only, regression test, document FRAGMENT_UNREADABLE in cli-contract, init traceback recorded as separate defect candidate |
 | DAO-002 | 2026-10-23T15:28:27+08:00 | TASK-069 | x-ipe-task-based-code-implementation | approval | 0.84 | FEATURE-001-F: Q1 A — append the 5 new 001-F payload paths to delivered 003-B test helper ERA_001A_REMOVED as a test-defect fix (no assertion/fixture/AC change); DAO-009 (2) amended; maintenance point noted in 003-B/001-F designs; Q2 Framework Status line updated honestly |
 | DAO-003 | 2026-10-24T02:56:11+08:00 | TASK-090 | x-ipe-task-based-code-implementation | approval | 0.88 | CR-TASK-086 renderer identity: three-file RENDERER_MANIFEST (__init__.py, atomic.py, guard/report.py) confirmed as exactly the DAO-003 (CR) DEC-2 closure rule; over-inclusion is the safe direction; design note to record it; closure test must enforce it |
+| DAO-004 | 2026-10-24T06:38:31+08:00 | TASK-084 | x-ipe-task-based-code-implementation | approval | 0.84 | FEATURE-001-G implementation DEC-I1…I14 approved with conditions: I1 ERA_001A_REMOVED append (DAO-002 precedent); I5 assert the design-order code exactly (no either/or) + R1 design erratum; I3/I7/I11/I13 recorded as closing notes; I13 fixtures named in maintenance notes with self-explaining failure messages; closing after independent code review |
 
 ---
 
@@ -134,3 +135,64 @@
 
 ### Follow-up
 > 002-G renderer_differs follow-up CR after this CR is accepted (DAO-003 change request DEC-G1).
+
+## DAO-004
+- **Timestamp:** 2026-10-24T06:38:31+08:00
+- **Task ID:** TASK-084
+- **Feature ID:** FEATURE-001-G
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-code-implementation
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human B13 = H2, B14 = No
+- **Disposition:** approval
+- **Confidence:** 0.84
+
+### Message
+> Implementation per design v1.2 5e0f2aa8 / spec v1.3.3 4cb3a1eb: 9 drafting_* modules + knowledge-drafting.md + additive changes to cli.py/SKILL.md/cli-contract.md only (all other delivered files byte-identical vs step-0); 265 new tests pass (216 fail / 2 collection errors at step-0); ruff clean; forbidden-substring scan zero. Full suite: 2871 passed, 10 failed (delivered 003-B carriers tests "created <94 files>" vs <104> because carhelp.py ERA_001A_REMOVED lacks the 10 new payload files). Report implementation-report-TASK-084.md §9 DEC-I1…I14. Rulings needed (owner recs: approve I1, I2, I3, I4, I5/I6, I7, I13; others per report). Independent code review running.
+
+### Guidance Returned
+> DAO verified:
+> - report SHA 2d668124… (§9 L237–254);
+> - `ARGUMENT_INVALID` is an existing code in the delivered `cli-contract.md` at HEAD;
+> - design R1 / step order (4b representability, 6b writer simulation).
+> - **DEC-I1 → approved.** This is the established maintenance rule (DAO-002 code implementation; noted in the 003-B design): append exactly the 10 new 001-G payload paths to `ERA_001A_REMOVED` as a pure list append, with no assertion or fixture change. It is scratch-verified (76/76). Re-run the full suite to 0 failures.
+> - **DEC-I2 → approved.**
+>   - Synthetic fixture batches with seeded-style identities and short synthetic content; nothing copied from `demo/` or any internal source.
+>   - `@SYNTH` only for internal-drafting tests (B14).
+> - **DEC-I3 → approved as the evaluation of AC-001G-08a.** "Byte-identical init outputs" is assessed modulo the declared payload growth: exactly the 10 new payload files are removed from `created`, an assertion fixes that set, and everything else is byte-identical with the goldens. Record this interpretation in the closing report.
+> - **DEC-I4 → approved** (privacy; normalized identically at regeneration).
+> - **DEC-I5 → approved with a change.** The test must assert the code the design's step order actually produces (`RULE_INCONSISTENT`) exactly, plus "nothing written". An either/or assertion would hide a future order change. Record a design erratum: R1's listed expectation is superseded by the step order (step 2 before 4b).
+> - **DEC-I6 → approved.** Gate before any rule read is stricter and matches B14 = No ("refused before reading any internal rule content").
+> - **DEC-I7 → approved.** All listed items are unchanged helpers, constants, exceptions or pure functions used read-only (`atomic.dumps_json` is pure serialization); no write outside 001-G-private paths. Record them in the closing report as additional P3a-class read-only uses (wording erratum to the spec P3a list at the next revision; no re-review).
+> - **DEC-I8 → approved.** `ARGUMENT_INVALID` is an existing delivered code; exit 1 with the result envelope.
+> - **DEC-I9 → approved.**
+> - **DEC-I10 → approved** (stricter allowlist).
+> - **DEC-I11 → approved.** The delivered `Finding.to_dict()` adds only the `blocking` boolean, never a value. Note it in the closing report as a superset of the AC's listed fields with no disclosure.
+> - **DEC-I12 → approved.**
+> - **DEC-I13 → approved.** These are new maintenance points like `ERA_001A_REMOVED`. Name both fixtures in the maintenance notes (001-G design/closing) and make their test failure messages say exactly which fixture to update and why, so future legitimate changes aren't mistaken for regressions.
+> - **DEC-I14 → approved** (fail closed).
+> Closing conditions:
+> - the independent code review passes (or its findings are fixed and re-reviewed);
+> - full suite 0 failures after DEC-I1;
+> - 001-A/B/C/D/F, 002-A and 003-A/B regressions as the design requires;
+> - the stop rule held (only cli.py/SKILL.md/cli-contract.md additive changes, plus the ERA list);
+> - B13/B14 bindings verified in tests;
+> - local exact-path commit (B8).
+> Then Feature Acceptance Test (fixture-only).
+
+### Rationale
+> All deviations are either established maintenance (ERA list), privacy normalization, stricter behavior or honest test interpretations. DEC-I5 is tightened so the test pins the actual behavior instead of tolerating two outcomes.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-code-implementation"
+>     match_strength: "strong"
+>     reason: "Apply DEC-I1/I5 changes, finish review, full regression"
+>     execution_steps:
+>       - phase: "1. Implement"
+>         step: "1.1 Apply ruled changes, full suite, independent review"
+>   - skill_name: "x-ipe-task-based-feature-acceptance-test"
+>     match_strength: "partial"
+>     reason: "Next after implementation (fixture-only acceptance)"
+
+### Follow-up
+> Design erratum (R1) and spec P3a wording erratum at next sync; maintenance notes for the two hash fixtures.

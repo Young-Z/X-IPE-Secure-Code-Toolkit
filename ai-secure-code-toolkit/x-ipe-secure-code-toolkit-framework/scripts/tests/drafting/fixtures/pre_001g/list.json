@@ -1,0 +1,55 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "knowledge list",
+    "ok": true,
+    "data": {
+      "rules": [
+        {
+          "rule": "CWE/Top25-2025/CWE-78",
+          "kind": "institutional",
+          "name": "OS Command Injection",
+          "applicability": [
+            "python"
+          ],
+          "item_digest": "sha256:0f7159b9a3901ae8648368be086e90702f601595bc0b7e3e1cec6058cae3398c",
+          "consistent": true,
+          "state": "active",
+          "state_digest": "sha256:0f7159b9a3901ae8648368be086e90702f601595bc0b7e3e1cec6058cae3398c",
+          "lifecycle_revision": 0
+        },
+        {
+          "rule": "CWE/Top25-2025/CWE-89",
+          "kind": "institutional",
+          "name": "SQL Injection",
+          "applicability": [
+            "java",
+            "python"
+          ],
+          "item_digest": "sha256:732a9d1e86654b2ae461b06249b07e2579aea199ebf29385388db6b6f5b10486",
+          "consistent": true,
+          "state": "active",
+          "state_digest": "sha256:732a9d1e86654b2ae461b06249b07e2579aea199ebf29385388db6b6f5b10486",
+          "lifecycle_revision": 0
+        },
+        {
+          "rule": "OWASP/Top10-2025/A03",
+          "kind": "institutional",
+          "name": "Software Supply Chain Failures",
+          "applicability": "unknown",
+          "item_digest": "sha256:77aee825107b14f4c76d4747d81f966bb41fed3b794d966561fd87d3a5c58801",
+          "consistent": true,
+          "state": "active",
+          "state_digest": "sha256:77aee825107b14f4c76d4747d81f966bb41fed3b794d966561fd87d3a5c58801",
+          "lifecycle_revision": 0
+        }
+      ],
+      "pending": [],
+      "count": 3,
+      "exited": []
+    },
+    "problems": [],
+    "next_steps": []
+  }
+]

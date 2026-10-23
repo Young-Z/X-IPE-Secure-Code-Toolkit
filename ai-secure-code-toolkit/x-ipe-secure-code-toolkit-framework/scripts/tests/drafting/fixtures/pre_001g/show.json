@@ -1,0 +1,46 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "knowledge show",
+    "ok": true,
+    "data": {
+      "rule": "CWE/Top25-2025/CWE-89",
+      "record": {
+        "applicability": [
+          "java",
+          "python"
+        ],
+        "created_at": "<time>",
+        "item_digest": "sha256:732a9d1e86654b2ae461b06249b07e2579aea199ebf29385388db6b6f5b10486",
+        "kind": "institutional",
+        "name": "SQL Injection",
+        "namespace": "CWE",
+        "relations": [],
+        "rule_id": "CWE-89",
+        "schema": "ai-secure-code-toolkit/local-rule/v1",
+        "source_documents": [],
+        "source_location": "https://cwe.mitre.org/data/definitions/89.html",
+        "source_location_status": "provided",
+        "updated_at": "<time>",
+        "version": "Top25-2025"
+      },
+      "content": "# CWE-89 SQL Injection (test fixture)\n\nBuild database queries only with parameterized statements.\n\n- MUST pass every untrusted value as a bound parameter, never by string concatenation.\n- MUST NOT build SQL text from request data.\n",
+      "examples": {
+        "example-java.md": "// fixture java\nrun();\n",
+        "example-python.md": "# Fixture seed example (human-written)\nquery = \"SELECT id FROM users WHERE name = ?\"\nrows = connection.execute(query, (name,)).fetchall()\n"
+      },
+      "changelog": "# Changelog — CWE/Top25-2025/CWE-89\n\n## <time> — created (role: maintainer)\n\n- item digest: sha256:218d920716c72300c72dfd7790d1c63b46fb47df571fba6bfbf9db41ed00325c\n- source document digest: none\n\n### record.json\n````diff\n--- /dev/null\n+++ b/record.json\n@@ -0,0 +1,19 @@\n+{\n+  \"applicability\": [\n+    \"java\",\n+    \"python\"\n+  ],\n+  \"created_at\": \"<time>\",\n+  \"item_digest\": \"sha256:218d920716c72300c72dfd7790d1c63b46fb47df571fba6bfbf9db41ed00325c\",\n+  \"kind\": \"institutional\",\n+  \"name\": \"SQL Injection\",\n+  \"namespace\": \"CWE\",\n+  \"relations\": [],\n+  \"rule_id\": \"CWE-89\",\n+  \"schema\": \"ai-secure-code-toolkit/local-rule/v1\",\n+  \"source_documents\": [],\n+  \"source_location\": \"https://cwe.mitre.org/data/definitions/89.html\",\n+  \"source_location_status\": \"provided\",\n+  \"updated_at\": \"<time>\",\n+  \"version\": \"Top25-2025\"\n+}\n````\n\n### content.md\n````diff\n--- /dev/null\n+++ b/content.md\n@@ -0,0 +1,6 @@\n+# CWE-89 SQL Injection (test fixture)\n+\n+Build database queries only with parameterized statements.\n+\n+- MUST pass every untrusted value as a bound parameter, never by string concatenation.\n+- MUST NOT build SQL text from request data.\n````\n\n### example-python.md\n````diff\n--- /dev/null\n+++ b/example-python.md\n@@ -0,0 +1,3 @@\n+# Fixture seed example (human-written)\n+query = \"SELECT id FROM users WHERE name = ?\"\n+rows = connection.execute(query, (name,)).fetchall()\n````\n\n## <time> — updated (role: maintainer)\n\n- item digest: sha256:732a9d1e86654b2ae461b06249b07e2579aea199ebf29385388db6b6f5b10486 (base sha256:218d920716c72300c72dfd7790d1c63b46fb47df571fba6bfbf9db41ed00325c)\n- source document digest: none\n\n### record.json\n````diff\n--- a/record.json\n+++ b/record.json\n@@ -4,7 +4,7 @@\n     \"python\"\n   ],\n   \"created_at\": \"<time>\",\n-  \"item_digest\": \"sha256:218d920716c72300c72dfd7790d1c63b46fb47df571fba6bfbf9db41ed00325c\",\n+  \"item_digest\": \"sha256:732a9d1e86654b2ae461b06249b07e2579aea199ebf29385388db6b6f5b10486\",\n   \"kind\": \"institutional\",\n   \"name\": \"SQL Injection\",\n   \"namespace\": \"CWE\",\n````\n\n### example-java.md\n````diff\n--- /dev/null\n+++ b/example-java.md\n@@ -0,0 +1,2 @@\n+// fixture java\n+run();\n````\n\n",
+      "item_digest": "sha256:732a9d1e86654b2ae461b06249b07e2579aea199ebf29385388db6b6f5b10486",
+      "consistent": true,
+      "pending_commit": false,
+      "state": "active",
+      "state_digest": "sha256:732a9d1e86654b2ae461b06249b07e2579aea199ebf29385388db6b6f5b10486",
+      "lifecycle_revision": 0,
+      "relations_status": [],
+      "broken_relations": []
+    },
+    "problems": [],
+    "next_steps": []
+  }
+]
