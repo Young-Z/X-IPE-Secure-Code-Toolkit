@@ -102,3 +102,5 @@ Pass rate: 14/14 at the final revision. All 32 ACs have current passing evidence
 - Skill instructions (04f) were verified structurally. Agent behavior (choice of the cheapest method, asking before adding more) is not measured.
 - Formal tool evaluation (AC-28) is pending in FEATURE-003-C.
 - Stakeholder outcome: not measured.
+
+> **Note (2026-10-24, TASK-100):** bug fix TASK-100 makes the shared no-follow open (`safe_io`) and the Guard staging walk refuse a FIFO without blocking, with the existing refusals. Regression evidence: `acceptance/regression-TASK-100-host-macos.jsonl` (identical to the original host evidence). The results above are unchanged.

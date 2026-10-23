@@ -8,6 +8,8 @@
 | DAO-001 | 2026-10-24T00:57:38+08:00 | TASK-079 | x-ipe-task-based-bug-fix | approval | 0.86 | FEATURE-001-A unreadable AGENTS.md: DEC-1…3 A approved (refuse like non-UTF-8, file + OS reason, existing next step); DEC-4 → separate bug-fix task (reproduce first) for the unopenable skills-folder file, a defect against 001-A edge case L192 within DAO defect-fix authority; TASK-079 closes after the running independent code review |
 | DAO-002 | 2026-10-24T01:45:57+08:00 | TASK-095 | x-ipe-task-based-bug-fix | approval | 0.84 | FEATURE-001-A unreadable skill target + FIFO host entry: DEC-1 (SKILL_NAME_CONFLICT + reason), DEC-2 (existing design code IO_ERROR, blocking even with --replace), DEC-3 (HOST_ENTRY_UNREADABLE 'not a regular file' before open) approved; optional O_NONBLOCK+fstat hardening against check-then-open race; DEC-4 FIFO at install record → separate low-priority candidate with a sweep of init-path reads, reproduce first |
 | DAO-003 | 2026-10-24T03:36:44+08:00 | TASK-097 | x-ipe-task-based-bug-fix | approval | 0.84 | FEATURE-001-A read-path sweep: DEC-1…5 approved (existing delivered codes RECORD_INVALID, TOOLKIT_FILES_CHANGED, IO_ERROR, TRUST_INVALID, PAYLOAD_INCOMPLETE; fail-closed); O-1 → separate bug task on FEATURE-002-B shared safe_io (reproduced; O_NONBLOCK+fstat; 002-B/002-D regressions); O-2 → separate FEATURE-003-B defect candidate scheduled after the human's B7 smoke unless the smoke runs at the fixed revision; swap race stays a Low honest limit |
+| DAO-004 | 2026-10-24T04:28:26+08:00 | TASK-100 | x-ipe-task-based-bug-fix | approval | 0.85 | FEATURE-002-B safe_io FIFO hang: DEC-1 (existing TOOL_NOT_REGISTERED via existing UnsafePath mapping), DEC-2 (set_blocking guarded by NONBLOCK), DEC-3 (shared helper only) approved; targets.py:270 walk folded into TASK-100 with the same pattern and a deterministic RED test, reviewed as a delta — else separate Low candidate |
+| DAO-005 | 2026-10-24T05:12:02+08:00 | TASK-100 | x-ipe-task-based-bug-fix | approval | 0.86 | TASK-100 close confirmed (walk fold-in test-first, review finding fixed, delta re-review PASS, full 2616/0, 002-B host regression identical); O-3 targets.file_digest → (a) separate Low bug-fix task after TASK-099 (reproduce first, reuse safe_io pattern); local exact-path commit allowed (B8) |
 
 ---
 
@@ -159,3 +161,95 @@
 
 ### Follow-up
 > Bug candidates: O-1 FEATURE-002-B safe_io FIFO hang (code queue next); O-2 FEATURE-003-B carriers replaces FIFO host entry (after the human's B7 smoke).
+
+## DAO-004
+- **Timestamp:** 2026-10-24T04:28:26+08:00
+- **Task ID:** TASK-100
+- **Feature ID:** FEATURE-002-B
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-bug-fix
+- **Source:** ai (lifecycle owner "Sage"); defect fix authorized by DAO-003 (bug fix, O-1); delegation continues
+- **Disposition:** approval
+- **Confidence:** 0.85
+
+### Message
+> O-1 from TASK-097: FIFO at a registered tool binary path hung status/registration/Guard precheck/rule-file and archive checks (safe_io.open_nofollow blocking open before fstat S_ISREG). Fix (+4 lines safe_io.py): O_NONBLOCK on the final open, existing S_ISREG refusal unchanged, blocking mode restored for regular files. RED 8 timeouts/2 pass; GREEN; full suite 2614/0; ruff clean; 002-B host regression 2/2 identical; delivered tests byte-identical; independent review running. Report bug-report-TASK-100.md. DEC-1 FIFO surfaces as existing TOOL_NOT_REGISTERED (as a directory already does); DEC-2 keep os.set_blocking(fd, True) for regular files; DEC-3 fix only the shared helper (durable.read already guarded). Limit: guard/targets.py:270 directory walk uses its own blocking open (swap-to-FIFO mid-walk could hang) — fold in now or separate?
+
+### Guidance Returned
+> DAO verified:
+> - bug report SHA fe9611c2… (DEC-1…3 L115–117; limit L122);
+> - `safe_io.py` L18 `NONBLOCK = getattr(os, "O_NONBLOCK", 0)`; `_check_regular` (L30–37) refuses non-regular with the existing `UnsafePath("<rel> is not a regular file")` and calls `os.set_blocking(fd, True)` only when `NONBLOCK` is non-zero, so it is a no-op on Windows;
+> - `TOOL_NOT_REGISTERED` is listed in `references/cli-contract.md` L98;
+> - `guard/targets.py` L268–276: the walk opens after `entry.is_file()` with a blocking `os.open`, then `fstat`.
+> - **DEC-1 → approved.** It is the existing exception and caller mappings, with the same code a directory at that path already receives. The message stays "missing or unreadable", with the existing detail. No new output kind.
+> - **DEC-2 → approved.** It hands callers the same blocking descriptor as before and is correctly guarded where `O_NONBLOCK` doesn't exist.
+> - **DEC-3 → approved.** One fix in the shared helper; `durable.read` is already safe.
+> **targets.py:270 → fold into TASK-100, with conditions.** DAO-003 asked for the `O_NONBLOCK` + `fstat` pattern to be applied uniformly through this task, and this is the last open instance of the same pattern in the same family. The change is tiny: add `safe_io.NONBLOCK` to the `os.open` flags and restore blocking after the `S_ISREG` check (reuse the helper's semantics, DRY).
+> Conditions:
+> 1. Write a deterministic RED test first: monkeypatch the walk's `is_file` for a FIFO entry to simulate the swap. It must time out before the fix and pass after it.
+> 2. The existing outcome for a non-regular entry (the current `irregular`/gap handling) is unchanged; no new code.
+> 3. Extend the running independent review to cover this delta.
+> 4. Delivered 002-A/B/D tests stay byte-identical; run the full suite and the 002-B host regression again.
+> If any condition can't be met cheaply, record it instead as a separate Low candidate and close TASK-100 as is.
+> TASK-100 closing:
+> - review passes;
+> - non-destructive evidence note in 002-B citing TASK-100;
+> - 002-D container regression deferred to its B9 acceptance (noted);
+> - local exact-path commit (B8).
+
+### Rationale
+> The helper fix restores designed refusals with existing codes and no output change; folding in the last same-pattern site completes the uniform guarantee DAO-003 asked for at minimal cost, provided it is reproduced and reviewed.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-bug-fix"
+>     match_strength: "strong"
+>     reason: "Add the targets.py walk fix test-first, extend review, close TASK-100"
+>     execution_steps:
+>       - phase: "Reproduce"
+>         step: "Write a failing test first, then fix"
+
+### Follow-up
+> None (O-2 for FEATURE-003-B stays scheduled after the human's B7 smoke).
+
+## DAO-005
+- **Timestamp:** 2026-10-24T05:12:02+08:00
+- **Task ID:** TASK-100
+- **Feature ID:** FEATURE-002-B
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-bug-fix
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human B8 = A (local commits only)
+- **Disposition:** approval
+- **Confidence:** 0.86
+
+### Message
+> TASK-100 closing. Walk fold-in done per DAO-004 (targets.py +2 lines, RED timeout→GREEN, full 2616/0, 002-B host regression identical); review finding (Windows get_blocking test guard) fixed; delta re-review PASS. New observation O-3 (Low, not fixed): targets.file_digest (targets.py ~79–84, used by snapshot/observe/_walk and toolrun.py:390) opens by path after a type check — a file swapped for a FIFO in that window could block. Options: (a) separate Low bug-fix task after TASK-099; (b) record only; (c) fold into TASK-100. Owner recommends (a). Confirm TASK-100 may close + local exact-path commit.
+
+### Guidance Returned
+> DAO verified:
+> - `guard/targets.py` L270: the walk opens with `safe_io.NONBLOCK` and, at L278, restores blocking under the `NONBLOCK` guard;
+> - `file_digest` (L79–84) uses a path-based `open()`;
+> - the bug report records the review finding fix (L111), the final full suite 2616 passed (L113), the review (L127/L174) and O-3 (L142).
+> **TASK-100 may close.** The fold-in met all DAO-004 conditions: test-first RED→GREEN, existing outcome, review extended and passed after its single finding was fixed, delivered tests byte-identical, full suite green, and the 002-B host regression identical. Close it with a non-destructive evidence note in 002-B citing TASK-100. The 002-D container regression is noted as deferred to its B9 acceptance.
+> **Local exact-path commit allowed (B8).** Commit only the TASK-100 source, test and report paths, with no push.
+> **O-3 → (a), a separate Low bug-fix task queued after TASK-099.** DAO-004 bounded the fold-in to the walk, and the review is closed, so reopening TASK-100 would widen a reviewed change. Recording only (b) would leave a known hang path untracked. Same rules as before:
+> - reproduce first deterministically (e.g. monkeypatching the type check);
+> - fix by reusing the shared `safe_io` pattern (descriptor-based no-follow + `NONBLOCK` + `S_ISREG`), with no new code or output;
+> - delivered 002-A/B/D tests byte-identical;
+> - independent review.
+> It is within DAO defect-fix authority.
+
+### Rationale
+> The closing evidence meets every condition set for the fold-in. O-3 is the same defect family in a different function and should get its own reproduced, reviewed fix rather than widening a closed review.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-bug-fix"
+>     match_strength: "strong"
+>     reason: "Close TASK-100; queue the O-3 Low bug task after TASK-099"
+>     execution_steps:
+>       - phase: "Reproduce"
+>         step: "Write a failing test first, then fix"
+
+### Follow-up
+> Low bug task O-3 (targets.file_digest) queued after TASK-099.

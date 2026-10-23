@@ -15,6 +15,7 @@ CHUNK = 1024 * 1024
 NOFOLLOW = getattr(os, "O_NOFOLLOW", 0)
 DIRECTORY = getattr(os, "O_DIRECTORY", 0)
 BINARY = getattr(os, "O_BINARY", 0)
+NONBLOCK = getattr(os, "O_NONBLOCK", 0)
 POSIX_FD = os.name == "posix" and os.open in os.supports_dir_fd
 
 
@@ -27,9 +28,12 @@ class TooLarge(Exception):
 
 
 def _check_regular(fd: int, rel: str) -> int:
+    """Refuse a non-regular file; a regular file's descriptor is returned in blocking mode."""
     if not stat.S_ISREG(os.fstat(fd).st_mode):
         os.close(fd)
         raise UnsafePath(f"{rel} is not a regular file")
+    if NONBLOCK:
+        os.set_blocking(fd, True)
     return fd
 
 
@@ -59,7 +63,7 @@ def open_nofollow(root: Path, rel: str) -> int:
         before = os.lstat(path)
         if stat.S_ISLNK(before.st_mode) or getattr(before, "st_file_attributes", 0) & 0x400:
             raise UnsafePath(f"{rel} is a link")
-        fd = os.open(path, os.O_RDONLY | BINARY)
+        fd = os.open(path, os.O_RDONLY | BINARY | NONBLOCK)
         after = os.fstat(fd)
         if (after.st_dev, after.st_ino) != (before.st_dev, before.st_ino):
             os.close(fd)
@@ -69,7 +73,7 @@ def open_nofollow(root: Path, rel: str) -> int:
     dfd = open_dir_nofollow(Path(root), parent or ".")
     try:
         try:
-            fd = os.open(name, os.O_RDONLY | NOFOLLOW, dir_fd=dfd)
+            fd = os.open(name, os.O_RDONLY | NOFOLLOW | NONBLOCK, dir_fd=dfd)
         except OSError as exc:
             raise UnsafePath(f"{rel} cannot be opened safely ({exc.strerror})") from None
     finally:

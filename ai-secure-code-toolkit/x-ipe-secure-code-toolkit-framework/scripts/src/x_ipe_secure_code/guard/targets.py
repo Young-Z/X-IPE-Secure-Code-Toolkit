@@ -267,7 +267,7 @@ def stage(
                     os.close(sub)
             elif entry.is_file(follow_symlinks=False):
                 try:
-                    fd = os.open(entry.name, os.O_RDONLY | safe_io.NOFOLLOW, dir_fd=dfd)
+                    fd = os.open(entry.name, os.O_RDONLY | safe_io.NOFOLLOW | safe_io.NONBLOCK, dir_fd=dfd)
                 except OSError:
                     irregular.append(display_name(entry_rel))
                     lines.append(f"{entry_rel}\0unreadable\n")
@@ -275,6 +275,8 @@ def stage(
                 if not stat.S_ISREG(os.fstat(fd).st_mode):
                     os.close(fd)
                     raise safe_io.UnsafePath(f"{display_name(entry_rel)} changed while staging")
+                if safe_io.NONBLOCK:
+                    os.set_blocking(fd, True)
                 if entry_rel in skip:
                     lines.append(f"{entry_rel}\0file\0{safe_io.hash_fd(fd)}\n")
                     continue
