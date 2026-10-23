@@ -33,6 +33,7 @@ class FilePlan:
     outcome: str  # create | current | update | locally_edited | replace | conflict
     new_sha: str
     recorded_sha: str | None
+    read_error: str | None = None
 
 
 def _plan_file(root: Path, target_rel: str, source: Path, recorded: str | None,
@@ -43,7 +44,12 @@ def _plan_file(root: Path, target_rel: str, source: Path, recorded: str | None,
         return FilePlan(target_rel, source, "unsafe", new_sha, recorded)
     if not target.exists():
         return FilePlan(target_rel, source, "create", new_sha, recorded)
-    disk = sha256_file(target)
+    try:
+        if not target.is_file():  # e.g. a FIFO: opening it would block
+            raise OSError("not a regular file")
+        disk = sha256_file(target)
+    except OSError as exc:  # cannot be read: blocking, never overwritten
+        return FilePlan(target_rel, source, "conflict", new_sha, recorded, exc.strerror or str(exc))
     if disk == new_sha:
         outcome = "current"
     elif recorded is not None and disk == recorded:
@@ -166,6 +172,8 @@ def _plan_and_apply(root: Path, profile: Profile, replace: set[str], payload: di
         fragment = None
     else:
         try:
+            if host.exists() and not host.is_file():  # e.g. a FIFO: opening it would block under the lock
+                raise OSError("not a regular file")
             data, read_error = (host.read_bytes() if host.exists() else None), None
         except OSError as exc:  # exists but cannot be opened: refused like a non-UTF-8 host entry
             data, read_error = None, exc
@@ -180,10 +188,15 @@ def _plan_and_apply(root: Path, profile: Profile, replace: set[str], payload: di
                                                    replace, member, exception)
         if fragment.problem:
             problems.append(fragment.problem)
-    conflicts = [p.target_rel for p in plans if p.outcome == "conflict"]
-    for target_rel in conflicts:
+    conflicts = [p for p in plans if p.outcome == "conflict"]
+    for plan in conflicts:
+        if plan.read_error and plan.recorded_sha is not None:
+            problems.append(Problem("IO_ERROR", f"Skill file {plan.target_rel} cannot be read "
+                                                f"({plan.read_error})"))
+            continue
+        unread = f"; it cannot be read ({plan.read_error})" if plan.read_error else ""
         problems.append(Problem("SKILL_NAME_CONFLICT",
-                                f"{target_rel} exists and was not placed by this toolkit"))
+                                f"{plan.target_rel} exists and was not placed by this toolkit{unread}"))
     for plan in plans:
         if plan.outcome == "unsafe":
             reason = unsafe_component(root, plan.target_rel, expect_dir=False)

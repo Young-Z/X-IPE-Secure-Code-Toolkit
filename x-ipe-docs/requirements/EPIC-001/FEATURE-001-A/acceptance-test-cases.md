@@ -183,3 +183,5 @@ Pass Rate = 25 / 26 = **96.2%** (diagnostic, not goal achievement).
 Refactor need: none evidenced — modules ≤ 251 lines, ruff clean, 93% coverage, no duplication found by review; recommend **Feature Closing** (AC-001A-10a Windows gap dispositioned by CR-002). Free-mode: no application workflow mutation (`workflow_action_updated: false`).
 
 > **Note (2026-10-23, TASK-079):** after acceptance, bug fix TASK-079 made plain `init` refuse an unreadable host entry file with `HOST_ENTRY_UNREADABLE` (designed behaviour) instead of crashing. Regression evidence: `acceptance/regression-TASK-079-host-macos.jsonl` (13/13 Pass). The results above are unchanged.
+
+> **Note (2026-10-23, TASK-095):** bug fix TASK-095 made plain `init` refuse unreadable skill targets (`SKILL_NAME_CONFLICT` / `IO_ERROR`) and non-regular host entry files (`HOST_ENTRY_UNREADABLE`) instead of crashing or hanging. Regression evidence: `acceptance/regression-TASK-095-host-macos.jsonl` (statuses identical). The results above are unchanged.
