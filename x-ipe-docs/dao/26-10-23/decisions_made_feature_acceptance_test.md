@@ -7,6 +7,7 @@
 |-------|-----------|---------|---------------|-------------|------------|---------|
 | DAO-001 | 2026-10-23T06:06:53+08:00 | TASK-058 | x-ipe-task-based-feature-acceptance-test | approval | 0.84 | FEATURE-002-D: Bug Fix for F-1 (9 misconfig types incl. ansible) and F-2 (exact-match WARN allow-list, fail-closed) without spec change; rerun; park at acceptance under existing status (B9); then FEATURE-003-B |
 | DAO-002 | 2026-10-23T17:47:54+08:00 | TASK-070 | x-ipe-task-based-feature-acceptance-test | approval | 0.85 | FEATURE-001-F acceptance PASS accepted (63/63, 3 superseded, 001-D 02b clauses superseded/re-run) → Feature Closing; O-1 interpretation confirmed (existing knowledge lock file on first use, consistent with DAO-004 (1)); O-2 recorded as optional human CR/polish candidate, not a defect |
+| DAO-003 | 2026-10-24T00:06:26+08:00 | TASK-091 | x-ipe-task-based-feature-acceptance-test | approval | 0.86 | FEATURE-002-G acceptance PASS (76/76 at 15985026…) accepted → Feature Closing; unit/integration evidence accepted (02c/02h/04f are Unit by spec; 07g/07h/07j Integration via in-process hooks; 05l simulated + limit); host-only 002-D regression accepted (no 002-D code touched; container re-run at 002-D B9 acceptance; no new downloads now); wording readings confirmed |
 
 ---
 
@@ -103,3 +104,48 @@
 
 ### Follow-up
 > Human CR candidates for later: structured save-validated Preset provenance; O-2 `adoption` text for Preset proposals. Optional spec wording clarification for O-1 at next spec revision.
+
+## DAO-003
+- **Timestamp:** 2026-10-24T00:06:26+08:00
+- **Task ID:** TASK-091
+- **Feature ID:** FEATURE-002-G
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-feature-acceptance-test
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human B8 = A (local commits only)
+- **Disposition:** approval
+- **Confidence:** 0.86
+
+### Message
+> Acceptance PASS at toolkit 15985026… (unchanged throughout): 76/76 ACs pass; black-box container 24/24 (182 checks, real Guard runs, real Opengrep 1.31.0), host 23/23 (174); feature+skill tests 249 passed; full suite 2497/0; ruff clean; peak RSS 0.60/1.49 GiB (macOS only); regressions 002-A/B/C, 003-A byte-identical, 003-B pass; 2 partials: 002-B container 9/10 = known superseded "Trivy not provided" check (byte-identical to last regression), 002-D host-only (TC-D-19 byte-identical; TC-H-01 needs Trivy binary + loopback registry volumes no longer present). Local Git repo exists per B8 (17 local commits, nothing pushed). Decide: (1) route Feature Closing; (2) accept named unit/integration tests as evidence for 02c, 02h, 04f, 07g, 07h, 07j (05l via simulated older report); (3) accept host-only 002-D regression now vs restore Trivy/registry now; (4) confirm wording readings ("same issue confirmed" only in a "never means" sentence; "resolved" only in the required "resolved from the project's report store" sentence).
+
+### Guidance Returned
+> DAO verified:
+> - report SHA 099a20c3… (285 lines): status "Verified engineering delivery… not measured"; revision 15985026… (238 files) unchanged; 31/33 logical TCs pass with 2 regression partials and 0 product failures; the AC evidence table (02c L136, 02h L141, 04f L157, 05l L176, 07g–07j L196–199); limits L228–234; O-1/O-2 L219–220;
+> - spec test types: 02c, 02h and 04f are **Unit**; 07g and 07j are Integration (file-access); 07h is Integration (regression); 05l is Integration (CLI);
+> - spec BR-03 bans "fixed/resolved/remediated/improved" as a class, count or description of findings.
+> **(1) Route to Feature Closing.** No refactor goal is named. Closing must carry:
+> - the two regression partials, with their causes;
+> - the honest limits: Windows/Linux RSS not measured; Trivy paths unit-only; simulated older renderer; the residual same-user race; stakeholder outcome not measured;
+> - the planned C1 follow-up (renderer_differs after CR-086);
+> - B8 (local commits only, no push, PR or release).
+> **(2) Accepted.** 02c, 02h and 04f are Unit-typed in the spec, so the named unit tests are their specified primary validation. 07g, 07h and 07j are specified with in-process hooks, fail points or a frozen clock, so the named integration tests are the correct evidence. 05l passes with a simulated older-renderer report, with the limit stated; CR-086/C1 later makes it observable for real. Add a supplementary (non-blocking) item: when FEATURE-002-D's B9 acceptance re-establishes the Trivy container environment, run one 002-G black-box comparison over real Trivy results (02h/04f/06c paths) and append that evidence. Never edit this report.
+> **(3) Accept the host-only 002-D regression now; do not restore Trivy/registry now.** Restoring would need new downloads. The human's B9 authorization covers only 002-D's own acceptance-time DB download, so restoring now would be new network use outside the authorization. 002-G touched no 002-D code (closed plug-in list), and the full suite (2497/0) includes 002-D's fake-based tests. Conditions:
+> - closing records the SHA-256 of 002-D-owned modules, unchanged versus the 002-D acceptance revision (or an empty diff list);
+> - the container regression is re-run inside 002-D's B9 acceptance and noted there.
+> **(4) Both readings confirmed.** "same issue confirmed" appearing only inside the fixed negation "it never means the same issue confirmed" satisfies DAO-010 (OQ-03), which forbids the claim, not its denial. "resolved" appearing only in AC-002G-05e's required sentence about reports being resolved from the report store does not describe a finding, so it is compliant with BR-03. The runner's exact-sentence exclusion is acceptable, provided any other occurrence fails the check.
+> No push, PR or release (B8).
+
+### Rationale
+> Evidence types match the spec's declared validation types at an unchanged, hash-bound revision. The partials are environment or superseded regression artefacts with no product failure. Restoring the 002-D environment now would exceed the human's network authorization.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-feature-closing"
+>     match_strength: "strong"
+>     reason: "Engineering-next after passing acceptance"
+>     execution_steps:
+>       - phase: "1. Verify"
+>         step: "1.1 Verify goals/AC/evidence at current revision; record limits, partials, follow-ups"
+
+### Follow-up
+> Supplementary real-Trivy 002-G comparison during 002-D B9 acceptance; 002-G C1 follow-up CR after CR-086.

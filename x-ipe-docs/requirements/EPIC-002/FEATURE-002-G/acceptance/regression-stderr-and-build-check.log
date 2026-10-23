@@ -1,0 +1,31 @@
+== regression-002A-container-linux.stderr (     548 bytes)
+build-check: guard compare --help exit=0
+ce386af4b865f1b51740815153adfad90cce149bd2fbb55bc6b577749d861a5a  /root/.cache/uv/archive-v0/sxG8zjSaf0s0ARAe0GcAa/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+f0f6ca23994d1183df8bd73413f2c25830d55958ffe026240ad7adad14cf09df  /root/.cache/uv/archive-v0/3RsEQvjUvMe0RyoJ9quoc/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+f513610654e9bc034a16abc3b2cc0175c9977dfbf9811a054a8d0e90dd304f8e  /root/.cache/uv/archive-v0/bLHuNRiPbATB5TGvAwJvf/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+== regression-002A-host-macos.stderr (       0 bytes)
+== regression-002B-container-linux.stderr (     548 bytes)
+build-check: guard compare --help exit=0
+ce386af4b865f1b51740815153adfad90cce149bd2fbb55bc6b577749d861a5a  /root/.cache/uv/archive-v0/sxG8zjSaf0s0ARAe0GcAa/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+f0f6ca23994d1183df8bd73413f2c25830d55958ffe026240ad7adad14cf09df  /root/.cache/uv/archive-v0/3RsEQvjUvMe0RyoJ9quoc/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+f513610654e9bc034a16abc3b2cc0175c9977dfbf9811a054a8d0e90dd304f8e  /root/.cache/uv/archive-v0/bLHuNRiPbATB5TGvAwJvf/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+== regression-002B-host-macos.stderr (       0 bytes)
+== regression-002C-container-linux.stderr (     548 bytes)
+build-check: guard compare --help exit=0
+ce386af4b865f1b51740815153adfad90cce149bd2fbb55bc6b577749d861a5a  /root/.cache/uv/archive-v0/sxG8zjSaf0s0ARAe0GcAa/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+f0f6ca23994d1183df8bd73413f2c25830d55958ffe026240ad7adad14cf09df  /root/.cache/uv/archive-v0/3RsEQvjUvMe0RyoJ9quoc/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+f513610654e9bc034a16abc3b2cc0175c9977dfbf9811a054a8d0e90dd304f8e  /root/.cache/uv/archive-v0/bLHuNRiPbATB5TGvAwJvf/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+== regression-002C-host-macos.stderr (       0 bytes)
+== regression-002D-host-macos.stderr (       0 bytes)
+== regression-003A-container-linux.stderr (     548 bytes)
+build-check: guard compare --help exit=0
+ce386af4b865f1b51740815153adfad90cce149bd2fbb55bc6b577749d861a5a  /root/.cache/uv/archive-v0/sxG8zjSaf0s0ARAe0GcAa/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+f0f6ca23994d1183df8bd73413f2c25830d55958ffe026240ad7adad14cf09df  /root/.cache/uv/archive-v0/3RsEQvjUvMe0RyoJ9quoc/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+f513610654e9bc034a16abc3b2cc0175c9977dfbf9811a054a8d0e90dd304f8e  /root/.cache/uv/archive-v0/bLHuNRiPbATB5TGvAwJvf/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+== regression-003A-host-macos.stderr (       0 bytes)
+== regression-003B-container-linux.stderr (     548 bytes)
+build-check: guard compare --help exit=0
+ce386af4b865f1b51740815153adfad90cce149bd2fbb55bc6b577749d861a5a  /root/.cache/uv/archive-v0/sxG8zjSaf0s0ARAe0GcAa/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+f0f6ca23994d1183df8bd73413f2c25830d55958ffe026240ad7adad14cf09df  /root/.cache/uv/archive-v0/3RsEQvjUvMe0RyoJ9quoc/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+f513610654e9bc034a16abc3b2cc0175c9977dfbf9811a054a8d0e90dd304f8e  /root/.cache/uv/archive-v0/bLHuNRiPbATB5TGvAwJvf/lib/python3.12/site-packages/x_ipe_secure_code/cli.py
+== regression-003B-host-macos.stderr (       0 bytes)

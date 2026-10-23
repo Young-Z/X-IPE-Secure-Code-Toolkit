@@ -1,0 +1,3 @@
+{"tc": "TC-C-10", "acs": ["AC-002C-03e", "AC-002C-05b", "AC-002C-04a"], "status": "Pass", "checks": ["03e/05b user-only commands refused without an interactive terminal, before anything is read", "04a cancel of an unknown verification refused with a next step", "nothing written"], "failed": []}
+{"tc": "TC-C-09", "acs": ["AC-002C-06a"], "status": "Pass", "checks": ["06a skill instructions (budget, pause, cancel, egress)", "06a reference documents attempt and egress requests"], "failed": []}
+{"summary": {"mode": "host", "platform": "darwin", "python": "3.13.3", "passed": 2, "total": 2}}
