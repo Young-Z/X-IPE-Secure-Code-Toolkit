@@ -1,0 +1,6 @@
+# pytest -rs over the test files containing skip markers (same command options as evidence-unit-integration.log), 2026-10-23
+SKIPPED [1] tests/adapters/test_adapters_units.py:510: file system rejects non-UTF-8 names
+SKIPPED [1] tests/knowledge/test_exit_review_fixes.py:272: delete has no append step
+SKIPPED [1] tests/guard/test_guard_units.py:685: file system rejects non-UTF-8 names
+SKIPPED [1] tests/presets/test_tags.py:59: conditional on FEATURE-001-E: Reference knowledge does not exist yet (AC-001F-05a)
+633 passed, 4 skipped in 79.80s (0:01:19)

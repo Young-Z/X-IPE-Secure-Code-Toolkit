@@ -1,0 +1,18 @@
+   Building ai-secure-code-toolkit @ file:///toolkit/x-ipe-secure-code-toolkit-framework/scripts
+      Built ai-secure-code-toolkit @ file:///toolkit/x-ipe-secure-code-toolkit-framework/scripts
+Installed 5 packages in 7ms
+secure-code 0.1.0
+79e0c69e7c4f77b24e8e66eb36d55522007455d1ca52e171f3768d08a7d1f29b  /root/.cache/uv/archive-v0/vTGM2mqe_4qOjP5PksIjG/x_ipe_secure_code/knowledge/catalog.py
+79e0c69e7c4f77b24e8e66eb36d55522007455d1ca52e171f3768d08a7d1f29b  /root/.cache/uv/archive-v0/g9LZ_Ws1N-798r1NYO2Xk/lib/python3.12/site-packages/x_ipe_secure_code/knowledge/catalog.py
+50cf6cda593eb3fe0476b71aab944ef0eb97f4f81c177602f93aaf5d2f733261  /root/.cache/uv/archive-v0/vTGM2mqe_4qOjP5PksIjG/x_ipe_secure_code/knowledge/presets.py
+50cf6cda593eb3fe0476b71aab944ef0eb97f4f81c177602f93aaf5d2f733261  /root/.cache/uv/archive-v0/g9LZ_Ws1N-798r1NYO2Xk/lib/python3.12/site-packages/x_ipe_secure_code/knowledge/presets.py
+34b5b8d99f2ea9eb550224ddae0b1958f60921e0604df2446e14feb254e1d731  /root/.cache/uv/archive-v0/vTGM2mqe_4qOjP5PksIjG/x_ipe_secure_code/knowledge/tags.py
+34b5b8d99f2ea9eb550224ddae0b1958f60921e0604df2446e14feb254e1d731  /root/.cache/uv/archive-v0/g9LZ_Ws1N-798r1NYO2Xk/lib/python3.12/site-packages/x_ipe_secure_code/knowledge/tags.py
+906c4562f13f8aeb906bdef30a8aacbdfbb2b8c5fb5cd4d65fcf3f575c5ba128  /root/.cache/uv/archive-v0/vTGM2mqe_4qOjP5PksIjG/x_ipe_secure_code/knowledge/impact.py
+906c4562f13f8aeb906bdef30a8aacbdfbb2b8c5fb5cd4d65fcf3f575c5ba128  /root/.cache/uv/archive-v0/g9LZ_Ws1N-798r1NYO2Xk/lib/python3.12/site-packages/x_ipe_secure_code/knowledge/impact.py
+165b78658c361281517e6e899340c864d47d8692bc445ab1f9d6a6904c4906f2  /root/.cache/uv/archive-v0/vTGM2mqe_4qOjP5PksIjG/x_ipe_secure_code/knowledge/exit.py
+165b78658c361281517e6e899340c864d47d8692bc445ab1f9d6a6904c4906f2  /root/.cache/uv/archive-v0/g9LZ_Ws1N-798r1NYO2Xk/lib/python3.12/site-packages/x_ipe_secure_code/knowledge/exit.py
+aa9b0bbb27bfa0fc6f8ff8a51b8b8d26ef40c31c1977e771c492709dec755a91  /root/.cache/uv/archive-v0/vTGM2mqe_4qOjP5PksIjG/x_ipe_secure_code/policy/preset_scope.py
+aa9b0bbb27bfa0fc6f8ff8a51b8b8d26ef40c31c1977e771c492709dec755a91  /root/.cache/uv/archive-v0/g9LZ_Ws1N-798r1NYO2Xk/lib/python3.12/site-packages/x_ipe_secure_code/policy/preset_scope.py
+a1e8d924f70e7ab7b7678aecb1a598cad3e1fc710ff56de065a5b7af3dd817d3  /root/.cache/uv/archive-v0/vTGM2mqe_4qOjP5PksIjG/x_ipe_secure_code/cli.py
+a1e8d924f70e7ab7b7678aecb1a598cad3e1fc710ff56de065a5b7af3dd817d3  /root/.cache/uv/archive-v0/g9LZ_Ws1N-798r1NYO2Xk/lib/python3.12/site-packages/x_ipe_secure_code/cli.py

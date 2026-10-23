@@ -1,0 +1,20 @@
+--- /Users/yzhang/Documents/projects/ai-secure-code-toolkit-v2/x-ipe-docs/requirements/EPIC-001/FEATURE-001-D/acceptance/blackbox.py	2026-10-22 21:37:59
++++ blackbox.py	2026-10-23 17:25:15
+@@ -64,7 +64,7 @@
+ REASON = "Superseded by a narrower rule"
+ NOT_CHECKED = "not checked in this version"
+ KINDS = ("relations", "scopes", "guard_runs", "copilot_collaborations", "pending_decisions", "document_index")
+-UNSUPPORTED = ("presets", "tags", "reference_cache")
++UNSUPPORTED = ("reference_cache",)  # DIAGNOSTIC: superseded per AC-001F-06a/06b
+ PREVIEW_KEYS = {"impact", "action", "rule", "target", "reason", "rule_state", "will", "impact_digest",
+                 "references_block"}
+ CONFIRM_KEYS = {"outcome", "rule", "target", "exit_id", "lifecycle_revision", "state_digest", "removed_pending",
+@@ -847,7 +847,7 @@
+          "'not checked in this version'",
+          tcode == 0 and lines[0] == "knowledge exit-preview: OK" and lines[1] == "impact:"
+          and "    count: 0" in lines and any(x.strip() == "(none)" for x in lines)
+-         and f"  presets: {NOT_CHECKED}" in lines and f"  tags: {NOT_CHECKED}" in lines
++         and "  presets:" in lines and "  tags:" in lines
+          and f"  reference_cache: {NOT_CHECKED}" in lines and any(x.startswith("impact_digest: sha256:")
+                                                                   for x in lines)),
+         ("text: confirm output (envelope without --json)", tc_ == 0

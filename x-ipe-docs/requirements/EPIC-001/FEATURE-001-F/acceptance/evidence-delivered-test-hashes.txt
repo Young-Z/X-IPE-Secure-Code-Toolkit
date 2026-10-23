@@ -1,0 +1,8 @@
+# Delivered test files (TASK-069 Stage A baseline, 101 files) vs. this revision (FW/scripts)
+files: 101; unchanged: 99; changed: 2
+CHANGED tests/carriers/carhelp.py  c661ff55fa3cd5ab… -> ed1fc988df40b1ce…
+CHANGED tests/knowledge/test_exit_preview.py  87c33f156edc447c… -> 49c61bce4683dde9…
+tests/policy/: 4 files, changed: []
+tests/guard/: 18 files, changed: []
+tests/copilot/: 8 files, changed: []
+tests/knowledge/: 15 files, changed: ['tests/knowledge/test_exit_preview.py']

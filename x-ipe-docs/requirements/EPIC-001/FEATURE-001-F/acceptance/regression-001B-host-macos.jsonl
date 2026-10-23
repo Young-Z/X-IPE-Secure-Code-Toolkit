@@ -1,0 +1,2 @@
+{"tc": "TC-B-15", "acs": ["AC-001B-08a", "AC-001B-01"], "status": "Pass", "checks": ["08a write refused NOT_AUTHORIZED", "08a nothing written", "08a read still works"], "failed": []}
+{"summary": {"mode": "host", "platform": "darwin", "python": "3.13.3", "passed": 1, "total": 1}}

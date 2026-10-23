@@ -1,0 +1,8 @@
+scripts/src/x_ipe_secure_code/knowledge/impact.py: OK
+scripts/src/x_ipe_secure_code/knowledge/exit.py: OK
+scripts/src/x_ipe_secure_code/cli.py: OK
+SKILL.md: OK
+references/cli-contract.md: OK
+references/policy-selection.md: OK
+pre-001-F reconstruction ready: 211 files
+secure-code 0.1.0
