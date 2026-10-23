@@ -21,20 +21,36 @@ from .results import Result
 COMMAND = "status"
 
 
-def _count_rules(folder: Path) -> int:
-    """Rule entries are folders at depth <namespace>/<version>/<rule id>."""
+def _count_rules(root: Path, folder: Path, problems: list[dict[str, str]]) -> int:
+    """Rule entries are folders at depth <namespace>/<version>/<rule id>; unreadable folders are reported."""
+    def entries(path: Path) -> list[os.DirEntry]:
+        try:
+            with os.scandir(path) as listing:
+                return list(listing)
+        except OSError as exc:
+            problems.append({"code": "IO_ERROR", "message": f"Folder {path.relative_to(root).as_posix()} "
+                                                            f"cannot be read ({exc.strerror or exc})"})
+            return []
+
     count = 0
     if not folder.is_dir():
         return 0
-    for namespace in os.scandir(folder):
+    for namespace in entries(folder):
         if not namespace.is_dir(follow_symlinks=False):
             continue
-        for version in os.scandir(namespace.path):
+        for version in entries(Path(namespace.path)):
             if not version.is_dir(follow_symlinks=False):
                 continue
-            count += sum(1 for rule in os.scandir(version.path)
+            count += sum(1 for rule in entries(Path(version.path))
                          if rule.is_dir(follow_symlinks=False))
     return count
+
+
+def _matches(path: Path, expected: str) -> bool:
+    try:
+        return path.is_file() and sha256_file(path) == expected
+    except OSError:  # cannot be read, so it cannot be shown to match the record
+        return False
 
 
 def _install(root: Path, record: InstallRecord | None, record_error: RecordError | None,
@@ -48,8 +64,7 @@ def _install(root: Path, record: InstallRecord | None, record_error: RecordError
                 "next_step": f"secure-code init --project {root} --env <environment>"}
     drifted = 0
     for rel, expected in record.files.items():
-        path = root / rel
-        if not path.is_file() or sha256_file(path) != expected:
+        if not _matches(root / rel, expected):
             drifted += 1
     if drifted:
         problems.append({"code": "TOOLKIT_FILES_CHANGED",
@@ -258,8 +273,8 @@ def collect(project: str | None, trust_paths: TrustPaths | None = None) -> Resul
     auth = verify(trust_paths or resolve())
     if auth.state == "invalid":
         problems.append({"code": "TRUST_INVALID", "message": auth.reason})
-    local = _count_rules(root / DATA_ROOT / "knowledge" / "local")
-    reference = _count_rules(root / DATA_ROOT / "knowledge" / "reference")
+    local = _count_rules(root, root / DATA_ROOT / "knowledge" / "local", problems)
+    reference = _count_rules(root, root / DATA_ROOT / "knowledge" / "reference", problems)
     data = {
         "install": _install(root, record, record_error, problems),
         "authorization": auth.to_dict(),

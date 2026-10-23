@@ -7,6 +7,7 @@
 |-------|-----------|---------|---------------|-------------|------------|---------|
 | DAO-001 | 2026-10-24T00:57:38+08:00 | TASK-079 | x-ipe-task-based-bug-fix | approval | 0.86 | FEATURE-001-A unreadable AGENTS.md: DEC-1…3 A approved (refuse like non-UTF-8, file + OS reason, existing next step); DEC-4 → separate bug-fix task (reproduce first) for the unopenable skills-folder file, a defect against 001-A edge case L192 within DAO defect-fix authority; TASK-079 closes after the running independent code review |
 | DAO-002 | 2026-10-24T01:45:57+08:00 | TASK-095 | x-ipe-task-based-bug-fix | approval | 0.84 | FEATURE-001-A unreadable skill target + FIFO host entry: DEC-1 (SKILL_NAME_CONFLICT + reason), DEC-2 (existing design code IO_ERROR, blocking even with --replace), DEC-3 (HOST_ENTRY_UNREADABLE 'not a regular file' before open) approved; optional O_NONBLOCK+fstat hardening against check-then-open race; DEC-4 FIFO at install record → separate low-priority candidate with a sweep of init-path reads, reproduce first |
+| DAO-003 | 2026-10-24T03:36:44+08:00 | TASK-097 | x-ipe-task-based-bug-fix | approval | 0.84 | FEATURE-001-A read-path sweep: DEC-1…5 approved (existing delivered codes RECORD_INVALID, TOOLKIT_FILES_CHANGED, IO_ERROR, TRUST_INVALID, PAYLOAD_INCOMPLETE; fail-closed); O-1 → separate bug task on FEATURE-002-B shared safe_io (reproduced; O_NONBLOCK+fstat; 002-B/002-D regressions); O-2 → separate FEATURE-003-B defect candidate scheduled after the human's B7 smoke unless the smoke runs at the fixed revision; swap race stays a Low honest limit |
 
 ---
 
@@ -109,3 +110,52 @@
 
 ### Follow-up
 > Low-priority bug candidate: FIFO/non-regular toolkit-owned files read by init/status (install record and similar), reproduce first.
+
+## DAO-003
+- **Timestamp:** 2026-10-24T03:36:44+08:00
+- **Task ID:** TASK-097
+- **Feature ID:** FEATURE-001-A
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-bug-fix
+- **Source:** ai (lifecycle owner "Sage"); defect fix authorized by DAO-002 (bug fix); delegation continues
+- **Disposition:** approval
+- **Confidence:** 0.84
+
+### Message
+> Fix: install_record.load refuses a non-regular record (init/carriers RECORD_INVALID "Inspect … not repaired automatically"; status "invalid record"). Audit of 16 read paths found 4 more blocking/crashing cases, fixed with existing codes: DEC-2 status — unopenable installed toolkit file counted as changed (TOOLKIT_FILES_CHANGED); DEC-3 status — unlistable knowledge folder → IO_ERROR naming the folder, adds nothing to the count; DEC-4 status — FIFO trust file → authorization invalid / TRUST_INVALID (auth/verify.py, 001-A module); DEC-5 init — FIFO/unreadable toolkit source file → PAYLOAD_INCOMPLETE before the lock and any write. 4 source files (+39/−12), 10 new tests red→green, full suite 2603/0, delivered tests + 001-A baselines byte-identical; independent code review running. Recorded, not fixed: O-1 status hangs if a registered tool binary path is a FIFO (shared safe_io, FEATURE-002-B); O-2 carriers silently replaces a FIFO carrier/host entry while plain init refuses it (003-B consistency); Low limit: check-to-read swap race.
+
+### Guidance Returned
+> DAO verified:
+> - bug report SHA 2de8475f…: DEC-1…5 (L137–141), O-1 (L142, reproduced by probe A14), O-2 (L143), audit table (L62–64);
+> - all five codes already exist in delivered code/contract at HEAD 0f71b21: `RECORD_INVALID` (carriers.py, registry_store.py, records.py), `TOOLKIT_FILES_CHANGED` and `TRUST_INVALID` (status.py), `IO_ERROR` and `PAYLOAD_INCOMPLETE` (001-A design), and all are listed in `references/cli-contract.md`.
+> **DEC-1…5 → approved.** Each turns a hang or crash into the existing, fail-closed outcome named by the delivered 001-A spec/design (spec L192 "fail with reason"; AC-001A-09c/09e for status and trust). No new output kind and no AC text change. This is within DAO defect-fix authority.
+> - DEC-4: fail-closed `invalid` authorization for a non-regular trust file is the conservative reading of design §G "unreadable trust files". Maintainer-gated commands correctly refuse.
+> - DEC-3: the IO_ERROR names only the folder and the OS reason. The count honestly excludes it.
+> **O-1 → separate bug task on FEATURE-002-B** (shared `safe_io.open_absolute_nofollow`). It is reproduced, it is a hang (a defect against the delivered "fail with reason" behavior), and it is within DAO defect-fix authority. Fix:
+> - open with `O_NONBLOCK` (where supported), then `fstat` regular-file check on the fd, then clear `O_NONBLOCK` before reading if needed;
+> - existing refusal code only;
+> - delivered 002-B/002-D/002-A tests byte-identical;
+> - run the 002-B host regression; note that the 002-D container regression runs at its B9 acceptance.
+> It joins the code queue after TASK-097.
+> **O-2 → separate FEATURE-003-B defect candidate.** Silently replacing a non-regular host entry contradicts 003-B's init/carriers consistency (AC-003B-01e) and 001-A's "user content never overwritten", so carriers should refuse like init. It is Low (no hang or crash). Timing: FEATURE-003-B awaits the human's B7 manual Copilot smoke "later today". Do not change 003-B code before that smoke unless the smoke is then run at the fixed revision. Default: fix after the human records B7, then re-run 003-B acceptance and record that the smoke revision predates this fix. Mention it in the human status summary.
+> **Swap race (check-to-read):** remains a Low honest limit in the bug report, unless the `O_NONBLOCK` + `fstat`-on-fd pattern is applied uniformly. That uniform pattern is a good target for the O-1 task, which owns the shared helper.
+> TASK-097 closing:
+> - independent code review passes (or its findings are fixed and re-reviewed);
+> - 001-A black-box regression plus the full suite at the final revision;
+> - a non-destructive evidence note citing TASK-097;
+> - local exact-path commit (B8).
+
+### Rationale
+> All five fixes restore designed fail-closed outcomes with existing codes. The two observations touch other features' modules and states (002-B's shared helper and 003-B awaiting a human smoke), so separate bounded tasks keep this fix reviewable and avoid invalidating the human's pending check.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-bug-fix"
+>     match_strength: "strong"
+>     reason: "Close TASK-097 after review; open O-1 (002-B safe_io) and O-2 (003-B, after B7) bug tasks"
+>     execution_steps:
+>       - phase: "Reproduce"
+>         step: "Write a failing test first, then fix"
+
+### Follow-up
+> Bug candidates: O-1 FEATURE-002-B safe_io FIFO hang (code queue next); O-2 FEATURE-003-B carriers replaces FIFO host entry (after the human's B7 smoke).

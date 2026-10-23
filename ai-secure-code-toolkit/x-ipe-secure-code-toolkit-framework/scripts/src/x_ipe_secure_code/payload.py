@@ -81,9 +81,15 @@ def locate(source: str | Path | None = None) -> Path:
 def files(root: Path) -> dict[str, Path]:
     """Return {'<skill>/<relative posix path>': absolute source path}."""
     result: dict[str, Path] = {}
+
+    def unreadable(exc: OSError) -> None:  # os.walk would otherwise skip the folder: a partial payload
+        rel = Path(exc.filename or root).relative_to(root).as_posix()
+        raise PayloadError("PAYLOAD_INCOMPLETE",
+                           f"Toolkit source folder {rel} cannot be read ({exc.strerror or exc})")
+
     for name in SKILL_NAMES:
         base = root / name
-        for current, dirs, names in os.walk(base, followlinks=False):
+        for current, dirs, names in os.walk(base, onerror=unreadable, followlinks=False):
             current_path = Path(current)
             rel_dir = current_path.relative_to(base).as_posix()
             kept = []
@@ -104,5 +110,8 @@ def files(root: Path) -> dict[str, Path]:
                 rel = filename if rel_dir == "." else f"{rel_dir}/{filename}"
                 if path.is_symlink():
                     raise PayloadError("PAYLOAD_SYMLINK", f"Symlink in toolkit source: {name}/{rel}")
+                if not path.is_file() or not os.access(path, os.R_OK):  # a FIFO would block init
+                    raise PayloadError("PAYLOAD_INCOMPLETE",
+                                       f"Toolkit source file {name}/{rel} is not a readable regular file")
                 result[f"{name}/{rel}"] = path
     return dict(sorted(result.items()))

@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
@@ -62,13 +63,19 @@ def _signed(pub: Ed25519PublicKey, kind: str, record: dict[str, Any]) -> bool:
     return verify_signature(pub, signature, canonical(kind, record))
 
 
+def _read(path: Path) -> bytes:
+    if path.exists() and not path.is_file():  # e.g. a FIFO: reading it would block
+        raise OSError(f"{path.name} is not a regular file")
+    return path.read_bytes()
+
+
 def _load_key_and_state(paths: TrustPaths) -> tuple[Ed25519PublicKey, dict[str, Any]]:
     try:
-        pub = load_public(paths.public_key.read_bytes())
+        pub = load_public(_read(paths.public_key))
     except (OSError, KeyFormatError) as exc:
         raise _Bad(f"trusted public key missing or unreadable ({exc.__class__.__name__})") from exc
     try:
-        state = parse(paths.state.read_bytes())
+        state = parse(_read(paths.state))
         check_state(state)
     except (OSError, RecordInvalid) as exc:
         raise _Bad(f"trust state missing or malformed: {exc}") from exc
@@ -79,7 +86,7 @@ def _load_key_and_state(paths: TrustPaths) -> tuple[Ed25519PublicKey, dict[str, 
 
 def _load_grant(paths: TrustPaths, pub: Ed25519PublicKey, grant_id: str) -> dict[str, Any]:
     try:
-        grant = parse(paths.grant(grant_id).read_bytes())
+        grant = parse(_read(paths.grant(grant_id)))
         check_grant(grant)
     except (OSError, RecordInvalid) as exc:
         raise _Bad(f"authorization missing or malformed: {exc}") from exc

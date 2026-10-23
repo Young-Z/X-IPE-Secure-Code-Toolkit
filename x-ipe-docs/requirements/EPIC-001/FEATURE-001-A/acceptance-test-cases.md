@@ -185,3 +185,5 @@ Refactor need: none evidenced — modules ≤ 251 lines, ruff clean, 93% coverag
 > **Note (2026-10-23, TASK-079):** after acceptance, bug fix TASK-079 made plain `init` refuse an unreadable host entry file with `HOST_ENTRY_UNREADABLE` (designed behaviour) instead of crashing. Regression evidence: `acceptance/regression-TASK-079-host-macos.jsonl` (13/13 Pass). The results above are unchanged.
 
 > **Note (2026-10-23, TASK-095):** bug fix TASK-095 made plain `init` refuse unreadable skill targets (`SKILL_NAME_CONFLICT` / `IO_ERROR`) and non-regular host entry files (`HOST_ENTRY_UNREADABLE`) instead of crashing or hanging. Regression evidence: `acceptance/regression-TASK-095-host-macos.jsonl` (statuses identical). The results above are unchanged.
+
+> **Note (2026-10-24, TASK-097):** bug fix TASK-097 made `init`, `status` and `carriers` refuse a non-regular install record, and fixed four related read paths plus unreadable toolkit-source folders with existing codes. Regression evidence: `acceptance/regression-TASK-097-host-macos.jsonl` (statuses identical). The results above are unchanged.

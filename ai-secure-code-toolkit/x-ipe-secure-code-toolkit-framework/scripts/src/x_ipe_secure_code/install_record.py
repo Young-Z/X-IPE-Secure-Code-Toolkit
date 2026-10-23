@@ -145,6 +145,8 @@ def load(root: Path) -> InstallRecord | None:
         raise RecordError(f"install record path is unsafe: {unsafe}", "PATH_UNSAFE")
     if not path.exists():
         return None
+    if not path.is_file():  # e.g. a FIFO: reading it would block (in init/carriers under the project lock)
+        raise RecordError("install record unreadable: not a regular file")
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
         if data.pop("schema") != SCHEMA:
