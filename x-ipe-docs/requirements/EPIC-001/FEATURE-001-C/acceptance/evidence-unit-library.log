@@ -1,0 +1,38 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.6, pytest-9.1.1, pluggy-1.7.0 -- /Users/yzhang/Documents/projects/ai-secure-code-toolkit-v2/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/.venv/bin/python3
+rootdir: /Users/yzhang/Documents/projects/ai-secure-code-toolkit-v2/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collecting ... collected 29 items
+
+tests/policy/test_policy_units.py::test_requested_reference_forms[CWE/4.14/CWE-79-4.14] PASSED [  3%]
+tests/policy/test_policy_units.py::test_requested_reference_forms[CWE/CWE-79-None] PASSED [  6%]
+tests/policy/test_policy_units.py::test_requested_reference_forms[@ACME/ACME-7-None] PASSED [ 10%]
+tests/policy/test_policy_units.py::test_requested_reference_forms[@ACME/v1/ACME-7-v1] PASSED [ 13%]
+tests/policy/test_policy_units.py::test_invalid_references_never_raise[] PASSED [ 17%]
+tests/policy/test_policy_units.py::test_invalid_references_never_raise[CWE] PASSED [ 20%]
+tests/policy/test_policy_units.py::test_invalid_references_never_raise[a/b/c/d] PASSED [ 24%]
+tests/policy/test_policy_units.py::test_invalid_references_never_raise[CWE/../CWE-79] PASSED [ 27%]
+tests/policy/test_policy_units.py::test_invalid_references_never_raise[CWE/4.14/CON] PASSED [ 31%]
+tests/policy/test_policy_units.py::test_invalid_references_never_raise[C W E/X] PASSED [ 34%]
+tests/policy/test_policy_units.py::test_invalid_references_never_raise[CWE//X] PASSED [ 37%]
+tests/policy/test_policy_units.py::test_status_truth_table[availabilities0-complete] PASSED [ 41%]
+tests/policy/test_policy_units.py::test_status_truth_table[availabilities1-partial] PASSED [ 44%]
+tests/policy/test_policy_units.py::test_status_truth_table[availabilities2-partial] PASSED [ 48%]
+tests/policy/test_policy_units.py::test_status_truth_table[availabilities3-maintenance_needed] PASSED [ 51%]
+tests/policy/test_policy_units.py::test_status_truth_table[availabilities4-maintenance_needed] PASSED [ 55%]
+tests/policy/test_policy_units.py::test_proposal_digest_ignores_order_and_descriptions_but_not_state PASSED [ 58%]
+tests/policy/test_policy_units.py::test_scope_id_excludes_creation_time_and_detects_changes PASSED [ 62%]
+tests/policy/test_policy_units.py::test_tampered_record_fails_verification PASSED [ 65%]
+tests/policy/test_policy_units.py::test_language_notes_never_filter[applicability0-languages0-does_not_match] PASSED [ 68%]
+tests/policy/test_policy_units.py::test_language_notes_never_filter[applicability1-languages1-matches] PASSED [ 72%]
+tests/policy/test_policy_units.py::test_language_notes_never_filter[unknown-languages2-unknown] PASSED [ 75%]
+tests/policy/test_policy_units.py::test_language_notes_never_filter[applicability3-languages3-no_context] PASSED [ 79%]
+tests/policy/test_policy_units.py::test_record_with_bad_language_context_is_invalid[languages0] PASSED [ 82%]
+tests/policy/test_policy_units.py::test_record_with_bad_language_context_is_invalid[5] PASSED [ 86%]
+tests/policy/test_policy_units.py::test_record_with_bad_language_context_is_invalid[java] PASSED [ 89%]
+tests/policy/test_policy_units.py::test_record_without_valid_creation_time_is_invalid[None] PASSED [ 93%]
+tests/policy/test_policy_units.py::test_record_without_valid_creation_time_is_invalid[5] PASSED [ 96%]
+tests/policy/test_policy.py::test_skill_package_describes_scope_selection PASSED [100%]
+
+============================== 29 passed in 0.04s ==============================
