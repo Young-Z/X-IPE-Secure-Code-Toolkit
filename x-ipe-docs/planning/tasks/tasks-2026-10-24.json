@@ -24,6 +24,17 @@
       "created_at": "2026-10-24T00:21:17.474179+00:00",
       "last_updated": "2026-10-24T00:21:17.474179+00:00",
       "task_id": "TASK-105"
+    },
+    {
+      "task_type": "Technical Design",
+      "description": "Technical design for FEATURE-004-A per spec v1.5.2 (23b5e234; DAO-021 refinement): bindings DAO-016 integrity key + quarantine recovery incl. hold-occupancy counting, additive self-contained skill sections, no model/network/third party, delivered outputs byte-identical; display-only hint for held items (DAO-021 reading 2) handled as a design DEC; readings 1-4 as confirmed.",
+      "role": "Sage",
+      "status": "in_progress",
+      "output_links": [],
+      "next_task": "",
+      "created_at": "2026-10-24T01:47:08.824291+00:00",
+      "last_updated": "2026-10-24T01:47:08.824291+00:00",
+      "task_id": "TASK-106"
     }
   ]
 }

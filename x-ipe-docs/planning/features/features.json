@@ -250,14 +250,14 @@
       "epic_id": "EPIC-004",
       "title": "Bounded Improvement Suggestions & Lessons",
       "version": "v1.0",
-      "status": "Planned",
+      "status": "Refined",
       "description": "Phase 3: strictly admitted improvement suggestions, at most 10 active, 30-day expiry and terminal retention, mandatory review of user suggestions.",
       "dependencies": [
         "FEATURE-002-A",
         "FEATURE-003-A"
       ],
       "created_at": "2026-10-18T16:59:49.085937+00:00",
-      "last_updated": "2026-10-18T16:59:49.085937+00:00"
+      "last_updated": "2026-10-24T01:47:08.794587+00:00"
     },
     {
       "feature_id": "FEATURE-004-B",
