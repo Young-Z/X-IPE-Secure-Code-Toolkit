@@ -1,7 +1,8 @@
 # Acceptance Test Cases
 
 > Feature: FEATURE-002-D — Trivy Adapter (EPIC-002)
-> Status: **Acceptance partial — B9 and B10 not executed; delivery NOT Completed.** At the fixed revision (Bug Fix TASK-059), 44 of 46 ACs pass with current black-box evidence (real Trivy v0.76.1 binary, real CLI, offline Linux arm64 container; macOS host for the Linux-only refusal). F-1 (AC-002D-03d) and F-2 (AC-002D-05b) from TASK-058 are fixed and verified with the real binary. **AC-002D-02b and 02c pass only against a loopback registry**; their live branch (provisioning from the real `mirror.gcr.io` / `ghcr.io` with real-host observation) and the mandatory real-binary gate file are **not executed (B9)**. The adapter on **Linux x86-64 is not executed (B10)**.
+> **Current status (2026-10-24 B17 run, see the section "Resumed Run 2026-10-24 (B9, B10, B17)" at the end; it supersedes the results below for the frozen revision `44837bb0…`):** all **46 of 46 ACs pass** on Linux arm64 at the frozen toolkit revision — the live branch of AC-002D-02b/02c now **executed against the real `mirror.gcr.io` through the adapter (TC-L-01 Pass, real-host DNS/SNI/IP observation)**; Linux x86-64 is a human-accepted unverified limit (B10, TC-X-01 not executed); the real-binary gate file TC-G-01 stays **not executed** (apt packages not authorized under B17). TC tally 25/29 = 86.2 % on the same 29-case denominator. Stakeholder outcome not measured. Status transition is the owner's decision.
+> Previous status (2026-10-23 rerun, kept for history): **Acceptance partial — B9 and B10 not executed; delivery NOT Completed.** At the fixed revision (Bug Fix TASK-059), 44 of 46 ACs pass with current black-box evidence (real Trivy v0.76.1 binary, real CLI, offline Linux arm64 container; macOS host for the Linux-only refusal). F-1 (AC-002D-03d) and F-2 (AC-002D-05b) from TASK-058 are fixed and verified with the real binary. **AC-002D-02b and 02c pass only against a loopback registry**; their live branch (provisioning from the real `mirror.gcr.io` / `ghcr.io` with real-host observation) and the mandatory real-binary gate file are **not executed (B9)**. The adapter on **Linux x86-64 is not executed (B10)**.
 > Revision: toolkit file list `2fc16db8…` (181 files; identical at the start and end of the rerun) · specification `229cc76e…` · design `cb2cd1cf…` · runner `66b42dce…` (SHA-256 prefixes; full values in Relevant Inputs).
 > History: acceptance **TASK-058** (2026-10-23, toolkit `8bf12b50…`: 42 Pass, 2 Fail F-1/F-2, 2 loopback-only) → DAO-001 of `x-ipe-docs/dao/26-10-23/decisions_made_feature_acceptance_test.md` → **Bug Fix TASK-059** ([bug-report-TASK-059.md](bug-report-TASK-059.md): `CONFIG_TYPES` = the 9 real v0.76.1 types incl. `ansible`; exact, version-pinned, fail-closed WARN allow-list for the two observed benign messages) → **full rerun** of this acceptance (all black-box cases, regressions, Framework suite) at the fixed revision, under the same DAO-002 rules. TASK-058's failing container evidence is kept as [evidence-container-linux-run1-TASK058-FAIL.jsonl](acceptance/evidence-container-linux-run1-TASK058-FAIL.jsonl).
 > Task: TASK-058 rerun, owner Sage, free-mode, interaction mode `dao-represent-human-to-interact` (owner relays). Binding rules: DAO-002 in `x-ipe-docs/dao/26-10-23/decisions_made_technical_design.md`. Rerun executed 2026-10-23 (UTC 2026-10-22 22:22–23:17).
@@ -297,3 +298,188 @@ acceptance_evidence:
 This record shows hash and coverage consistency only. The executed artifacts above are the proof, and stakeholder outcome is **not measured**.
 
 > **Note (2026-10-24, resumption after B9/B10):** the human granted B9 = A (one-time Trivy DB download via `tool_update` in a disposable container) and B10 = A (Apple Silicon arm64 evidence accepted; x86-64 recorded as an unverified limit — TC-X-01 stays not executed as an accepted limit). At resumption the Docker assets of TASK-058/059 (official v0.76.1 binary volume, uv cache, images) had been removed; re-downloading them is outside B9, so TASK-058 is parked on human item **B17** (representative DAO-004, feature acceptance test). Nothing was run; the results above are unchanged.
+
+## Resumed Run 2026-10-24 (B9, B10, B17)
+
+**Executed 2026-10-24 (UTC 01:26–02:26) by the acceptance worker for owner Sage, task TASK-058 (free-mode, mode `dao-represent-human-to-interact`, owner relays). No board, Git, memory, product, product-doc or existing-test change; no successor run.**
+
+### Authorizations applied (exact scope)
+
+| Item | Human decision (`x-ipe-docs/dao/26-10-23/human_decisions.md`) | How it was applied |
+| --- | --- | --- |
+| B9 = A | One-time acceptance-time Trivy DB download through the toolkit's `tool_update` path in a disposable container | **One** provisioning request (`secure-code tools provision --component vulnerability_db --component java_db --component checks_bundle`) from the validated default registry `mirror.gcr.io`, under a Maintainer authorization created inside the container (`auth init`, never on the macOS host) and one FEATURE-002-C `tool_update` grant (`metadata`, exact scopes of the three repositories) given at a terminal. No retry. `ghcr.io` was **not** contacted live (a second registry would be a second download). `SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED` is the gate file's switch (TC-G-01), not used because TC-G-01 did not run. |
+| B10 = A | arm64 evidence accepted; x86-64 an unverified limit | TC-X-01 → **Not executed — accepted limit (B10)**; not counted as passed. |
+| B17 = A | Re-download, in disposable containers/volumes only, (1) the official Trivy v0.76.1 linux/arm64 asset (pinned digest), (2) the toolkit's Python packages from PyPI; apt NOT authorized | (1) downloaded once, digest-verified before extraction and before any execution (below). (2) **not needed**: every runtime dependency was already in a local seed cache, so PyPI was not contacted. No apt package, no x86-64 asset, no `checksums.txt`, no GitHub API call. |
+
+Network use: only the two explicit steps (binary download; TC-L-01). Every other container ran with `--network none` or on the Docker `--internal` network `b17-int` whose single peer was the loopback registry; host runs used `UV_OFFLINE=1`.
+
+### Frozen revision
+
+- Executed only against the frozen copy `files/fat-002d-b17/frozen/ai-secure-code-toolkit` (session folder; git archive of toolkit HEAD `f18423e`); the live `ai-secure-code-toolkit/` tree was neither executed nor hashed. The copy was kept read-only during the run.
+- File-list hash (method: `find . -type f` without `.venv`, `__pycache__`, `.pytest_cache`, `.ruff_cache`, `.coverage` → `shasum -a 256` → `sed` → `LC_ALL=C sort -k2` → `shasum -a 256`): **start `44837bb074771c70e3c78cd9a1307e5dbf6f67e58e4786363f3efd0a73b46c68` (291 files, 01:26 UTC) = end `44837bb074771c70e3c78cd9a1307e5dbf6f67e58e4786363f3efd0a73b46c68` (291 files, 02:25 UTC)**; the per-file lists are byte-identical.
+- Versus the TASK-059 rerun revision (`2fc16db8…`, 181 files): 110 files added and 27 changed (later features, e.g. FEATURE-001-G and the TASK-097/100 work). Changed files shared with this adapter: `cli.py`, `status.py`, `guard/report.py`, `guard/service.py`, `guard/targets.py`, `guard/budget.py`, `guard/cancel.py`, `guard/retention.py`, `adapters/safe_io.py`, `atomic.py`, `payload.py`, `pyproject.toml`, Guard `SKILL.md`, Framework `SKILL.md`/`cli-contract.md`. Unchanged: every `adapters/trivy*.py` (`trivy.py` `b06073d8…`, `trivy_log.py` `44ff4d1e…`, `trivy_run.py` `7b1072c7…`, `trivy_provision.py` `70ededeb…`, …), `digests.py` `4e949cf3…`, `registry_store.py` `e26a36ac…`, `process.py` `8890554a…`, `guard/toolrun.py` `06d1fdd1…`, gate `tests/guard/test_trivy_real.py` `a02faa0d…`. Because shared modules changed, **every** executable group was re-run at the frozen revision (no reuse of earlier results).
+
+### Environment rebuild (all removed at the end; digests recorded)
+
+| Asset | Source / method | Digest / identity |
+| --- | --- | --- |
+| Trivy v0.76.1 linux/arm64 archive | B17 download in a disposable `python:3.12-slim` container into volume `b17-bin` ([harness/fetch_trivy_arm64_b17.py](acceptance/harness/fetch_trivy_arm64_b17.py)); `https://github.com/aquasecurity/trivy/releases/download/v0.76.1/trivy_0.76.1_Linux-ARM64.tar.gz` (redirect host `release-assets.githubusercontent.com`), 47,434,511 bytes, 20.1 s | `sha256:e174dff2a6dba5e3ae41f8d0537a6324405bd08132497340304c6b20e0f16a1f` = pinned value of tool-validation and `digests.TRIVY` (checked **before** extraction) |
+| Trivy binary (extracted) | from the verified archive | `sha256:b422130ea54e53e142e65c838662e48919ce9c3f23f17d80066b43e70550cb85`, 162,857,120 bytes = pinned (checked **before** any execution) ([toolval-binary-b17.jsonl](acceptance/tool-level/toolval-binary-b17.jsonl)) |
+| uv cache `b17-uv-cache` | fresh volume; seed `fat-uv-cache-001d` copied through a read-only mount (seed never mutated); every cached toolkit build removed; toolkit built **offline** from the frozen copy | wheels `cffi`, `cryptography`, `pycparser`, `pyyaml` from the seed; built `x_ipe_secure_code` tree equals the frozen source file by file (106 files); PyPI not contacted |
+| Images (local, no pull) | `fat-uv-git:py312` `8cbe78fe…` (Python 3.12.12, uv 0.9.30); `python:3.12-slim` `a6e34c59…`; `ghcr.io/astral-sh/uv:python3.12-bookworm-slim` `e5b65587…` (002-A regression); `busybox` `c9fccaa6…` (only to stream `docker save` into a volume) | — |
+| Image archives `b17-img` ([image-archives-b17.txt](acceptance/tool-level/image-archives-b17.txt)) | `docker save` of local `redis:6-alpine` (`efecd39d…`) and `hello-world:latest` (`7e1a4e2d…`); `FROM scratch` images built locally with WebGoat's `maven-wrapper.jar` and with a 600 MB random blob (no base image, no pull; images and their 7 BuildKit cache entries deleted after `docker save`) | `redis-6-alpine.tar` `df0f77c7…`, `hello-world.tar` `68869b3b…`, `jar-only.tar` `59be28be…`, `big-600m.tar` `dc9450bd…` |
+| Trivy components for the loopback registry | **no new download**: the generations the adapter itself provisioned live in TC-L-01, copied to `b17-comp`, rebuilt as OCI artifacts by the unchanged [registry.py](acceptance/harness/registry.py) `build` ([oci-build-b17.jsonl](acceptance/tool-level/oci-build-b17.jsonl)) | `db/trivy.db` `6fd7f9c4…`, `java-db/trivy-java.db` `9c17cf95…`, `db/metadata.json` `d6595a0a…`, `java-db/metadata.json` `1511c594…`, `policy/metadata.json` `9d172818…` (642 files); manifests: vulnerability DB `f5c551bd…` (old variant `93aa0c8d…`), Java DB `2084133a…`, checks bundle `0d665ebe…` |
+| Test CA | new disposable CA + leaf (`mirror.gcr.io`, `ghcr.io`, `pkg-containers.githubusercontent.com`; 3-day validity), generated with OpenSSL in the session folder, trusted only inside the disposable runner container; keys deleted after the run | — |
+| Opengrep (002-B regression) | existing local volume `og-validate`, mounted read-only | unchanged |
+
+New harness files (existing harness files unchanged): [fetch_trivy_arm64_b17.py](acceptance/harness/fetch_trivy_arm64_b17.py), [tc_live_b17.py](acceptance/harness/tc_live_b17.py), [setup-loopback-b17.sh](acceptance/harness/setup-loopback-b17.sh), [run-container-b17.sh](acceptance/harness/run-container-b17.sh), [run-host-b17.sh](acceptance/harness/run-host-b17.sh), [run-regressions-b17.sh](acceptance/harness/run-regressions-b17.sh) — the `*-b17.sh` scripts are the earlier scripts with `TOOLKIT_ROOT` pointing at the frozen copy and the `b17-*` volumes. The runner [blackbox.py](acceptance/blackbox.py) (`66b42dce…`) and the four regression runners were run **unchanged**.
+
+### TC-L-01 — Live provisioning from the real registry through the adapter: **Pass (17/17)**
+
+[evidence-live-provisioning-b17.jsonl](acceptance/evidence-live-provisioning-b17.jsonl) · harness [tc_live_b17.py](acceptance/harness/tc_live_b17.py) (imports the unchanged runner's helpers; never imports toolkit code) · container `fat-uv-git:py312` on Docker's default `bridge` network, `UV_OFFLINE=1` (the CLI itself had no network), disposable HOME/trust store, project `live ü` · run 01:34:16–01:41:55 UTC.
+
+- **Before the live run:** the observers were self-tested offline (`--network none`: a loopback TLS ClientHello with SNI and a crafted DNS answer were decoded), and the whole flow was dry-run with `--network none` ([evidence-live-provisioning-dryrun-networknone-b17.jsonl](acceptance/evidence-live-provisioning-dryrun-networknone-b17.jsonl): the same three argv, every operation `failed` (the tool's OCI download error; for the bundle "download did not produce exactly the policy/ subtree"), previous `missing`, zero IP frames — no egress was possible). A first dry run stopped on a harness `None` check (fixed in the harness before the live run; not a product finding).
+- **Flow (real CLI):** `auth init` (in the container) → `init` → `tools register` (official binary) → scope, `guard open`/`plan` (one `trivy` runtime check on `app/requirements.txt`) → `guard extend` → `guard allow-egress --purpose tool_update --recipient https://mirror.gcr.io --data metadata --scope …trivy-db:2 --scope …trivy-java-db:1 --scope …trivy-checks:2` (grant `g-1`, typed at a terminal) → **one** `tools provision` (448.3 s) → offline scan → `guard conclude`.
+- **Result:** exit 0; three operations (run in parallel), each `completed`, previous `missing`:
+
+| Component | Repository:tag | Size | Time | Content digest | Metadata (equal to the installed `metadata.json`) |
+| --- | --- | --- | --- | --- | --- |
+| vulnerability_db | `mirror.gcr.io/aquasec/trivy-db:2` | 1,628,737,686 B | 56.9 s | `sha256:7b2d0198…` | Version 2, UpdatedAt 2026-10-23T19:15:43Z, NextUpdate 2026-10-24T19:15:43Z, DownloadedAt 2026-10-24T01:35:18Z |
+| java_db | `mirror.gcr.io/aquasec/trivy-java-db:1` | 1,561,686,169 B | 385.0 s | `sha256:d1cd6216…` | Version 1, UpdatedAt 2026-10-24T01:07:32Z, NextUpdate 2026-10-27T01:07:32Z, DownloadedAt 2026-10-24T01:41:44Z |
+| checks_bundle | `mirror.gcr.io/aquasec/trivy-checks:2` | 1,056,303 B | 3.8 s | `sha256:32d9f2fb…` | MajorVersion 2, Digest `sha256:b591e919…` (same bundle digest as FF-05), DownloadedAt 2026-10-24T01:41:49Z |
+
+- **Adapter records (02b/02c):** exactly three `trivy` processes; argv `image --download-db-only --db-repository mirror.gcr.io/aquasec/trivy-db:2`, `image --download-java-db-only --java-db-repository mirror.gcr.io/aquasec/trivy-java-db:1`, `fs --scanners misconfig --checks-bundle-repository mirror.gcr.io/aquasec/trivy-checks:2 --skip-db-update --skip-java-db-update --offline-scan … <op>/empty`, each with `--skip-version-check --disable-telemetry`, exactly one repository flag, no project path; environment exactly HOME/XDG_CONFIG_HOME/XDG_CACHE_HOME/TMPDIR/PATH/LANG/TZ; working folder the private `staging/op-*`; three `allowed`, `used: true` declarations `eg-1…3` listing known host `mirror.gcr.io` with grant `g-1` and the configuration-level note; one finished `tool_update` attempt `a-1-8a811cb9`; provisioning entry with Maintainer action `tools.provision`, grants and the limit text; staging removed; `status`: the three components `present`, registry `mirror.gcr.io`, generation, age; report sections "Tool Provisioning", "Trivy Component State", "Outbound Calls (Egress)" with repository, known hosts and "configuration-level".
+- **Real-host observation (no iptables, no proxy, no sinkhole):**
+
+| Observable | Observed during the provisioning window |
+| --- | --- |
+| DNS queries (outgoing UDP/53, decoded) | only `mirror.gcr.io`, to Docker Desktop's resolver `192.168.65.7` |
+| DNS answers (incoming, decoded) | `mirror.gcr.io` CNAME `googlecode.l.googleusercontent.com` → A `173.194.43.82` |
+| TLS ClientHello SNI (outgoing TCP payload) | 3 ClientHellos (one per process), all `mirror.gcr.io`; no `ghcr.io`, no `pkg-containers.githubusercontent.com`, no other server name |
+| IP destinations (every outgoing IPv4/IPv6 frame, 67,248 frames) | exactly `173.194.43.82:443/tcp` (the address returned for `mirror.gcr.io`) and `192.168.65.7:53/udp`; no other address, port or protocol; no IPv6 frame |
+| Offline scan after provisioning (02d) | 1 `trivy` process with the six offline flags, method `ok`, **zero IP frames** |
+
+  **Not observable** with this method: HTTP `Host` headers, paths and redirect targets inside TLS (a redirect to another host would have shown as a new DNS query and SNI — none occurred; a redirect within `mirror.gcr.io` would be invisible); traffic of other containers or of the macOS host; enforcement (the toolkit does not gate the launched tool's network use — the configuration-level limit stated by AC-002D-02b). The DNS-level name `googlecode.l.googleusercontent.com` is the CNAME of `mirror.gcr.io` and never appeared as a connection server name. This agrees with tool-validation Known Issue 17 (`mirror.gcr.io` operations contacted only `mirror.gcr.io:443`).
+
+### Refreshed offline black-box at the frozen revision
+
+| Run | Result | Evidence |
+| --- | --- | --- |
+| Container (TC-D-00…19; `run-container-b17.sh`, offline `b17-int` + loopback registry, 01:44–01:51 UTC) | **19/20 cases Pass; 444/445 checks**; the check-name lists of all 20 cases are identical to the TASK-059 rerun. The one failing check is TC-D-01 "01b x86-64 official binary on an arm64 host: refused TOOL_PLATFORM_MISMATCH": its fixture `/tv/64bit/trivy` (the official x86-64 binary) was **not available — the x86-64 asset is outside B17**; the path was missing, so the refusal was `TOOL_PATH_INVALID`. Not a product defect, and not an assertion of AC-002D-01b (whose text lists other version, custom build, modified file, archive, path cases — all passed); it concerns the x86-64 table entry (B10). It last passed in the TASK-059 rerun; `digests.py` and `registry_store.py` are unchanged since, `cli.py` changed | [evidence-container-linux-b17.jsonl](acceptance/evidence-container-linux-b17.jsonl) (`a8abebb6…`); stderr empty |
+| Host macOS (TC-H-01, TC-D-19; `run-host-b17.sh`, `UV_OFFLINE=1`, frozen copy) | **2/2, 12 checks** | [evidence-host-macos-b17.jsonl](acceptance/evidence-host-macos-b17.jsonl) (`c2b9c056…`); stderr empty |
+
+Observed values (loopback rebuilt from the live components): WebGoat `pom.xml` 36 findings, 18 packages skipped offline (unchanged), `completed_with_errors` with the unlisted pom WARN (fail-closed); 2019 DB variant used offline, age 2733 d; status `disk_bytes` equal to the summed blocks; zero IP frames and zero registry requests in every scan window; loopback provisioning (TC-D-03) SNI only `mirror.gcr.io`, frames only to the registry on 443.
+
+### TC-U-01 — Framework suite at the frozen revision: **Pass**
+
+- `uv run --offline python -m pytest -p no:cacheprovider -o addopts="" -q` in a disposable copy of the frozen tree (identical file-list hash `44837bb0…`) on macOS (CPython 3.14.6, uv 0.11.23, `uv sync --offline` from the host cache, no download): **2884 passed, 5 skipped, 23 deselected** (02:12–02:24 UTC) ([evidence-unit-integration-b17.log](acceptance/evidence-unit-integration-b17.log), `1964f4ff…`).
+- A first run in the bare copy had **1 failure, 2883 passed**: FEATURE-003-B's `test_07a_dev_repo_carriers_unchanged` requires the development repository's `.github/copilot-instructions.md` next to the toolkit folder, which the session-folder copy lacked (layout dependency of the copy, not of the product; [evidence-unit-integration-b17-run1-layout-fail.log](acceptance/evidence-unit-integration-b17-run1-layout-fail.log)). The workspace file was placed beside the copy (read-only use; removed afterwards) and the full suite re-run → the result above.
+- Targeted (AC-002D-01f and TASK-059): `-v -k "01f or test_07b or test_digest_table_matches_validation_record or task059" tests/adapters tests/guard` → **26 passed** ([evidence-unit-01f-b17.log](acceptance/evidence-unit-01f-b17.log), `ed8582cf…`).
+
+### Regressions at the frozen revision (TC-R-01…04)
+
+`run-regressions-b17.sh` (unchanged runners; container `--network none` + macOS host): **all eight logs are byte-identical to the TASK-059 rerun evidence** — 002-A 26/26 + 2/2, 002-B 9/10 + 2/2 (the one failing check is the superseded "06b trivy/strix not provided", per AC-002D-08a, not counted as passed), 002-C 9/9 + 2/2, 003-A 11/11 + 2/2; all stderr empty. Files: `acceptance/regression-{002A,002B,002C,003A}-{container-linux,host-macos}-b17.jsonl`.
+
+### TC-G-01 — Real-binary gate: **Not executed (apt not authorized under B17)**
+
+Prerequisites of `tests/guard/test_trivy_real.py --require-real-trivy` (unchanged, `a02faa0d…`), recorded: `SECURE_CODE_TRIVY_IMAGE` must contain Python ≥ 3.11, `cryptography`, `pyyaml` **and `iptables`** — no local image has `iptables` and installing it needs apt (not authorized); a `docker` CLI for the pytest process (present on the macOS host, absent in every local Linux image); the official binary on a path shared by the pytest process and the Docker daemon; samples and image archives; `SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1`. Never counted as passed. Its assertions are covered by TC-L-01 (live provisioning, real-host observation) and the offline black-box cases listed under "Gate-equivalent offline evidence" above, which is not the gate file.
+
+### TC-X-01 — Linux x86-64: **Not executed — accepted limit (B10)**
+
+No x86-64 asset was downloaded (outside B17) and no emulated run was made. Not counted as passed.
+
+### Supplementary 002-G comparison on real Trivy results
+
+Not run in this pass (not cheap: it needs its own comparison setup); stays deferred as noted in DAO-004.
+
+### AC changes at the frozen revision
+
+| AC ID | Result (2026-10-24) |
+| --- | --- |
+| AC-002D-01a | **Pass (arm64)**: registration of the official arm64 binary with digest before execution and full record (TC-D-01). Linux x86-64: accepted unverified limit (B10, TC-X-01); the cross-architecture refusal check was not re-run (x86-64 asset outside B17) |
+| AC-002D-02b | **Pass**: live `mirror.gcr.io` branch through the adapter with real-host DNS/SNI/IP observation (TC-L-01) + loopback for refusals and the two-host `ghcr.io` branch (TC-D-02…05). Limit: `ghcr.io`/`pkg-containers.githubusercontent.com` not contacted live (one-time grant used for the validated default registry) |
+| AC-002D-02c | **Pass**: live result fields and metadata equal to the installed files (TC-L-01); failed, cancelled, timed-out, killed and partial branches on the loopback registry (TC-D-03, TC-D-05) |
+| all other 43 ACs | **Pass**, re-executed at the frozen revision with the same assertions as in the AC map above (TC-D-00…19, TC-H-01, TC-U-01) |
+
+**AC totals (46) at the frozen revision `44837bb0…`: Pass 46 · Fail 0 · Not executed 0** (01a on arm64 only; x86-64 is the human-accepted limit B10). Before (TASK-059 rerun): 44 Pass + 2 loopback-only (02b, 02c).
+
+### Execution Results (2026-10-24, same 29-case denominator)
+
+| Type | Total Planned | Passed | Failed | Blocked | Partial / Not Run |
+| --- | --- | --- | --- | --- | --- |
+| frontend-ui | 0 | 0 | 0 | 0 | 0 |
+| backend-api | 0 | 0 | 0 | 0 | 0 |
+| integration — black-box CLI (TC-D-00…18 container; TC-H-01 host) | 20 | 19 | 0 | 0 | 1 partial (TC-D-01: one non-AC check without its x86-64 fixture) |
+| structured-review — package inspection (TC-D-19; container + host) | 1 | 1 | 0 | 0 | 0 |
+| unit / integration — Framework suite (TC-U-01) | 1 | 1 | 0 | 0 | 0 |
+| integration — real-binary gate file (TC-G-01) | 1 | 0 | 0 | 0 | 1 not executed (apt not authorized, B17) |
+| integration — live provisioning (TC-L-01) | 1 | 1 | 0 | 0 | 0 |
+| integration — Linux x86-64 adapter (TC-X-01) | 1 | 0 | 0 | 0 | 1 not executed — accepted limit (B10) |
+| integration — black-box regression (TC-R-01…04; container + host) | 4 | 3 | 0 | 0 | 1 partial (TC-R-01, superseded check) |
+| **TOTAL (logical TCs)** | **29** | **25** | **0** | **0** | **4** |
+
+**pass_rate = 25 / 29 = 86.2 %** (all planned logical TCs, incl. not executed and partial). Compared with the TASK-059 rerun (25/29): TC-L-01 moved to Pass, TC-D-01 moved to Partial (missing x86-64 fixture, environment only). Diagnostic only: 17 live + 445 container + 12 host black-box checks; 16 regression case × environment executions; 2884 suite tests.
+
+### Honest limits (this run)
+
+- **Live branch scope:** one provisioning from `mirror.gcr.io`; the live `ghcr.io` two-origin branch, live refusal/failure/timeout/cancel branches and a second live provisioning (replacing a previous generation) were not executed live (loopback only).
+- **Observation scope:** inside the runner container only (DNS, SNI, IP/port of every frame); TLS content, HTTP hosts/paths/redirects not observable; no enforcement claim. The macOS host and Docker VM traffic were not observed.
+- **Loopback artifacts** are rebuilt from the live-downloaded component files (same file content, different layer/manifest digests; checks-bundle manifest annotated `2.0.0`); they prove the toolkit's behaviour, not the real registries'.
+- **x86-64:** neither the adapter (B10) nor the registration cross-architecture refusal was re-run at this revision.
+- **TC-G-01** gate file not executed (apt). **Clean `.tf`** known limitation and **F-3** unchanged (informational).
+- **Framework-only branches** (fake binary) as listed above; musl, Windows and a host with Python on `/usr/bin` not run.
+- **Host uv cache:** the macOS host runs built the frozen toolkit into the host's uv cache offline (as in earlier runs); no package was downloaded onto the host.
+- **Independent review** of this evidence: not performed by the acceptance worker; left to the owner. **Stakeholder outcome: not measured.**
+
+### Hygiene and cleanup
+
+- Frozen copy hash identical at start and end (above); no `__pycache__`/`.venv` created in it. Scratch only under `files/fat-002d-b17/` of the session folder; deliverables only in this report and new `-b17` files under `acceptance/` (no earlier evidence overwritten). Credential-shaped strings (AWS key id, GitHub token formats) in the new evidence: none; the Maintainer passphrase appears in no evidence file.
+- Removed at the end: container `b17-reg`; network `b17-int`; volumes `b17-bin` (binary and archive), `b17-uv-cache`, `b17-comp` (live components), `b17-oci`, `b17-img`, `b17-work`, `b17-work-live`, `b17-reglog`; images `b17-jar:local`, `b17-big:local` and their 7 BuildKit cache entries (pruned by id); test-CA keys and certificates, handoff project, work/temp folders and the suite copy. Verified afterwards: no `b17` container, network, volume, image or build-cache entry left; seed volumes `fat-uv-cache-*` still present and never mounted writable.
+
+### Relevant inputs (2026-10-24)
+
+| Role | Path | SHA-256 |
+| --- | --- | --- |
+| toolkit (frozen) | `files/fat-002d-b17/frozen/ai-secure-code-toolkit` file list (291 files), start = end | `44837bb074771c70e3c78cd9a1307e5dbf6f67e58e4786363f3efd0a73b46c68` |
+| specification / design / bug report | unchanged | `229cc76e…` / `cb2cd1cf…` / `0723ef6d…` |
+| tool validation README / driver / results | unchanged | `48579370…` / `32017334…` / `00f43284…` |
+| config | `x-ipe-docs/config/tools.json` (`stages.validation.acceptance_test` → `x-ipe-tool-implementation-python: true`) | `6df39210…` |
+| human decisions (B9, B10, B17) | `x-ipe-docs/dao/26-10-23/human_decisions.md` | `62615b94d18ab9c78165a5e0026606de5a316bb6086478ec9a173ef58d503632` |
+| DAO logs | `decisions_made_feature_acceptance_test.md` (DAO-004) / `decisions_made_technical_design.md` (DAO-002; file appended by other tasks during this run, value at the end) | `880e1f7a686ea66bfb9107545c531a85b39bedab2201bad4f3b7172c1830dc20` / `766d7a867899cfb4a10156181e9cfd6504d6ab6f24759aa47fceb31f35fe2b2c` |
+| runner (unchanged) | [blackbox.py](acceptance/blackbox.py) | `66b42dce8dd0cfb9cdc018555966ba374761c17890e72356ce43103f1d63063a` |
+| harness (new) | [fetch_trivy_arm64_b17.py](acceptance/harness/fetch_trivy_arm64_b17.py) / [tc_live_b17.py](acceptance/harness/tc_live_b17.py) / [setup-loopback-b17.sh](acceptance/harness/setup-loopback-b17.sh) / [run-container-b17.sh](acceptance/harness/run-container-b17.sh) / [run-host-b17.sh](acceptance/harness/run-host-b17.sh) / [run-regressions-b17.sh](acceptance/harness/run-regressions-b17.sh) | `39fd7f84…` / `36713caa…` / `29b133a9…` / `53e8b3a7…` / `00687816…` / `89437be0…` |
+| evidence (live) | [evidence-live-provisioning-b17.jsonl](acceptance/evidence-live-provisioning-b17.jsonl) / [dry run, no network](acceptance/evidence-live-provisioning-dryrun-networknone-b17.jsonl) | `6e6b7ade2cbe494816b8f748793d1c316f15bf3530cb311de08a890bb2401177` / `3df320c6d852ca487877992b17ac5eb773e6104b17852e7cd9bb0dca391cb75e` |
+| evidence (black-box) | [evidence-container-linux-b17.jsonl](acceptance/evidence-container-linux-b17.jsonl) / [evidence-host-macos-b17.jsonl](acceptance/evidence-host-macos-b17.jsonl) | `a8abebb6695c45ae5d63a2ccc42c0ede0f749f4047a6443afa28677ea1717b09` / `c2b9c056150f4538c45a04eaab9474d7486d01f53aa01aaaf0ef2754931840e4` |
+| evidence (suite) | [evidence-unit-integration-b17.log](acceptance/evidence-unit-integration-b17.log) / [run 1](acceptance/evidence-unit-integration-b17-run1-layout-fail.log) / [01f targeted](acceptance/evidence-unit-01f-b17.log) | `1964f4ff70f3b6cfb89fb96354ae022d3c7f92dcd3943554e1a1783f673d3d47` / `10cd44e7ee1ce3b646caf78d3416b004ce4b7eba8b4dd71d0760f1ba70b4e7b5` / `ed8582cfca07d14dd2e24b1127b049cfd17f7a575d89ca489f23342b8b5ec0d1` |
+| evidence (regressions) | `regression-*-b17.jsonl` (8 files) | byte-identical to the TASK-059 rerun files: 002-A `404ada17…`/`b87e492e…`, 002-B `9239513a…`/`290c2607…`, 002-C `7a21573d…`/`b9261d26…`, 003-A `4b978585…`/`e2e89141…` |
+| evidence (tool level) | [toolval-binary-b17.jsonl](acceptance/tool-level/toolval-binary-b17.jsonl) / [oci-build-b17.jsonl](acceptance/tool-level/oci-build-b17.jsonl) / [image-archives-b17.txt](acceptance/tool-level/image-archives-b17.txt) | `f991601a1cfae57cd83ca100ed121f2386c8acad4603179069e391799f9c645c` / `1e83d9cd6d2982ace5ae92d2cc27eef618e1777196ab25dcabb1b5a44fd43fcf` / `75cccb994ce35c2ac8bb2689f2013d68b22b97dbd3834c55fa9b729aafddbc81` |
+
+### Acceptance state and handoff (2026-10-24)
+
+- **Engineering delivery:** every scoped AC (46/46) has current passing evidence at the frozen revision on Linux arm64 (macOS for the Linux-only refusal), including the previously parked live branch of AC-002D-02b/02c. Not counted as passed: TC-G-01 (gate file; apt not authorized — explicitly left not executed by B17), TC-X-01 (accepted limit B10), TC-D-01 partial (one non-AC check without its x86-64 fixture), TC-R-01 partial (superseded check).
+- **Stakeholder outcome:** not measured.
+- **Owner decision:** whether TC-G-01's non-execution under B17 and the B10 limit permit the transition to Tested; independent review of this evidence; F-3 and clean-`.tf` CR candidates. Conditional successors returned unchanged: code refactor (no evidenced need) and feature closing. No board, Git or successor action taken.
+
+```yaml
+acceptance_evidence_2026_10_24:
+  feature_id: "FEATURE-002-D"
+  task: "TASK-058 (resumed; B9 = A, B10 = A, B17 = A)"
+  toolkit_frozen_file_list: {start: "44837bb074771c70e3c78cd9a1307e5dbf6f67e58e4786363f3efd0a73b46c68", end: "44837bb074771c70e3c78cd9a1307e5dbf6f67e58e4786363f3efd0a73b46c68", files: 291}
+  downloads:
+    - {what: "trivy_0.76.1_Linux-ARM64.tar.gz (GitHub)", sha256: "e174dff2a6dba5e3ae41f8d0537a6324405bd08132497340304c6b20e0f16a1f", pinned_match: true}
+    - {what: "trivy binary (extracted)", sha256: "b422130ea54e53e142e65c838662e48919ce9c3f23f17d80066b43e70550cb85", pinned_match: true}
+    - {what: "PyPI packages", status: "not needed; not contacted"}
+    - {what: "TC-L-01 tool_update (mirror.gcr.io)", trivy_db: "6fd7f9c44ff3120e0d15d5b5b2234e1ff1c9e7a6b56b4e776041f93faf1f6f17", trivy_java_db: "9c17cf958a0fc2c74d5457ac33d2eb3ef71b170b49cadf9c465ecb9de7d66924", checks_bundle_digest: "sha256:b591e9190cff4aa4e385b1a25bccfd9ecf178d3c77fd194e1410b7ce7e1df058"}
+  cases:
+    - {tc_id: TC-L-01, ac_ids: [AC-002D-02b, AC-002D-02c, AC-002D-08a], status: Pass, checks: "17/17", evidence: acceptance/evidence-live-provisioning-b17.jsonl}
+    - {tc_id: "TC-D-00..18", status: "18 Pass, TC-D-01 Partial (x86-64 fixture outside B17)", evidence: acceptance/evidence-container-linux-b17.jsonl}
+    - {tc_id: TC-H-01, status: Pass, evidence: acceptance/evidence-host-macos-b17.jsonl}
+    - {tc_id: TC-D-19, status: Pass, evidence: [acceptance/evidence-container-linux-b17.jsonl, acceptance/evidence-host-macos-b17.jsonl]}
+    - {tc_id: TC-U-01, status: Pass, result: "2884 passed, 5 skipped, 23 deselected; targeted 26 passed", evidence: acceptance/evidence-unit-integration-b17.log}
+    - {tc_id: "TC-R-01..04", status: "TC-R-01 Partial (superseded); TC-R-02..04 Pass; byte-identical to the TASK-059 rerun", evidence: "acceptance/regression-*-b17.jsonl"}
+    - {tc_id: TC-G-01, status: "Not executed (apt not authorized, B17)"}
+    - {tc_id: TC-X-01, status: "Not executed - accepted limit (B10)"}
+  ac_totals: {pass: 46, fail: 0, not_executed: 0, note: "01a arm64 only; x86-64 accepted limit B10"}
+  pass_rate: "25/29 = 86.2%"
+  stakeholder_outcome: "not measured"
+```

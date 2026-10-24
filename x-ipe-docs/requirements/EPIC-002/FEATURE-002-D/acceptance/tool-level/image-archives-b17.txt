@@ -1,0 +1,13 @@
+total 616684
+-rw-r--r-- 1 root root 600197120 Oct 24 01:43 big-600m.tar
+-rw-r--r-- 1 root root     26112 Oct 24 01:43 hello-world.tar
+-rw-r--r-- 1 root root     57344 Oct 24 01:43 jar-only.tar
+-rw-r--r-- 1 root root  31194112 Oct 24 01:43 redis-6-alpine.tar
+dc9450bd501e613b65fd1365145f1be4931abdd4f0b536e2fc13414f52733a5f  big-600m.tar
+68869b3b2d16f45bd3f17747d1f3a088ef6da2e4fdcf720b47c49686d05edd0f  hello-world.tar
+59be28bea3c0869911ba83fe48664e5353376aaf1d9f6883a19ac6d60a8bb1de  jar-only.tar
+df0f77c742bb4beb7fbb6e48a92d4f1de02d84c509327eec5e3d3989e75ec78f  redis-6-alpine.tar
+sha256:efecd39dc5c776191502e50c3b136f8db65bb25f1ea1931cf62a6b6395a4cc8a [redis:6-alpine]
+sha256:7e1a4e2d11e2ac7a8c3f768d4166c2defeb09d2a750b010412b6ea13de1efb19 [hello-world:latest]
+sha256:f33616e433daf1b6741a0f276f063a55792316d803a4081e88fd8565b5d7e53c [b17-jar:local]
+sha256:12545e4dca0f4341f3d087a6f3b225907ec81216bed2b1fd3196f07c7ce9c3e4 [b17-big:local]

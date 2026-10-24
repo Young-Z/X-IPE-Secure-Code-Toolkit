@@ -1,0 +1,35 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.6, pytest-9.1.1, pluggy-1.7.0 -- /Users/yzhang/.copilot/session-state/081276d7-fac0-4983-a366-46d60bec1fe5/files/fat-002d-b17/suite/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts/.venv/bin/python3
+rootdir: /Users/yzhang/.copilot/session-state/081276d7-fac0-4983-a366-46d60bec1fe5/files/fat-002d-b17/suite/ai-secure-code-toolkit/x-ipe-secure-code-toolkit-framework/scripts
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collecting ... collected 1101 items / 1075 deselected / 26 selected
+
+tests/adapters/test_adapters_units.py::test_digest_table_matches_validation_record PASSED [  3%]
+tests/adapters/test_trivy_units.py::test_01f_static_build_matches_any_libc_opengrep_exact PASSED [  7%]
+tests/adapters/test_trivy_units.py::test_07b_trivy_table_matches_validation_record PASSED [ 11%]
+tests/guard/test_compare_files.py::test_07b_basename_and_subfolder_refused PASSED [ 15%]
+tests/guard/test_compare_skill.py::test_01f_comparing_section_rules PASSED [ 19%]
+tests/guard/test_guard.py::test_01f_keep_marker_and_release PASSED       [ 23%]
+tests/guard/test_guard_trivy.py::test_01f_trivy_build_matches_host_of_any_libc PASSED [ 26%]
+tests/guard/test_trivy_bugfix_task059.py::test_config_types_are_exactly_the_v0761_help_list PASSED [ 30%]
+tests/guard/test_trivy_bugfix_task059.py::test_ansible_override_accepted_and_reaches_the_tool PASSED [ 34%]
+tests/guard/test_trivy_bugfix_task059.py::test_compose_and_non_listed_types_still_refused[compose] PASSED [ 38%]
+tests/guard/test_trivy_bugfix_task059.py::test_compose_and_non_listed_types_still_refused[docker-compose] PASSED [ 42%]
+tests/guard/test_trivy_bugfix_task059.py::test_compose_and_non_listed_types_still_refused[Ansible] PASSED [ 46%]
+tests/guard/test_trivy_bugfix_task059.py::test_compose_and_non_listed_types_still_refused[ansible-playbook] PASSED [ 50%]
+tests/guard/test_trivy_bugfix_task059.py::test_parser_observed_warnings_not_degrading_for_v0761[2026-10-22T17:07:48Z\tWARN\t[pip] Unable to find python `site-packages` directory. License detection is skipped.\terr="unable to find path to Python executable"\n] PASSED [ 53%]
+tests/guard/test_trivy_bugfix_task059.py::test_parser_observed_warnings_not_degrading_for_v0761[2026-10-22T17:07:48Z\tWARN\tUsing severities from other vendors for some vulnerabilities. Read https://trivy.dev/docs/v0.76/guide/scanner/vulnerability#severity-selection for details.\n] PASSED [ 57%]
+tests/guard/test_trivy_bugfix_task059.py::test_parser_other_warnings_or_versions_stay_degrading[2026-10-22T17:07:48Z\tWARN\t[pip] Unable to find python `site-packages` directory. License detection is skipped.\n-0.77.0] PASSED [ 61%]
+tests/guard/test_trivy_bugfix_task059.py::test_parser_other_warnings_or_versions_stay_degrading[2026-10-22T17:07:48Z\tWARN\tUsing severities from other vendors for some vulnerabilities. Read https://trivy.dev/docs/v0.76/guide/scanner/vulnerability#severity-selection for details.\n-None] PASSED [ 65%]
+tests/guard/test_trivy_bugfix_task059.py::test_parser_other_warnings_or_versions_stay_degrading[2026-10-22T17:07:48Z\tWARN\t[pip] Unable to find python `site-packages` directory. License detection is skipped. Extra\n-0.76.1] PASSED [ 69%]
+tests/guard/test_trivy_bugfix_task059.py::test_parser_other_warnings_or_versions_stay_degrading[2026-10-22T17:07:48Z\tWARN\t[pip] Unable to find python `site-packages` directory.\n-0.76.1] PASSED [ 73%]
+tests/guard/test_trivy_bugfix_task059.py::test_parser_other_warnings_or_versions_stay_degrading[2026-10-22T17:07:48Z\tWARN\tUsing severities from other vendors for some vulnerabilities.\n-0.76.1] PASSED [ 76%]
+tests/guard/test_trivy_bugfix_task059.py::test_parser_other_warnings_or_versions_stay_degrading[2026-10-22T17:07:48Z\tERROR\t[pip] Unable to find python `site-packages` directory. License detection is skipped.\n-0.76.1] PASSED [ 80%]
+tests/guard/test_trivy_bugfix_task059.py::test_parser_other_warnings_or_versions_stay_degrading[2026-10-22T17:07:48Z\tWARN\t[npm] Unable to find node_modules. License detection is skipped.\n-0.76.1] PASSED [ 84%]
+tests/guard/test_trivy_bugfix_task059.py::test_observed_warnings_on_fully_analysed_check_succeed PASSED [ 88%]
+tests/guard/test_trivy_bugfix_task059.py::test_unlisted_warning_still_fails_the_method[extra0] PASSED [ 92%]
+tests/guard/test_trivy_bugfix_task059.py::test_unlisted_warning_still_fails_the_method[extra1] PASSED [ 96%]
+tests/guard/test_trivy_bugfix_task059.py::test_version_mismatch_disables_the_allow_list PASSED [100%]
+
+===================== 26 passed, 1075 deselected in 11.44s =====================
