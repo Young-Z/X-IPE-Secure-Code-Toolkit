@@ -29,3 +29,12 @@ __pycache__/
 
 # Node dependencies (reinstallable)
 node_modules/
+
+# Human decision 2026-10-24 09:22 (option B): workflow files naming the internal policy stay local-only
+/x-ipe-docs/dao/26-10-23/human_decisions.md
+/x-ipe-docs/dao/26-10-23/decisions_made_feature_refinement.md
+/x-ipe-docs/dao/26-10-23/decisions_made_technical_design.md
+/x-ipe-docs/planning/tasks/tasks-2026-10-23.json
+/x-ipe-docs/requirements/EPIC-001/FEATURE-001-E/specification.md
+/x-ipe-docs/requirements/EPIC-001/FEATURE-001-G/specification.md
+/x-ipe-docs/requirements/EPIC-001/FEATURE-001-G/technical-design.md
