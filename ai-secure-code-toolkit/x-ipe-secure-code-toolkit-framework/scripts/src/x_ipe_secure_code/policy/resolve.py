@@ -5,10 +5,14 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Any
 
 from ..knowledge import durable, lifecycle, store
 from ..knowledge.identity import RuleRef
+from ..reference import cache as reference_cache
+from ..reference import clock as reference_clock
+from ..reference import policy_view, registry
 from .refs import RequestedRef, is_utf8, parse_requested
 
 COMPLETE = "complete"
@@ -63,6 +67,9 @@ class Library:
     exited: dict[str, dict[str, Any]] = field(default_factory=dict)
     notices: list[str] = field(default_factory=list)
     overrides: dict[str, dict[str, Any]] = field(default_factory=dict)
+    # FEATURE-001-E (P1): registered Reference rules with their read-only cache states; empty → Local only.
+    refs: registry.RegistryView = field(default_factory=registry.RegistryView.empty)
+    now: datetime | None = None
 
     @property
     def size(self) -> int:
@@ -79,7 +86,10 @@ class Library:
         return refs
 
     def versions(self, namespace: str, rule_id: str) -> list[RuleRef]:
-        return sorted(r for r in self._present() if r.namespace == namespace and r.rule_id == rule_id)
+        found = {r for r in self._present() if r.namespace == namespace and r.rule_id == rule_id}
+        if self.refs.present:
+            found.update(self.refs.versions(namespace, rule_id))
+        return sorted(found)
 
     def active(self) -> list[RuleRef]:
         """The "all" set: stored rules except consistent deactivated ones (overrides applied)."""
@@ -133,7 +143,21 @@ def partial(tree: durable.Tree, texts: list[str]) -> Library:
 def _library(tree: durable.Tree, rules: dict[RuleRef, Any], pending: set[str]) -> Library:
     formal = {r.rel for r in rules}
     memory, notice = lifecycle.memory_or_empty(tree)
-    return Library(rules, pending - formal, latest_exits(memory, formal), [notice] if notice else [])
+    lib = Library(rules, pending - formal, latest_exits(memory, formal), [notice] if notice else [])
+    _attach_references(tree, lib)
+    return lib
+
+
+def _attach_references(tree: durable.Tree, lib: Library) -> None:
+    """FEATURE-001-E (P1): registry view and current-key cache states, read-only through the same Tree."""
+    try:
+        refs = registry.view_at(tree)
+    except (store.StoreError, OSError, ValueError, UnicodeError) as exc:
+        refs = registry.RegistryView(notice=f"REFERENCE_REGISTRY_UNREADABLE: {getattr(exc, 'message', exc)}")
+    if refs.present:
+        lib.now = reference_clock.utc_now()
+        reference_cache.attach(tree, refs, lib.now)
+    lib.refs = refs
 
 
 def latest_exits(memory: list[dict[str, Any]], formal: set[str] | None = None) -> dict[str, dict[str, Any]]:
@@ -203,7 +227,22 @@ def _policy(lib: Library, ref: RuleRef, stored: store.StoredRule, languages: lis
 
 
 def evaluate(lib: Library, ref: RuleRef, languages: list[str]) -> dict[str, Any]:
-    """Availability of one exact rule identity: a Policy entry or a `missing` entry with reason."""
+    """Availability of one exact rule identity: a Policy entry or a `missing` entry with reason.
+
+    FEATURE-001-E (P1, X-02 literal): a formal Local record or exit memory wins; otherwise a registered
+    (or removed) Reference rule is evaluated from its cache; otherwise the delivered result."""
+    found = _evaluate_local(lib, ref, languages)
+    if not lib.refs.present or ref.rel in lib.overrides:
+        return found
+    if ref in lib.rules or ref.rel in lib.exited:
+        return policy_view.local_first(lib, ref, found)
+    if lib.refs.has(ref) or lib.refs.is_removed(ref):
+        return policy_view.evaluate(lib, ref, languages)
+    return found
+
+
+def _evaluate_local(lib: Library, ref: RuleRef, languages: list[str]) -> dict[str, Any]:
+    """The delivered FEATURE-001-C/001-D evaluation of formal Local knowledge (unchanged)."""
     if ref.rel in lib.overrides:
         return _projected(ref, lib.overrides[ref.rel])
     stored = lib.rules.get(ref)
@@ -249,6 +288,8 @@ def _projected(ref: RuleRef, view: dict[str, Any]) -> dict[str, Any]:
 
 def entry_for(lib: Library, req: RequestedRef, languages: list[str]) -> dict[str, Any]:
     """Resolve one requested reference (full or version-less)."""
+    if lib.refs.present and req.text.lower().startswith("reference:"):
+        return _prefixed(lib, req.text, languages)
     base: dict[str, Any] = {"requested": req.text}
     if req.invalid:
         return {**base, "availability": "missing", "reason": "invalid_reference", "detail": req.invalid}
@@ -278,9 +319,26 @@ def entry_for(lib: Library, req: RequestedRef, languages: list[str]) -> dict[str
         else:
             candidate["state_digest"] = found["source_evidence"]["state_digest"]
         candidates.append(candidate)
+    kinds = [policy_view.kind_of(lib, ref) for ref in versions] if lib.refs.present else []
+    if "reference" in kinds:
+        for candidate, kind in zip(candidates, kinds, strict=True):
+            candidate["knowledge_kind"] = kind
     return {
         **base, "availability": "unclear", "reason": "multiple_versions", "candidates": candidates, **info,
     }
+
+
+def _prefixed(lib: Library, text: str, languages: list[str]) -> dict[str, Any]:
+    """`reference:NS/VER/ID` (FEATURE-001-E, 02e): the prefix never overrides Local first."""
+    req = parse_requested(text[len("reference:"):])
+    full = None if req.invalid else req.full()
+    if full is None or not (lib.refs.has(full) or lib.refs.is_removed(full)):
+        return {"requested": text, "availability": "missing", "reason": "invalid_reference",
+                "detail": "not a registered Reference rule", "requested_kind": "reference"}
+    found = {"requested": text, **evaluate(lib, full, languages), "requested_kind": "reference"}
+    if full in lib.rules or full.rel in lib.exited:
+        found["notes"] = [*found.get("notes", []), policy_view.PREFIX_NOTE]
+    return found
 
 
 def _exit_order(lib: Library, rel: str) -> tuple[str, str]:
@@ -329,6 +387,9 @@ def build(
     """Resolve references (or every library rule) into the proposal data."""
     mode = "apply_all" if apply_all else "clues"
     requested = [r.rel for r in lib.active()] if apply_all else texts
+    if apply_all and lib.refs.present:  # FEATURE-001-E (DEC-14): Reference rules without Local or exit memory
+        extra_refs = [r.rel for r in lib.refs.identities() if r not in lib.rules and r.rel not in lib.exited]
+        requested = sorted({*requested, *extra_refs})
     entries: list[dict[str, Any]] = []
     seen: dict[str, dict[str, Any]] = {}
     for text in requested:
@@ -343,6 +404,9 @@ def build(
     extra: dict[str, Any] = {}
     if apply_all:
         extra["inactive"] = inactive_counts(lib)
+    if lib.refs.present:  # FEATURE-001-E (02f/02g): only with Reference rules; Local-only output unchanged
+        extra["library_sizes"] = {"local": lib.size, "reference": lib.refs.count}
+        extra["counts_by_kind"] = policy_view.counts_by_kind(entries)
     return {
         "notices": _notices(lib, entries, apply_all, default_preset_exists),
         "status": overall_status(entries),
@@ -376,6 +440,10 @@ def _notices(
         {"code": code, "message": "Exit memory is unreadable; exited identities are reported as not found"}
         for code in lib.notices
     ]
+    if lib.refs.notice:
+        code, _, detail = lib.refs.notice.partition(": ")
+        notices.append({"code": code, "message": "The Reference registry is partly unreadable" +
+                        (f": {detail}" if detail else "")})
     exited = sorted({x["rule"] for e in entries for x in e.get("exited", [])})
     if exited:
         notices.append(
@@ -421,7 +489,12 @@ def _notices(
 
 
 def next_steps(data: dict[str, Any]) -> list[str]:
-    """One next step per non-complete situation, plus the confirmation step."""
+    """One next step per non-complete situation, plus the confirmation step (and, FEATURE-001-E, one
+    step per Reference reason present)."""
+    return _next_steps(data) + policy_view.next_steps(data["entries"])
+
+
+def _next_steps(data: dict[str, Any]) -> list[str]:
     status = data["status"]
     if status == MAINTENANCE_NEEDED:
         if data["library_size"] == 0:

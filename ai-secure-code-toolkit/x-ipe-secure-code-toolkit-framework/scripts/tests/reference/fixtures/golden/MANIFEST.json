@@ -1,0 +1,20 @@
+{
+  "captured_with_src_sha256": "a8a92d6c0b85c3ae1631a39ae013c0e64d5e1aef1e27e2117f973227de1b1e70",
+  "files": [
+    "exit-preview.json",
+    "preset-resolve.json",
+    "resolve-all.json",
+    "resolve-rules.json",
+    "resolve-versionless.json",
+    "scope-save.json",
+    "scope-show.json",
+    "status.json",
+    "tag-show.json"
+  ],
+  "volatile": [
+    "absolute temporary paths (replaced by <folder name>)",
+    "timestamps matching YYYY-MM-DDTHH:MM:SS[.f]Z (created_at, at, opened_at, ...)",
+    "verification/collaboration/exit ids (<run-id>)",
+    "host name and OS user of the authorization record"
+  ]
+}

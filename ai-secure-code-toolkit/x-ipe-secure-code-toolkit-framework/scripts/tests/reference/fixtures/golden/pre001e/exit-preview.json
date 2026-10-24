@@ -1,0 +1,95 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "knowledge exit-preview",
+    "ok": true,
+    "data": {
+      "impact": {
+        "relations": {
+          "count": 0,
+          "items": [],
+          "pointing_to_target": [],
+          "unreadable_sources": []
+        },
+        "scopes": {
+          "count": 1,
+          "items": [
+            {
+              "scope_id": "sha256:52f4996798ac9a1c8bece7ae8b36f16df00b38c3ab09e6e760c2e3034345823c",
+              "created_at": "<time>"
+            }
+          ],
+          "unreadable": []
+        },
+        "guard_runs": {
+          "count": 0,
+          "items": [],
+          "unreadable": []
+        },
+        "copilot_collaborations": {
+          "count": 0,
+          "items": [],
+          "unreadable": []
+        },
+        "pending_decisions": {
+          "count": 0,
+          "items": []
+        },
+        "document_index": {
+          "count": 0,
+          "items": [],
+          "unreadable": null
+        },
+        "presets": {
+          "count": 1,
+          "items": [
+            {
+              "name": "web-input",
+              "file_digest": "sha256:47bdf9a67b9cd493fe89c42c3c085e8ce2d8c80ee0139bcd87042092ceb8e992"
+            }
+          ],
+          "unreadable": []
+        },
+        "tags": {
+          "count": 1,
+          "items": [
+            {
+              "name": "injection",
+              "file_digest": "sha256:8e11cbc01348a10eec01e178b27a5b317c0eb025a0f483d921cb788719370b34"
+            }
+          ],
+          "unreadable": []
+        },
+        "reference_cache": "not checked in this version"
+      },
+      "action": "deactivate",
+      "rule": "CWE/4.14/CWE-22",
+      "target": null,
+      "reason": "fixture reason",
+      "rule_state": {
+        "consistent": true,
+        "state": "active",
+        "revision": 0,
+        "state_digest": "sha256:206f739064aa2a4d1056cdafef5fb1b25969c304e70a3ad009a7643a393d1d73",
+        "fingerprint": "sha256:41b19772d171c3828f3ed5941467a0376ca780066cecefc6f7ae673635ef9d48",
+        "special_entries": [],
+        "pending_commit": false
+      },
+      "will": [
+        "mark CWE/4.14/CWE-22 deactivated (content and changelog are kept)",
+        "keep 0 pending decision(s)",
+        "invalidate 0 index entries",
+        "record the action in the changelog and increase the lifecycle revision 0 → 1",
+        "no other rule, scope record, run or report is changed; references are reported broken"
+      ],
+      "impact_digest": "sha256:1cb024ca928c20e6669fce661a5a45daf815b6b47d5f84d04e3d5731cd3a164b",
+      "references_block": false
+    },
+    "problems": [],
+    "next_steps": [
+      "Show the whole impact to the Maintainer; references do not block the decision",
+      "Only after the Maintainer explicitly confirms: run secure-code knowledge exit-confirm with this impact_digest"
+    ]
+  }
+]

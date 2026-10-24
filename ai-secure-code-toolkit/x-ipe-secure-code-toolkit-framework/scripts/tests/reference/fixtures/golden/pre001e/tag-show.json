@@ -1,0 +1,30 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "tag show",
+    "ok": true,
+    "data": {
+      "name": "injection",
+      "file_digest": "sha256:8e11cbc01348a10eec01e178b27a5b317c0eb025a0f483d921cb788719370b34",
+      "members": [
+        {
+          "source": "local",
+          "rule": "CWE/4.14/CWE-22",
+          "availability": "available"
+        },
+        {
+          "source": "local",
+          "rule": "CWE/4.14/CWE-89",
+          "availability": "available"
+        }
+      ],
+      "broken": [],
+      "note": "tags never change severity, mandatory marking or Presets"
+    },
+    "problems": [],
+    "next_steps": [
+      "Use the members as concrete references at proposal time (secure-code policy resolve --rule ...)"
+    ]
+  }
+]

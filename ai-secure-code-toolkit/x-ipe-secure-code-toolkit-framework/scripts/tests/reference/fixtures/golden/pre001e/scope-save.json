@@ -1,0 +1,24 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "scope save",
+    "ok": true,
+    "data": {
+      "scope_id": "sha256:52f4996798ac9a1c8bece7ae8b36f16df00b38c3ab09e6e760c2e3034345823c",
+      "path": "x-ipe-docs/secure-code/scopes/52f4996798ac9a1c8bece7ae8b36f16df00b38c3ab09e6e760c2e3034345823c.json",
+      "created": true,
+      "mode": "clues",
+      "adopted_rules": [
+        "CWE/4.14/CWE-22",
+        "CWE/4.14/CWE-89"
+      ],
+      "not_adopted": [],
+      "created_at": "<time>"
+    },
+    "problems": [],
+    "next_steps": [
+      "Give this scope_id to Guard or Copilot; they load it with: secure-code scope show --scope ID"
+    ]
+  }
+]

@@ -115,6 +115,9 @@ def build_parser() -> argparse.ArgumentParser:
     k_drafting_auth.add_argument("--revoke", action="store_true")
     for sub in (k_draft_check, k_draft_approve, k_supplements, k_drafting_auth):
         sub.add_argument("--json", action="store_true")
+    from .reference import cli_parser as reference_cli  # FEATURE-001-E: knowledge reference ...
+
+    reference_cli.add(k_commands)
 
     policy = commands.add_parser("policy", help="Resolve formal Local Policies (read-only)")
     p_commands = policy.add_subparsers(dest="policy_command", required=True)
@@ -368,6 +371,10 @@ def _knowledge(args: argparse.Namespace) -> Result:
     cmd = args.knowledge_command
     if cmd in DRAFTING_COMMANDS:
         return _drafting(args)
+    if cmd == "reference":
+        from .reference import service as reference_service
+
+        return reference_service.run(args)
     if cmd == "check":
         return service.check(args.project, args.input)
     if cmd == "import":

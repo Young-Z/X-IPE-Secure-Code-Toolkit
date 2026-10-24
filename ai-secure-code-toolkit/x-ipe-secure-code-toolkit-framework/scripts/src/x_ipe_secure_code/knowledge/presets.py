@@ -320,7 +320,8 @@ def _diff(entry: catalog.Entry, lib: resolve.Library, candidates: list[Any]) -> 
         {
             "rule": r,
             "availability": valid_rows[r]["availability"],
-            "state_digest": valid_rows[r]["state_digest"],
+            "state_digest": valid_rows[r].get("state_digest"),  # FEATURE-001-E: uncached Reference
+            **({"reason": valid_rows[r]["reason"]} if "reason" in valid_rows[r] else {}),
         }
         for r in valid
         if r not in stored
@@ -338,7 +339,7 @@ def _diff(entry: catalog.Entry, lib: resolve.Library, candidates: list[Any]) -> 
                 "schema": RECOMPUTE_SCHEMA,
                 "name": entry.name,
                 "file_digest": entry.digest,
-                "valid": [{"rule": r, "state_digest": valid_rows[r]["state_digest"]} for r in valid],
+                "valid": [{"rule": r, "state_digest": valid_rows[r].get("state_digest")} for r in valid],
                 "stored": stored_rows,
                 "invalid": sorted(invalid_view, key=lambda i: (i["requested"], i["reason"])),
                 "add": [a["rule"] for a in add],
@@ -403,7 +404,8 @@ def _accepted(data: dict[str, Any], key: str, offered: list[str]) -> list[str]:
     outside = sorted(set(value) - set(offered))
     if outside:
         raise catalog.request_error(f"{key} names references that are not confirmable: {', '.join(outside)}")
-    return sorted(set(value))
+    by_text = {str(o): o for o in offered}  # FEATURE-001-E: keep the offered member (and its source)
+    return sorted({by_text[v] for v in value})
 
 
 def recompute_confirm(project: str | None, name: str, request: str, confirmed: bool) -> Result:

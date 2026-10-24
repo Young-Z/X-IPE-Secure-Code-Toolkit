@@ -91,7 +91,7 @@ def test_preview_lists_exact_referencing_presets_tags(env, action):
         assert item["file_digest"] == mod("knowledge.catalog").file_digest(file.read_bytes())
         assert impact[kind]["unreadable"] == []
     assert impact["presets"] != NOT_CHECKED and impact["tags"] != NOT_CHECKED
-    assert impact["reference_cache"] == NOT_CHECKED
+    assert impact["reference_cache"]["count"] == 0  # superseded per AC-001E-07c — re-run
     text = result.to_text()
     assert "presets:" in text and "alpha" in text and "t-two" in text
     assert files(env.project) == before
@@ -106,9 +106,10 @@ def test_preview_empty_lists_reference_cache_not_checked(env):
     for kind in ("presets", "tags"):
         assert impact[kind]["items"] == [] and impact[kind]["count"] == 0
         assert impact[kind]["unreadable"] == []
-    assert impact["reference_cache"] == NOT_CHECKED
-    assert "(none)" in result.to_text() and NOT_CHECKED in result.to_text()
-    assert set(mod("knowledge.impact").UNSUPPORTED) == {"reference_cache"}
+    assert impact["reference_cache"]["items"] == []  # superseded per AC-001E-07c — re-run
+    # superseded per AC-001E-07c — re-run
+    assert "(none)" in result.to_text() and NOT_CHECKED not in result.to_text()
+    assert set(mod("knowledge.impact").UNSUPPORTED) == set()  # superseded per AC-001E-07c — re-run
 
 
 # AC-001F-06c
@@ -420,7 +421,8 @@ def test_pre_upgrade_preview_stale_once_then_repreview(env, monkeypatch):
     saved = env.save()
     assert saved.ok, saved.to_dict()
     impact = mod("knowledge.impact")
-    delivered = tuple(p for p in impact.PROVIDERS if p.kind not in ("presets", "tags"))
+    # superseded per AC-001E-07c — re-run
+    delivered = tuple(p for p in impact.PROVIDERS if p.kind not in ("presets", "tags", "reference_cache"))
     assert [p.kind for p in delivered] == ["relations", "scopes", "guard_runs", "copilot_collaborations",
                                            "pending_decisions", "document_index"]
     with monkeypatch.context() as old:

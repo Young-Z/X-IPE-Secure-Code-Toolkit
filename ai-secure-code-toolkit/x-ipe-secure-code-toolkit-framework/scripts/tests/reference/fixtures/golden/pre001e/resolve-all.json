@@ -1,0 +1,139 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "policy resolve",
+    "ok": true,
+    "data": {
+      "notices": [
+        {
+          "code": "APPLY_ALL_PROPOSED",
+          "message": "No clues and no default Preset — Apply All proposed: every formal Local Policy. This is the Policy scope only; the artifact scope is decided separately.",
+          "default_preset_exists": false
+        },
+        {
+          "code": "MULTI_VERSION",
+          "rules": {
+            "CWE/CWE-79": [
+              "4.14",
+              "4.15"
+            ]
+          },
+          "message": "Rules present in several source versions: confirm which versions apply"
+        }
+      ],
+      "status": "complete",
+      "mode": "apply_all",
+      "library_size": 4,
+      "pending_count": 0,
+      "counts": {
+        "requested": 4,
+        "available": 4,
+        "missing": 0,
+        "unclear": 0
+      },
+      "adopted": [],
+      "adoption": "nothing adopted yet — the user must confirm, then: secure-code scope save --confirmed",
+      "proposal_digest": "sha256:76938b501abb8d78ba6e61e50a4cc46374ebb69b3ca151211156df5901a62d71",
+      "entries": [
+        {
+          "requested": "CWE/4.14/CWE-22",
+          "rule": "CWE/4.14/CWE-22",
+          "availability": "available",
+          "name": null,
+          "kind": "institutional",
+          "requirement": "Rule CWE-22 body.\n",
+          "applicability": "unknown",
+          "language_note": "no_context",
+          "examples": [],
+          "relations": [],
+          "source_evidence": {
+            "source_location": "https://example.org/CWE-22",
+            "source_documents": [],
+            "state_digest": "sha256:206f739064aa2a4d1056cdafef5fb1b25969c304e70a3ad009a7643a393d1d73",
+            "last_changed_at": "<time>"
+          },
+          "other_versions": [],
+          "retrieval_status": "retrieved",
+          "unresolved": []
+        },
+        {
+          "requested": "CWE/4.14/CWE-79",
+          "rule": "CWE/4.14/CWE-79",
+          "availability": "available",
+          "name": null,
+          "kind": "institutional",
+          "requirement": "Rule CWE-79 body.\n",
+          "applicability": "unknown",
+          "language_note": "no_context",
+          "examples": [],
+          "relations": [],
+          "source_evidence": {
+            "source_location": "https://example.org/CWE-79",
+            "source_documents": [],
+            "state_digest": "sha256:500fd8cd4e313bbd7b691bfdf5cacc61320e9258f936acbf7092a35c44d3a16f",
+            "last_changed_at": "<time>"
+          },
+          "other_versions": [
+            "CWE/4.15/CWE-79"
+          ],
+          "retrieval_status": "retrieved",
+          "unresolved": []
+        },
+        {
+          "requested": "CWE/4.14/CWE-89",
+          "rule": "CWE/4.14/CWE-89",
+          "availability": "available",
+          "name": null,
+          "kind": "institutional",
+          "requirement": "Rule CWE-89 body.\n",
+          "applicability": "unknown",
+          "language_note": "no_context",
+          "examples": [],
+          "relations": [],
+          "source_evidence": {
+            "source_location": "https://example.org/CWE-89",
+            "source_documents": [],
+            "state_digest": "sha256:d20e718d9958fbf1f43bf86b02b627d57d22b0ba0b98b36ffe7537e9eeafebc8",
+            "last_changed_at": "<time>"
+          },
+          "other_versions": [],
+          "retrieval_status": "retrieved",
+          "unresolved": []
+        },
+        {
+          "requested": "CWE/4.15/CWE-79",
+          "rule": "CWE/4.15/CWE-79",
+          "availability": "available",
+          "name": null,
+          "kind": "institutional",
+          "requirement": "Rule CWE-79 body.\n",
+          "applicability": "unknown",
+          "language_note": "no_context",
+          "examples": [],
+          "relations": [],
+          "source_evidence": {
+            "source_location": "https://example.org/CWE-79",
+            "source_documents": [],
+            "state_digest": "sha256:a39882e02fb73f58104d1d38e30710dcee1bafb184f41ad5aa011fa6ead1031c",
+            "last_changed_at": "<time>"
+          },
+          "other_versions": [
+            "CWE/4.14/CWE-79"
+          ],
+          "retrieval_status": "retrieved",
+          "unresolved": []
+        }
+      ],
+      "inactive": {
+        "deactivated": 0,
+        "deleted": 0,
+        "renamed": 0
+      }
+    },
+    "problems": [],
+    "next_steps": [
+      "Ask the user to confirm the scope, then run: secure-code scope save --decisions FILE --confirmed"
+    ]
+  }
+]

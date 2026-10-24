@@ -104,6 +104,19 @@ ERA_001A_REMOVED = (
     f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/submit.py",
     f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/probes/suite.probe",
     f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/payload/launcher.py",
+    # FEATURE-001-E (maintenance point, DAO-023/024 precedent).
+    f"{FRAMEWORK}/references/reference-knowledge.md",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/__init__.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/cache.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/cli_parser.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/clock.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/fetch.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/parse.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/policy_view.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/registry.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/registry_ops.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/service.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/reference/urls.py",
 )
 
 # FEATURE-001-A minimal fragment, byte for byte as written by host_fragment.py a14b9b85… (golden).

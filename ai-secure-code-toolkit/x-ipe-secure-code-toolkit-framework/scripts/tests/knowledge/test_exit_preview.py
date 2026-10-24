@@ -184,12 +184,12 @@ def test_empty_supported_not_unsupported(project, tmp_path):
         assert preview.data["impact"][kind]["count"] == 0
     # superseded per AC-001F-06a/06b (anticipated by 001-D)
     for kind in ("reference_cache",):
-        assert preview.data["impact"][kind] == "not checked in this version"
+        assert preview.data["impact"][kind]["count"] == 0  # superseded per AC-001E-07c — re-run
     for kind in ("presets", "tags"):
         assert preview.data["impact"][kind]["count"] == 0
         assert preview.data["impact"][kind]["items"] == []
     assert "(none)" in preview.to_text()
-    assert "not checked in this version" in preview.to_text()
+    assert "not checked in this version" not in preview.to_text()  # superseded per AC-001E-07c — re-run
     assert files(project) == before
     denied = env.confirm(None)
     refusal(denied, "IMPACT_DIGEST_REQUIRED", step="preview")
@@ -306,7 +306,7 @@ def test_cli_commands_json_and_text(env):
     text = run_cli(env.cli_args("deactivate")[:-1], env.trust)
     assert text.returncode == 0
     assert text.stdout.index("impact:") < text.stdout.index("impact_digest:")
-    assert "not checked in this version" in text.stdout
+    assert "reference_cache:" in text.stdout  # superseded per AC-001E-07c — re-run
     assert "(none)" in text.stdout
     assert files(env.project) == before
     confirmed = run_cli(env.cli_args("deactivate", payload["data"]["impact_digest"]), env.trust)

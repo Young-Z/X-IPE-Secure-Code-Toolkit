@@ -86,14 +86,36 @@
     },
     {
       "task_type": "Feature Acceptance Test",
-      "description": "Acceptance FEATURE-002-F at the TASK-085 commit (frozen copy): black-box CLI + real-runtime cases on local Docker Desktop with local images only, --network none, no pulls/builds; CR-077 helper path black-box; regressions 001-A/B/C/D/F/G, 002-A/B/C/D(host; container only with local assets)/G, 003-A/B; honest limits (one runtime); flaky test_02e reported honestly (DAO-006 code implementation).",
+      "description": "Acceptance FEATURE-002-F at 73fe2dc: 73/74 ACs pass; AC-002F-04l fails (D-1: results-area ENOSPC named as tmp limit). DAO-007: fix D-1 in TASK-112 after TASK-098, re-run TC-F-27/21/51 + full suite on a new frozen copy, append evidence; byte-pin partials (001-G TC-G-33, 002-G TC-G-23) accepted only with file-by-file justification.",
+      "role": "Sage",
+      "status": "blocked",
+      "output_links": [],
+      "next_task": "",
+      "created_at": "2026-10-24T04:48:47.883621+00:00",
+      "last_updated": "2026-10-24T15:03:04.705484+00:00",
+      "task_id": "TASK-111"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-002-F D-1 (DAO-007): execute_io.ERRNO_HINTS maps every ENOSPC to /tmp, so a results-area overflow reports \"tmp limit reached\" instead of the results-size limit (AC-002F-04l). RED first on the TC-F-27 scenario; classify ENOSPC by failing path (results area → results-size limit; /tmp → tmp limit), existing names only; re-run TC-F-27/21/51 + full suite on a new frozen copy; append evidence to acceptance doc; independent review. Starts after TASK-098 releases the live tree.",
+      "role": "Sage",
+      "status": "pending",
+      "output_links": [],
+      "next_task": "",
+      "created_at": "2026-10-24T15:03:04.736590+00:00",
+      "last_updated": "2026-10-24T15:03:04.736590+00:00",
+      "task_id": "TASK-112"
+    },
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance FEATURE-001-E at the TASK-098 commit (frozen copy): black-box CLI with loopback-only reference fixtures (B4 = B; real fetch parked; P-01 = A), P6 gate GET, regressions of delivered features incl. superseded closed-list assertions marked as such; honest limits (no real domains, no TLS).",
       "role": "Sage",
       "status": "in_progress",
       "output_links": [],
       "next_task": "",
-      "created_at": "2026-10-24T04:48:47.883621+00:00",
-      "last_updated": "2026-10-24T04:48:47.883621+00:00",
-      "task_id": "TASK-111"
+      "created_at": "2026-10-24T16:55:40.301534+00:00",
+      "last_updated": "2026-10-24T16:55:40.301534+00:00",
+      "task_id": "TASK-113"
     }
   ]
 }

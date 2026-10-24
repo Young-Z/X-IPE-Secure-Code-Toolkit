@@ -341,6 +341,9 @@ def confirm(
                     "Maintainer qualification no longer valid",
                     "Re-run the authorization step",
                 )
+            invalidated = _invalidate_reference_cache(tree, req)
+            if invalidated:
+                data["invalidated_reference_cache"] = invalidated
             exit_journal.run(tree, journal)
     except Refused as exc:
         return exit_journal.with_recovered(
@@ -350,6 +353,16 @@ def confirm(
         return exit_journal.with_recovered(exit_journal.refusal(CONFIRM, exc), recovered)
     steps = [REPAIR_STEP + " (secure-code knowledge links lists broken references)"]
     return exit_journal.with_recovered(Result(CONFIRM, True, data, [], steps), recovered)
+
+
+def _invalidate_reference_cache(tree: durable.Tree, req: Request) -> list[str]:
+    """FEATURE-001-E (P2, 001-D BR-05): the listed cache entries are invalidated at confirmation."""
+    from ..reference import cache as reference_cache
+
+    keys = reference_cache.invalidate_at(tree, rule=req.ref.rel)
+    if req.target is not None:
+        keys += reference_cache.invalidate_at(tree, rule=req.target)
+    return sorted(keys)
 
 
 # --------------------------------------------------------------------------- plan

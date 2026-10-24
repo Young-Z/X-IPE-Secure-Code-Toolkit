@@ -174,8 +174,27 @@ def confirmed_or_refuse(confirmed: bool) -> None:
 
 
 # --------------------------------------------------------------------------- documents
+class Member(str):
+    """A stored identity that remembers its member source (FEATURE-001-E, P4): `local` or `reference`.
+    It compares, hashes and sorts exactly like the plain identity text."""
+
+    source: str
+
+    def __new__(cls, rel: str, source: str = "local") -> Member:
+        member = super().__new__(cls, rel)
+        member.source = source
+        return member
+
+
+def source_of(rel: str) -> str:
+    return getattr(rel, "source", "local")
+
+
 def _members(rels: list[str]) -> list[dict[str, str]]:
-    return [{"rule": rel, "source": "local"} for rel in sorted(set(rels))]
+    first: dict[str, str] = {}
+    for rel in rels:
+        first.setdefault(str(rel), source_of(rel))
+    return [{"rule": rel, "source": first[rel]} for rel in sorted(first)]
 
 
 def preset_doc(
@@ -224,8 +243,10 @@ def parse(kind: Kind, stem: str, raw: bytes) -> dict[str, Any]:
         raise ValueError(f"{kind.members} must be a non-empty list")
     rels = []
     for member in members:
-        if not isinstance(member, dict) or set(member) != {"rule", "source"} or member["source"] != "local":
-            raise ValueError("each reference must be {rule, source: local}")
+        if not isinstance(member, dict) or set(member) != {"rule", "source"} or member["source"] not in (
+            "local", "reference"
+        ):
+            raise ValueError("each reference must be {rule, source: local or reference}")
         rels.append(RuleRef.parse(member["rule"]).rel)
     if rels != sorted(set(rels)):
         raise ValueError("references are not sorted and unique")
@@ -250,7 +271,7 @@ class Entry:
     @property
     def rels(self) -> list[str]:
         key = "rules" if "rules" in self.data else "members"
-        return [m["rule"] for m in self.data[key]]
+        return [Member(m["rule"], m["source"]) for m in self.data[key]]
 
 
 @dataclass
@@ -382,7 +403,7 @@ def is_dynamic(text: str) -> bool:
 
 def check_references(lib: resolve.Library, texts: list[Any]) -> tuple[list[str], list[dict[str, Any]], int]:
     """A2: (valid fully qualified identities sorted, invalid with reasons, duplicates dropped)."""
-    valid: set[str] = set()
+    valid: dict[str, Member] = {}
     invalid: list[dict[str, Any]] = []
     duplicates = 0
     for text in texts:
@@ -392,14 +413,21 @@ def check_references(lib: resolve.Library, texts: list[Any]) -> tuple[list[str],
             )
             continue
         if text.lower().startswith("reference:"):
-            invalid.append(
-                {
-                    "requested": text,
-                    "reason": "invalid_reference",
-                    "detail": "Reference sources are not available until FEATURE-001-E "
-                    "provides Reference knowledge; use Local rules",
-                }
-            )
+            # FEATURE-001-E (P4): a registered Reference rule is stored as {rule, source: reference}
+            req = parse_requested(text[len("reference:"):])
+            full = None if req.invalid else req.full()
+            if full is None or not lib.refs.has(full):
+                invalid.append(
+                    {
+                        "requested": text,
+                        "reason": "invalid_reference",
+                        "detail": "not a registered Reference rule; ask a Maintainer to register it "
+                        "(secure-code knowledge reference register)",
+                    }
+                )
+                continue
+            duplicates += full.rel in valid
+            valid.setdefault(full.rel, Member(full.rel, "reference"))
             continue
         if is_dynamic(text):
             invalid.append(
@@ -418,8 +446,9 @@ def check_references(lib: resolve.Library, texts: list[Any]) -> tuple[list[str],
             continue
         if found["rule"] in valid:
             duplicates += 1
-        valid.add(found["rule"])
-    return sorted(valid), invalid, duplicates
+        source = "reference" if found.get("knowledge_kind") == "reference" else "local"
+        valid.setdefault(found["rule"], Member(found["rule"], source))
+    return [valid[rel] for rel in sorted(valid)], invalid, duplicates
 
 
 def validated_members(lib: resolve.Library, texts: list[Any]) -> tuple[list[str], int]:
@@ -444,7 +473,7 @@ def availability(lib: resolve.Library, rels: list[str]) -> list[dict[str, Any]]:
     rows = []
     for rel in rels:
         found = resolve.evaluate(lib, RuleRef.parse(rel), [])
-        row: dict[str, Any] = {"source": "local", "rule": rel, "availability": found["availability"]}
+        row: dict[str, Any] = {"source": source_of(rel), "rule": rel, "availability": found["availability"]}
         if found["availability"] == "available":
             row["state_digest"] = found["source_evidence"]["state_digest"]
         else:

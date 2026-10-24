@@ -1,0 +1,57 @@
+[
+  1,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "policy resolve",
+    "ok": false,
+    "data": {
+      "notices": [],
+      "status": "maintenance_needed",
+      "mode": "clues",
+      "library_size": 4,
+      "pending_count": 0,
+      "counts": {
+        "requested": 2,
+        "available": 0,
+        "missing": 1,
+        "unclear": 1
+      },
+      "adopted": [],
+      "adoption": "nothing adopted yet — the user must confirm, then: secure-code scope save --confirmed",
+      "proposal_digest": "sha256:1f99b14b9057eb09e874111921ee74b3ca50cc067b34f5b3426d9776d1c85589",
+      "entries": [
+        {
+          "requested": "CWE/CWE-79",
+          "availability": "unclear",
+          "reason": "multiple_versions",
+          "candidates": [
+            {
+              "rule": "CWE/4.14/CWE-79",
+              "availability": "available",
+              "state_digest": "sha256:500fd8cd4e313bbd7b691bfdf5cacc61320e9258f936acbf7092a35c44d3a16f"
+            },
+            {
+              "rule": "CWE/4.15/CWE-79",
+              "availability": "available",
+              "state_digest": "sha256:a39882e02fb73f58104d1d38e30710dcee1bafb184f41ad5aa011fa6ead1031c"
+            }
+          ]
+        },
+        {
+          "requested": "CWE/NOPE",
+          "availability": "missing",
+          "reason": "not_found"
+        }
+      ]
+    },
+    "problems": [
+      {
+        "code": "MAINTENANCE_NEEDED",
+        "message": "No usable formal Policy"
+      }
+    ],
+    "next_steps": [
+      "Revise the references or ask a Maintainer to import them: CWE/CWE-79, CWE/NOPE"
+    ]
+  }
+]

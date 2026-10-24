@@ -439,6 +439,186 @@ class EgressGate:
                 return {"status": exc.code, "redirect_not_followed": True}
             return {"status": exc.code, "redirect_not_followed": False}
         return {"status": response.status, "redirect_not_followed": False, "body": response.read(65536)}
+    # --- P6 GET path (FEATURE-001-E, additive) ---
+    # Body-less loopback GET for purpose `reference_fetch` only (DAO-018 OQ-01 A / DAO-020 TD DEC-01/02).
+    # Kept inside this module: the delivered rule is that no other module opens network clients. v1.0
+    # fetches only http://127.0.0.1[:port] (human item P-01): numeric AF_INET socket, no name resolution,
+    # no TLS, no proxy, no redirect, no retry, HTTP/1.0 with fixed headers, strict response-head grammar,
+    # allowlisted bounded headers, body read to EOF up to limit + 1, one absolute monotonic deadline and an
+    # explicit close on success, error and timeout.
+    GET_HEADERS = (
+        ("User-Agent", "ai-secure-code-toolkit/{version}"),
+        ("Accept", "text/html, text/plain, text/markdown"),
+        ("Accept-Encoding", "identity"),
+        ("Connection", "close"),
+    )
+    GET_ALLOWED = {"content-type": 256, "content-length": 20, "content-encoding": 64}
+    GET_MAX_STATUS, GET_MAX_HEAD, GET_MAX_LINES, GET_CHUNK = 1024, 16384, 64, 65536
+    GET_ORIGIN = re.compile(r"http://127\.0\.0\.1(?::[0-9]{1,5})?")
+    GET_STATUS = re.compile(rb"HTTP/1\.[01] ([2-5][0-9]{2}) [\t\x20-\x7e\x80-\xff]*")
+    GET_TOKEN = re.compile(rb"[!#$%&'*+\-.^_`|~0-9A-Za-z]+")
+    GET_VALUE = re.compile(rb"[\t\x20-\x7e\x80-\xff]*")
+    GET_DIGITS = re.compile(rb"[0-9]{1,20}")
+    GET_STEP = "Check the fixture server and the registered entry URL, then fetch again"
+
+    @staticmethod
+    def get_failed(detail: str, message: str) -> GuardError:
+        """`EGRESS_GET_FAILED` with data `detail`: timeout | connection_failed | header_invalid."""
+        return GuardError("EGRESS_GET_FAILED", message, EgressGate.GET_STEP, {"detail": detail})
+
+    @staticmethod
+    def require_loopback(url: Any) -> None:
+        """EGRESS_INVALID unless exactly http://127.0.0.1[:port]/… (before consumption and any socket)."""
+        origin, _, _ = _parse_url(url)
+        parts = urlsplit(url)
+        loopback = parts.scheme == "http" and parts.hostname == "127.0.0.1"
+        if not (loopback and EgressGate.GET_ORIGIN.fullmatch(origin)):
+            raise _invalid("The GET path fetches only http://127.0.0.1[:port] in v1.0 (human item P-01)")
+
+    @staticmethod
+    def parse_head(head: bytes) -> tuple[int, list[tuple[str, str]]]:
+        """Strict grammar of a response head (without its final CRLF CRLF), applied to every line including
+        headers that are later discarded; any violation is `header_invalid`."""
+        g = EgressGate
+
+        def bad(why: str) -> GuardError:
+            return g.get_failed("header_invalid", f"The response head is not accepted ({why})")
+
+        if len(head) > g.GET_MAX_HEAD:
+            raise bad("head larger than 16 KiB")
+        lines = head.split(b"\r\n")
+        if any(b"\r" in line or b"\n" in line for line in lines):
+            raise bad("bare CR or LF")
+        if len(lines[0]) > g.GET_MAX_STATUS or not g.GET_STATUS.fullmatch(lines[0]):
+            raise bad("status line")
+        if len(lines) - 1 > g.GET_MAX_LINES:
+            raise bad("too many header lines")
+        out: list[tuple[str, str]] = []
+        seen: set[str] = set()
+        for line in lines[1:]:
+            if line[:1] in (b" ", b"\t"):
+                raise bad("obsolete line folding")
+            name, colon, value = line.partition(b":")
+            if not colon or not g.GET_TOKEN.fullmatch(name):
+                raise bad("field line")
+            value = value.strip(b" \t")
+            if not g.GET_VALUE.fullmatch(value):
+                raise bad("control character in a field value")
+            lowered = name.decode("ascii").lower()
+            if lowered == "transfer-encoding":
+                raise bad("Transfer-Encoding is not supported")
+            if lowered in g.GET_ALLOWED:
+                if lowered in seen:
+                    raise bad(f"duplicated {lowered}")
+                too_long = len(value) > g.GET_ALLOWED[lowered]
+                if too_long or (lowered == "content-length" and not g.GET_DIGITS.fullmatch(value)):
+                    raise bad(f"{lowered} value")
+            seen.add(lowered)
+            out.append((lowered, value.decode("latin-1")))
+        return int(lines[0][9:12]), out
+
+    def get(self, auth: Authorization, *, limit: int, deadline: float) -> dict[str, Any]:
+        """Body-less GET for purpose `reference_fetch` only (FEATURE-001-E, P6). Additive to `send`: the
+        same single-use, URL-bound consumption under the Guard lock, then the loopback request."""
+        self.require_loopback(auth.url)
+        origin, path = canonical_url(auth.url)
+
+        def consume(state: dict[str, Any]) -> None:
+            _live(self.root, state)
+            d = next((x for x in state["egress"]["declarations"] if x["id"] == auth.id), None)
+            sent = "sha256:" + hashlib.sha256(auth.payload).hexdigest()
+            if d is None or d["decision"] != "allowed" or d["digest"] != sent:
+                raise GuardError(
+                    "EGRESS_NOT_AUTHORIZED", "This authorization is not recorded as allowed", STEP
+                )
+            if d["purpose"] != "reference_fetch":
+                raise _invalid("The GET path serves only purpose reference_fetch")
+            if d["used"]:
+                raise GuardError(
+                    "EGRESS_REUSED", "An authorization can be used once", "Authorize the call again"
+                )
+            if (d["recipient"], d["path"]) != (origin, path):
+                raise GuardError("EGRESS_NOT_AUTHORIZED", "The URL differs from the authorized one", STEP)
+            d["used"] = True
+
+        with _locked(self.root):
+            runs.update_state(self.root, self.vid, consume)
+        return self.get_request(auth.url, limit=limit, deadline=deadline)
+
+    @staticmethod
+    def get_request(url: str, *, limit: int, deadline: float) -> dict[str, Any]:
+        """One GET → {"status", "headers" (allowlisted, lower-case names), "body" (≤ limit + 1 bytes),
+        "truncated", "redirect_not_followed"}; EGRESS_GET_FAILED otherwise."""
+        import socket
+        import time
+
+        from .. import __version__
+
+        g = EgressGate
+        g.require_loopback(url)
+        _, _, raw = _parse_url(url)
+        port = urlsplit(url).port or 80
+
+        def remaining() -> float:
+            left = deadline - time.monotonic()
+            if left <= 0:
+                raise g.get_failed("timeout", "The fetch deadline was reached")
+            return left
+
+        def io(call: Any, *args: Any) -> Any:
+            sock.settimeout(remaining())
+            try:
+                return call(*args)
+            except TimeoutError:
+                raise g.get_failed("timeout", "The fetch deadline was reached") from None
+            except OSError as exc:
+                detail = f"The connection failed ({exc.strerror or exc})"
+                raise g.get_failed("connection_failed", detail) from None
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            io(sock.connect, ("127.0.0.1", port))
+            headers = [(k, v.format(version=__version__)) for k, v in g.GET_HEADERS]
+            lines = [f"GET {raw} HTTP/1.0", f"Host: 127.0.0.1:{port}", *(f"{k}: {v}" for k, v in headers)]
+            io(sock.sendall, ("\r\n".join(lines) + "\r\n\r\n").encode("ascii"))
+            data = b""
+            while b"\r\n\r\n" not in data:
+                if (b"\r\n" not in data and len(data) > g.GET_MAX_STATUS) or len(data) > g.GET_MAX_HEAD + 4:
+                    raise g.get_failed("header_invalid", "The response head is not accepted (too long)")
+                chunk = io(sock.recv, 4096)
+                if not chunk:
+                    raise g.get_failed("header_invalid", "The response ended before its head was complete")
+                data += chunk
+            end = data.index(b"\r\n\r\n")
+            status, fields = g.parse_head(data[:end])
+            body = data[end + 4 :]
+            allowed = {name: value for name, value in fields if name in g.GET_ALLOWED}
+            result: dict[str, Any] = {"status": status, "headers": allowed, "body": b"", "truncated": False,
+                                      "redirect_not_followed": 300 <= status < 400}
+            if not 200 <= status < 300:
+                return result
+            declared = int(allowed["content-length"]) if "content-length" in allowed else None
+            if declared is not None and declared > limit:
+                result["truncated"] = True
+                return result
+            while len(body) <= limit:
+                chunk = io(sock.recv, min(g.GET_CHUNK, limit + 1 - len(body)))
+                if not chunk:
+                    break
+                body += chunk
+            body = body[: limit + 1]
+            truncated = len(body) > limit
+            if declared is not None and not truncated and len(body) != declared:
+                raise g.get_failed("header_invalid", "The body length differs from Content-Length")
+            result.update(body=body, truncated=truncated)
+            return result
+        finally:
+            try:
+                sock.shutdown(socket.SHUT_RDWR)
+            except OSError:
+                pass
+            sock.close()
+    # --- end P6 GET path ---
 
 
 # --------------------------------------------------------------------------- Adapter network needs

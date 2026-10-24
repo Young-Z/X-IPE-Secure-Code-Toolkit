@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html><head><title>Hidden content (synthetic fixture)</title>
+<style>.later { display: none; } STYLE-TEXT</style></head>
+<body><main>
+<p>Visible requirement text that must be extracted.</p>
+<script>SCRIPT-TEXT</script>
+<template><p>TEMPLATE-TEXT</p></template>
+<noscript>NOSCRIPT-TEXT</noscript>
+<iframe>IFRAME-TEXT</iframe>
+<object>OBJECT-TEXT</object>
+<form><label>FORM-TEXT</label></form>
+<!-- COMMENT-TEXT -->
+<div hidden><p>HIDDEN-ATTR-TEXT</p></div>
+<div aria-hidden=" TRUE "><p>ARIA-HIDDEN-TEXT</p></div>
+<span style="color: blue; DISPLAY : None">DISPLAY-NONE-TEXT</span>
+<span style="visibility:   hidden">VISIBILITY-HIDDEN-TEXT</span>
+<span class="later">STYLESHEET-HIDDEN-TEXT</span>
+</main></body></html>

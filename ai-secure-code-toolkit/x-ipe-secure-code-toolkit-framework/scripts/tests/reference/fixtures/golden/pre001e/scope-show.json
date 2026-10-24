@@ -1,0 +1,85 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "scope show",
+    "ok": true,
+    "data": {
+      "status": "complete",
+      "scope_id": "sha256:52f4996798ac9a1c8bece7ae8b36f16df00b38c3ab09e6e760c2e3034345823c",
+      "mode": "clues",
+      "artifact_scope": "not determined by the Policy scope",
+      "adopted_rules": [
+        "CWE/4.14/CWE-22",
+        "CWE/4.14/CWE-89"
+      ],
+      "counts": {
+        "adopted": 2,
+        "needs_reconfirmation": 0,
+        "missing": 0
+      },
+      "entries": [
+        {
+          "rule": "CWE/4.14/CWE-22",
+          "requested": "CWE/4.14/CWE-22",
+          "note": null,
+          "confirmed_state_digest": "sha256:206f739064aa2a4d1056cdafef5fb1b25969c304e70a3ad009a7643a393d1d73",
+          "adoption": "adopted",
+          "policy": {
+            "rule": "CWE/4.14/CWE-22",
+            "availability": "available",
+            "name": null,
+            "kind": "institutional",
+            "requirement": "Rule CWE-22 body.\n",
+            "applicability": "unknown",
+            "language_note": "unknown",
+            "examples": [],
+            "relations": [],
+            "source_evidence": {
+              "source_location": "https://example.org/CWE-22",
+              "source_documents": [],
+              "state_digest": "sha256:206f739064aa2a4d1056cdafef5fb1b25969c304e70a3ad009a7643a393d1d73",
+              "last_changed_at": "<time>"
+            },
+            "other_versions": [],
+            "retrieval_status": "retrieved",
+            "unresolved": []
+          }
+        },
+        {
+          "rule": "CWE/4.14/CWE-89",
+          "requested": "CWE/4.14/CWE-89",
+          "note": null,
+          "confirmed_state_digest": "sha256:d20e718d9958fbf1f43bf86b02b627d57d22b0ba0b98b36ffe7537e9eeafebc8",
+          "adoption": "adopted",
+          "policy": {
+            "rule": "CWE/4.14/CWE-89",
+            "availability": "available",
+            "name": null,
+            "kind": "institutional",
+            "requirement": "Rule CWE-89 body.\n",
+            "applicability": "unknown",
+            "language_note": "unknown",
+            "examples": [],
+            "relations": [],
+            "source_evidence": {
+              "source_location": "https://example.org/CWE-89",
+              "source_documents": [],
+              "state_digest": "sha256:d20e718d9958fbf1f43bf86b02b627d57d22b0ba0b98b36ffe7537e9eeafebc8",
+              "last_changed_at": "<time>"
+            },
+            "other_versions": [],
+            "retrieval_status": "retrieved",
+            "unresolved": []
+          }
+        }
+      ],
+      "not_adopted": [],
+      "clues": "registration change",
+      "confirmation_note": "Maintainer explicitly confirmed scope",
+      "created_at": "<time>"
+    },
+    "problems": [],
+    "next_steps": []
+  }
+]

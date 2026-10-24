@@ -47,8 +47,9 @@ Preset update: give `rules` (a membership change, with either a new `applicabili
 
 Every reference is checked like `policy resolve` (`not_found`, `pending_decision`, `inconsistent`,
 `multiple_versions` with candidates, `deactivated`, `deleted`, `renamed`). Tag names, expressions,
-wildcards or other selectors are refused as `dynamic_selector`; a Reference member is refused
-`invalid_reference` until FEATURE-001-E delivers Reference knowledge. Stored references are always
+wildcards or other selectors are refused as `dynamic_selector`; a member `reference:NS/VER/ID` is stored as
+`{rule, source: reference}` when that Reference rule is registered (resolved Local first); an unregistered
+one is refused `invalid_reference`. Stored references are always
 fully qualified; no rule content, example or state digest is stored.
 
 ## Save as Preset

@@ -11,6 +11,7 @@
 | DAO-004 | 2026-10-24T05:15:42+08:00 | TASK-058 | x-ipe-task-based-feature-acceptance-test | critique | 0.86 | FEATURE-002-D B9 run: re-downloading the Trivy binary (GitHub) and Python deps (PyPI) is NOT covered by B9 (DB download via tool_update only; acceptance downloads were already ruled outside tool-validation authority in DAO-002 TD) → (B) escalate as human B17; park TASK-058 at existing status; no partial closing (C rejected); queue reorder to TASK-084 next confirmed |
 | DAO-005 | 2026-10-24T08:19:17+08:00 | TASK-103 | x-ipe-task-based-feature-acceptance-test | approval | 0.86 | FEATURE-001-G acceptance (62/62 active, 09a–e deferred by human B13) accepted → Feature Closing; O-084-1 → (a) separate Low bug-fix task (mask/omit refused provenance URLs, existing masking, no new output) after TASK-102, disclosed in closing; closing review = code review PASS + acceptance if both bound to 93e3eaa, else delta review; local commit (B8) |
 | DAO-006 | 2026-10-24T10:30:26+08:00 | TASK-058 | x-ipe-task-based-feature-acceptance-test | approval | 0.80 | FEATURE-002-D B17 run (46/46 ACs, TC-L-01 live pass): (a) accepted with conditions — design's 'mandatory real-binary gate before closing' amended (DAO design erratum) to TC-G-01 or a check-by-check executed equivalent confirmed by the independent evidence review; uncovered TC-G-01 assertions become disclosed limits; TC-G-01 recorded 'not executed — human scoped B17 = A', never passed; human told B17-B remains available |
+| DAO-007 | 2026-10-24T23:01:15+08:00 | TASK-111 | x-ipe-task-based-feature-acceptance-test | critique | 0.86 | FEATURE-002-F acceptance 73/74: D-1 (AC-002F-04l limit misnamed) → (a) bug fix after TASK-098, RED first, re-run TC-F-27/21/51 on a new frozen copy; (b) rejected (AC requires naming the limit); 001-G TC-G-33 / 002-G TC-G-23 partials accepted as expected change-set pins if every differing file is in 002-F's closed list + ruled maintenance points; 002-D TC-H-01 environment partial recorded |
 
 ---
 
@@ -295,3 +296,51 @@
 
 ### Follow-up
 > Supplementary real-Trivy 002-G comparison; human informed that B17-B can still enable TC-G-01.
+
+## DAO-007
+- **Timestamp:** 2026-10-24T23:01:15+08:00
+- **Task ID:** TASK-111
+- **Feature ID:** FEATURE-002-F
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-feature-acceptance-test
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human B12 = A, P-01 clarification confirmed (12:24)
+- **Disposition:** critique
+- **Confidence:** 0.86
+
+### Message
+> Acceptance at frozen 73fe2dc (hash f7a155a4… start=end): 73/74 active ACs Pass, AC-002F-04l FAIL on one clause (D-1, minor): TC-F-27 helper writing 3 MiB into the results area is stopped and nothing over the limit kept, but the reported limit is "tmp limit reached" instead of the results-size limit (execute_io.ERRNO_HINTS maps every ENOSPC to /tmp). TCs 51: 46 Pass, 1 Fail, 4 Partial. Real runtime Docker Desktop: registration (GPG_KEY labelled public), 20/20 probes, Guard flow accepted_full/partial, timeout and cancel kill, 236 containers all --network none, no leftovers. Regression partials: 001-G TC-G-33 and 002-G TC-G-23 pin pre-002-F bytes; 002-D TC-H-01 needs removed B17 assets. Maintainer steps via throwaway trust store, never auth init on host. TASK-098 (001-E) owns the live tree now. Options: (a) bug-fix task for D-1 after TASK-098 (RED first on TC-F-27; re-run TC-F-27/21/51 on a new frozen copy), then closing; (b) accept the wrong name as limit. Also: accept 001-G/002-G byte-pin partials as expected?
+
+### Guidance Returned
+> DAO verified:
+> - acceptance doc SHA e58c0bc4…: status "Blocked — 73/74"; D-1 detail L241; regression partials L255–261;
+> - spec AC-002F-04l (L117): "the method is failed naming the limit AND no oversized output is retained".
+> **D-1 → (a).** AC-002F-04l explicitly requires naming the limit, so the misnamed limit fails a confirmed clause. (b) is rejected: accepting it would rewrite a failed AC by representative approval, which DAO may not do.
+> Bug-fix task right after TASK-098 releases the live tree (serialization respected):
+> - RED first on the TC-F-27 scenario;
+> - classify ENOSPC by the failing path/mount (results area → results-size limit L-07/L-08 as specified; `/tmp` → tmp limit), with no new output kind, only the correct existing limit name;
+> - re-run TC-F-27, TC-F-21 and TC-F-51 on a new frozen copy at the fixed revision, plus the full suite;
+> - append the new evidence to the acceptance doc (never edit the original Fail);
+> - an independent review of the fix.
+> FEATURE-002-F stays Implemented and is not closed until D-1 passes. Then Feature Closing.
+> **Regression partials:**
+> - **001-G TC-G-33 and 002-G TC-G-23 → accepted as expected change-set pins,** on the condition that the acceptance doc lists every differing file and shows each is within 002-F's closed list §1.1 (DAO-017) or a ruled maintenance point (DAO-005/006 code implementation). They are reported as "Partial (expected 002-F change)", never as Pass, and the original 001-G/002-G evidence is not edited. Any differing file outside that set is a defect and stops closing.
+> - **002-D TC-H-01 → environment partial, recorded** (same precedent as the 002-G acceptance; the container regression stays host-only, with no new download).
+> **Method notes accepted:** Maintainer steps via a throwaway trust store, following the delivered real-runtime test method; no `auth init` on the host; one-runtime honest limits.
+
+### Rationale
+> A failed explicit AC clause must be fixed, not waived by the representative; the fix is small and correctly sequenced behind the live-tree owner. The byte-pin partials are expected consequences of ruled 002-F changes, acceptable only with an explicit file-by-file justification.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-bug-fix"
+>     match_strength: "strong"
+>     reason: "D-1 fix after TASK-098 (RED first), then re-run affected TCs"
+>     execution_steps:
+>       - phase: "Reproduce"
+>         step: "Write a failing test first, then fix"
+>   - skill_name: "x-ipe-task-based-feature-closing"
+>     match_strength: "partial"
+>     reason: "After D-1 passes"
+
+### Follow-up
+> D-1 bug task queued after TASK-098; 002-F closing after D-1 evidence.

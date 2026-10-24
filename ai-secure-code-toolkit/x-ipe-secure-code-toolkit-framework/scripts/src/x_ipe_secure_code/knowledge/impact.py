@@ -12,12 +12,13 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from ..policy import resolve, scope
+from ..reference import cache as reference_cache
 from . import catalog, durable, lifecycle, store
 from .identity import RuleRef
 
 SCHEMA = "ai-secure-code-toolkit/exit-impact/v1"
 NOT_CHECKED = "not checked in this version"
-UNSUPPORTED = ("reference_cache",)
+UNSUPPORTED: tuple[str, ...] = ()  # FEATURE-001-E (P2): `reference_cache` is a provider now
 SCOPE_FILE = re.compile(r"[0-9a-f]{64}\.json")
 
 
@@ -185,6 +186,7 @@ PROVIDERS: tuple[Provider, ...] = (
     Provider("document_index", document_index),
     Provider("presets", catalog.presets_provider),
     Provider("tags", catalog.tags_provider),
+    Provider("reference_cache", reference_cache.impact_provider),  # FEATURE-001-E (P2/P3/P5)
 )
 
 

@@ -288,4 +288,9 @@ def collect(project: str | None, trust_paths: TrustPaths | None = None) -> Resul
         "host_integration": _host(root, record, problems),
         "problems": problems,
     }
+    if reference > 0:  # FEATURE-001-E (P7): one additive line, only when Reference rules exist
+        from .reference.cache import available_count
+
+        line = f"Reference rules: registered {reference}, available {available_count(root)}"
+        data["policies"]["reference_rules"] = line
     return Result(COMMAND, True, data)

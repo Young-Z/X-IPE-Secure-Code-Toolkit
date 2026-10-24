@@ -1,0 +1,85 @@
+[
+  0,
+  {
+    "schema": "ai-secure-code-toolkit/result/v1",
+    "command": "policy resolve",
+    "ok": true,
+    "data": {
+      "notices": [
+        {
+          "code": "MULTI_VERSION",
+          "rules": {
+            "CWE/CWE-79": [
+              "4.14",
+              "4.15"
+            ]
+          },
+          "message": "Rules present in several source versions: confirm which versions apply"
+        }
+      ],
+      "status": "complete",
+      "mode": "clues",
+      "library_size": 4,
+      "pending_count": 0,
+      "counts": {
+        "requested": 2,
+        "available": 2,
+        "missing": 0,
+        "unclear": 0
+      },
+      "adopted": [],
+      "adoption": "nothing adopted yet — the user must confirm, then: secure-code scope save --confirmed",
+      "proposal_digest": "sha256:e812a6f177d0b2c3cb579ddb86dfbfe1bc2398cee9fae01175c73807500f98b7",
+      "entries": [
+        {
+          "requested": "CWE/4.14/CWE-79",
+          "rule": "CWE/4.14/CWE-79",
+          "availability": "available",
+          "name": null,
+          "kind": "institutional",
+          "requirement": "Rule CWE-79 body.\n",
+          "applicability": "unknown",
+          "language_note": "unknown",
+          "examples": [],
+          "relations": [],
+          "source_evidence": {
+            "source_location": "https://example.org/CWE-79",
+            "source_documents": [],
+            "state_digest": "sha256:500fd8cd4e313bbd7b691bfdf5cacc61320e9258f936acbf7092a35c44d3a16f",
+            "last_changed_at": "<time>"
+          },
+          "other_versions": [
+            "CWE/4.15/CWE-79"
+          ],
+          "retrieval_status": "retrieved",
+          "unresolved": []
+        },
+        {
+          "requested": "CWE/4.14/CWE-89",
+          "rule": "CWE/4.14/CWE-89",
+          "availability": "available",
+          "name": null,
+          "kind": "institutional",
+          "requirement": "Rule CWE-89 body.\n",
+          "applicability": "unknown",
+          "language_note": "unknown",
+          "examples": [],
+          "relations": [],
+          "source_evidence": {
+            "source_location": "https://example.org/CWE-89",
+            "source_documents": [],
+            "state_digest": "sha256:d20e718d9958fbf1f43bf86b02b627d57d22b0ba0b98b36ffe7537e9eeafebc8",
+            "last_changed_at": "<time>"
+          },
+          "other_versions": [],
+          "retrieval_status": "retrieved",
+          "unresolved": []
+        }
+      ]
+    },
+    "problems": [],
+    "next_steps": [
+      "Ask the user to confirm the scope, then run: secure-code scope save --decisions FILE --confirmed"
+    ]
+  }
+]

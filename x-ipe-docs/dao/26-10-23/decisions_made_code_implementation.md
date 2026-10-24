@@ -11,6 +11,8 @@
 | DAO-004 | 2026-10-24T06:38:31+08:00 | TASK-084 | x-ipe-task-based-code-implementation | approval | 0.84 | FEATURE-001-G implementation DEC-I1…I14 approved with conditions: I1 ERA_001A_REMOVED append (DAO-002 precedent); I5 assert the design-order code exactly (no either/or) + R1 design erratum; I3/I7/I11/I13 recorded as closing notes; I13 fixtures named in maintenance notes with self-explaining failure messages; closing after independent code review |
 | DAO-005 | 2026-10-24T10:57:12+08:00 | TASK-085 | x-ipe-task-based-code-implementation | approval | 0.80 | FEATURE-002-F implementation: (1) DEC-I17 maintenance points + DEC-I18 approved per DAO-023/024; (2) snapshot Medium bug fixed here RED-first; (3) DEC-I4 narrow GPG_KEY fingerprint exemption within authority + design erratum; (4) DEC-I5 → (b) as spec clarification v1.3.x within authority (intent 'network disabled'), stronger probe evidence incl. CapEff, delta review, human visibility; (5) flaky 001-G test → separate Low task; (6) other DEC-I approved, DEC-I6 tighten /dev/shm if conformance passes else honest limit |
 | DAO-006 | 2026-10-24T12:47:45+08:00 | TASK-085 | x-ipe-task-based-code-implementation | approval | 0.86 | FEATURE-002-F: DEC-I21…I25 approved (guard-records.md hash rebaseline as same maintenance point; snapshot_unsafe on unopenable folder; IPC none; P-01 details; header refresh); human confirmed P-01 clarification 12:24; TASK-085 complete → Implemented, local exact-path commit; acceptance on local Docker Desktop with local images only, --network none, no pulls; full regression set incl. 002-D (local assets only) |
+| DAO-007 | 2026-10-24T23:12:49+08:00 | TASK-098 | x-ipe-task-based-code-implementation | approval | 0.84 | FEATURE-001-E implementation: DEC-I04 maintenance approved (4 fixture hashes, reference_cache-only golden line, NEW_REFERENCE tuple); DEC-I05 → explicit per-feature later-changes allowlist with ruling reference (keeps 002-F tripwire); DEC-I06 ratified (P6 block placement forced by delivered 002-C test_05f; design erratum); DEC-I01–03, I07–16 ratified; P-notes incl. P6 extension note appended by owner at closing (human P6 = A) |
+| DAO-008 | 2026-10-25T00:11:31+08:00 | TASK-098 | x-ipe-task-based-code-implementation | approval | 0.85 | FEATURE-001-E: DEC-I17 presets.py approved as P4 review-fix plumbing (Reference-only, Local byte-identical; erratum + closing; DAO-007 DEC-I11 wording corrected); DEC-I04 init.json-entry variant and DEC-I05 per-path sha256 pin variant ratified; closing gated on re-review PASS |
 
 ---
 
@@ -320,3 +322,87 @@
 
 ### Follow-up
 > None.
+
+## DAO-007
+- **Timestamp:** 2026-10-24T23:12:49+08:00
+- **Task ID:** TASK-098
+- **Feature ID:** FEATURE-001-E
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-code-implementation
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human B4 = B, P6 = A, B16 = B, P-01 = A
+- **Disposition:** approval
+- **Confidence:** 0.84
+
+### Message
+> Implementation per spec v1.1.2 / design v1.2: 81/81 ACs tested; 262 new tests; full suite 3495 passed / 2 failed / 7 skipped; ruff clean; 16 delivered files changed (7 product incl. egress.py P6 block — removal restores 836f8b36; 3 framework docs; 4 closed-list test edits per DEC-13/18; carhelp/drafthelp payload maintenance). Report implementation-report-TASK-098.md (a7deb22a; DEC-I01…I16). Code review running. Rulings: DEC-I04 001-G test_08a fails (fixture delivered_tests_001abcdf.json pins the 4 closed-list-edited test files; exit-preview golden needs reference_cache rebaseline; drafthelp NEW_REFERENCE single string) → maintenance per DEC-I13 / DAO-023/024. DEC-I05 002-F test_closed_list_diff allows only 002-F's closed list vs its step-0 → scope to 002-F's own files, or add a later-features allowlist with recorded reason — which form? DEC-I06 loopback GET client inside egress.py's P6 block (not guard/egress_get.py) because delivered 002-C test_05f forbids socket imports outside egress.py — ratify? Remaining DEC-I per §9. Confirm P-notes (incl. P6 extension note on 002-C FR-002C-9) appended by owner at closing.
+
+### Guidance Returned
+> DAO verified:
+> - report SHA a7deb22a… (§9 DEC-I01…I16, L204–219);
+> - delivered 002-F `tests/helpers/test_helper_boundary.py::test_closed_list_diff` (L108–124): every delivered file's hash is compared against 002-F's step-0 baseline, and `changed ⊆ CLOSED_LIST` is asserted, plus the engine-branch removal hash check;
+> - human_decisions.md L62 (P6 = A: the human accepts the named-plug-in classification; the gate step may proceed) and L63 (B16 = B, the Reference-only bootstrap stays a recorded limit).
+> **DEC-I04 → approved as DEC-I13 maintenance (DAO-004 code implementation; same pattern as DAO-023/024).**
+> - Rebaseline exactly the 4 test-file hashes changed by the approved closed-list edits (DEC-13/18) in `delivered_tests_001abcdf.json`.
+> - Rebaseline the exit-preview golden only for the `reference_cache` line/value. Record the reason in a comment or fixture note: "P3: Reference cache became a supported impact kind (AC-001E-07c)". Every other golden byte stays identical.
+> - Convert `NEW_REFERENCE` to a tuple and add `references/reference-knowledge.md`.
+> - No assertion is weakened. Show the before/after diff of each maintenance edit in the report.
+> **DEC-I05 → the later-features allowlist form, not narrowing to 002-F-owned files.** The test's lasting value is a tripwire: any unplanned change to a delivered file fails until it is justified. Scoping to 002-F's own files would lose that. Add an explicit, per-feature allowlist next to `CLOSED_LIST`, for example `LATER_FEATURE_CHANGES = {"FEATURE-001-E (DAO-007 code implementation)": {…exact 16 paths…}}`. Each entry names the feature and the DAO ruling, and the test asserts `changed ⊆ CLOSED_LIST ∪ ⋃ allowlists`. The engine check stays unchanged. Add the comment "maintenance: later features append their ruled delivered-file changes here (DAO-007 code implementation)". It is the same maintenance class as `ERA_001A_REMOVED`, and 002-F's own guarantee is untouched.
+> **DEC-I06 → ratified.** The placement is forced by the delivered 002-C test `test_05f` (the no-socket-outside-egress rule, which is itself the single-gate principle). Behavior and contract are as designed, and removing the delimited block restores the delivered hash 836f8b36… (keep that test). Record a design erratum (DEC-01's "client in `guard/egress_get.py`" → "inside the P6 block of `egress.py`"). The human's P6 = A covers this extension.
+> **DEC-I01, I03, I07, I12–I15 → ratified/informational.** For I14, the closing report states plainly how genuine RED was produced (holding aside the pre-written `cache.py`).
+> **DEC-I02 → ratified** (refusal in the safe direction; re-resolve).
+> **DEC-I08 → ratified** (Local-only byte-identical).
+> **DEC-I09 → ratified** (never returns superseded content; capacity → uncached, reported).
+> **DEC-I10 → ratified.**
+> **DEC-I11 → ratified,** keeping delivered `tags.py`/`presets.py` unchanged. Note the `str`-subclass carrier in the design notes, and add a test that serialization stays byte-identical for Local members.
+> **DEC-I16 / P-notes → confirmed: the owner appends them at closing.** That covers the P1–P9 non-destructive notes from the design's exact texts, including the P6 extension note on 002-C FR-002C-9 and its design gate section (DAO-018 item 3). Attribute them to the owner applying DAO-018/020/022, noting the human's P6 = A. Re-run the affected delivered acceptance and mark it "superseded per AC-001E-… — re-run", never as a plain pass.
+> Closing conditions for TASK-098:
+> - the independent code review passes;
+> - the full suite has 0 failures after DEC-I04/I05 (flaky `test_02e` reported honestly if it recurs);
+> - the delivered-file change set equals the closed list, P1–P9 and the ruled maintenance points;
+> - B4 = B loopback-only checks;
+> - local exact-path commit (B8).
+> Then the D-1 fix for 002-F (DAO-007 acceptance) takes the live tree, and 001-E acceptance follows in the queue.
+
+### Rationale
+> Both blocking tests are regression tripwires that legitimately need per-feature maintenance; the allowlist form keeps their detection power. The egress placement is forced by a stricter delivered rule and preserves the single-gate design.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-code-implementation"
+>     match_strength: "strong"
+>     reason: "Apply DEC-I04/I05 maintenance, finish review, full suite"
+>     execution_steps:
+>       - phase: "1. Implement"
+>         step: "1.1 Apply ruled changes, full suite, independent review"
+
+### Follow-up
+> P-notes at closing; design erratum for DEC-01 placement.
+
+## DAO-008
+- **Timestamp:** 2026-10-25T00:11:31+08:00
+- **Task ID:** TASK-098
+- **Feature ID:** FEATURE-001-E
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-code-implementation
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human P6 = A, B16 = B
+- **Disposition:** approval
+- **Confidence:** 0.85
+
+### Message
+> DAO-007 applied + review fixes: full suite 3501/0/7 skipped; re-review running. DEC-I17: review bug 2 (presets._accepted lost source: reference) + second RED-found bug (registered-but-uncached Reference candidate → KeyError 'state_digest' in `preset recompute`) required changing delivered knowledge/presets.py (outside design change list; DAO-007 DEC-I11 said presets unchanged). Approve as added P4 plumbing (closing + erratum)? DEC-I04 variant: add references/reference-knowledge.md to golden pre_001g/init.json instead of NEW_REFERENCE tuple (tuple would edit delivered assertion L79). DEC-I05 variant: LATER_FEATURE_CHANGES pins exact post-001-E sha256 per path (20), egress.py pinned with P6 block removed (836f8b36). Ratify?
+
+### Guidance Returned
+> DAO verified: `git diff HEAD -- knowledge/presets.py` = 4+/3− (two `valid_rows[r]["state_digest"]` → `.get("state_digest")` in `_diff`; `_accepted` returns the offered member objects via `by_text` instead of plain strings); report L288 records DEC-I17, §11.3/§11.4 before/after; 001-E spec L328 P4 = 001-F AC-001F-05a named plug-in ("Reference members valid once Reference knowledge exists"); drafting fixture diff = 4 hashes in delivered_tests_001abcdf.json, exit-preview `reference_cache` value + its derived `impact_digest` only, init.json +1 line (reference-knowledge.md); test_helper_boundary.py LATER_FEATURE_CHANGES already pins presets.py (L60).
+> **DEC-I17 → approved** as review-fix plumbing inside the named P4 plug-in: both changes only take effect for Reference members (a plain-str Local member maps to itself; `.get` equals `[...]` whenever the key exists), Local output byte-identical by test, and they fix real defects (lost source, crash). Conditions: design erratum adds presets.py to the change list; closing report lists it under P4; its LATER_FEATURE_CHANGES pin stays exact. Correction recorded openly: DAO-007's "presets.py unchanged" (DEC-I11) is superseded by this entry for these two edits only — tags.py stays unchanged.
+> **DEC-I04 variant → ratified.** Adding one golden entry is maintenance of a fixture, not of an assertion — strictly less invasive than DAO-007's tuple. The exit-preview `impact_digest` change is accepted as derived from the ruled `reference_cache` line (state in the report's reason note).
+> **DEC-I05 variant → ratified** (stricter than DAO-007's form: tripwire now also catches drift after 001-E). Rule for later features: each must append its own ruled block with exact pins and the ruling reference; egress.py pinned at 836f8b36 with the P6 block removed keeps P6 removable as designed.
+> **Route:** TASK-098 completes only when the running re-review returns PASS (or PASS-WITH-NITS with nits applied) and a fresh full suite is green at the final hash; then local exact-path commit (B8 = A), then FEATURE-001-E Feature Acceptance; P-notes appended at closing (DAO-007). A re-review finding on presets.py beyond Reference-only effect returns here.
+
+### Rationale Summary
+> Named plug-in (P4) + defect fixes with Local byte-identity → within DAO authority; both test variants keep every delivered assertion and are equal or stricter guards.
+
+### Suggested Skills
+- x-ipe-task-based-code-implementation (finish after re-review) → x-ipe-task-based-feature-acceptance-test (FEATURE-001-E)
+
+### Follow-up
+- Design erratum (presets.py), closing report P4 list, exit-preview digest reason note.

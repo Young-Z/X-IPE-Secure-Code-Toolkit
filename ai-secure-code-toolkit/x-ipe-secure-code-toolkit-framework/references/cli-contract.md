@@ -160,7 +160,8 @@ completed first.
   (`[{rule, held_at, sha256}]`), `document_index` (`[{document, edge, sha256}]`, `unreadable`);
   `presets` / `tags` (`items: [{name, file_digest}]` of the Presets/tags referencing the rule,
   `unreadable: [{file, detail, content_digest?}]`, FEATURE-001-F); each with `count` (empty lists
-  print `(none)`). `reference_cache`: "not checked in this version". Links inside these folders
+  print `(none)`). `reference_cache` (`items: [{key, kind, rule|explore_url, fetched_at,
+  expires_at, state}]`, FEATURE-001-E; invalidated on confirmation). Links inside these folders
   are listed as unreadable, never followed.
 - `rule_state`: `consistent`, `state`, `revision`, `state_digest`, `fingerprint`,
   `special_entries` (FIFO/socket/device entries of an inconsistent rule, never opened),
@@ -218,6 +219,45 @@ in this version). Formats, page allowlist, block grammar, results, codes and lim
   only `drafting-authorize --list`.
 - No drafting command accepts a model, endpoint, key, token or credential option, opens a network
   connection or executes example code.
+
+## Reference knowledge (FEATURE-001-E)
+
+`secure-code knowledge reference <command> --project P [--json]`; procedure, formats and limits:
+[reference knowledge](reference-knowledge.md).
+
+| Command | Rights | Arguments | Success data |
+| --- | --- | --- | --- |
+| `register --batch FILE` | Maintainer | batch file (`ai-secure-code-toolkit/reference-batch/v1`) | `items: [{index, type, id, outcome, code?, reason?}]` |
+| `update` | Maintainer | `--source NS/VER` or `--rule REF`, `--registration-digest D`, changed fields | `record`, `registration_digest`, `invalidated_cache` |
+| `remove-preview` | Maintainer | `--rule REF --reason R` | `impact`, `impact_digest`, `registration_digest` |
+| `remove-confirm` | Maintainer | `--rule REF --reason R --impact-digest D --registration-digest RD` | `removed`, `removal_id`, `invalidated_cache` |
+| `remove-source` | Maintainer | `--source NS/VER --registration-digest D` | `removed`, `invalidated_cache` |
+| `list` | anyone | — | `sources`, `rules` with `cache_state` (`content not obtained` without a valid entry) |
+| `show` | anyone | `--rule REF` or `--source NS/VER` | registration, digests, cache summary, `label` |
+| `fetch` | anyone (User grant) | `--run ID --rule REF [--refresh]` + limits | `outcome`, `reference`, `notes`, `cache`, `digest_changes`, `egress`, `fetches_used`, `fetches_cap` |
+| `explore` | anyone (User grant) | `--run ID --source NS/VER --url URL [--refresh]` + limits | `text`, `content_label`, `links`, `masking` |
+| `cache-clean` | anyone | `[--cache-capacity N]` | `removed: [{key, reason}]` |
+
+Limits (overridable downward only, else `LIMIT_INVALID`): `--max-bytes` (2 MiB), `--max-text`
+(256 KiB), `--timeout` (30 s), `--max-fetches` (20 per verification), `--cache-capacity` (64 MiB,
+at least 1 MiB). No option, request field or environment variable selects a resolver, opener, clock,
+fixture mode or address allowlist.
+
+| Code | When | Next step |
+| --- | --- | --- |
+| `NOT_AUTHORIZED` | a Maintainer write without the qualification | ask a Maintainer |
+| `REQUEST_INVALID` / `LIMIT_INVALID` | malformed input / a limit above its default | fix the request / use a value at or below the default |
+| `REGISTRATION_INVALID` | domain, scheme, port, path-prefix, URL, title or applicability checks (`reason`) | fix the named field |
+| `IDENTITY_COLLISION` / `IDENTITY_RESERVED` | identity exists (also by letter case) / exited Local identity | choose another identity |
+| `SOURCE_NOT_FOUND` / `RULE_NOT_REGISTERED` / `SOURCE_HAS_RULES` | registry state | register first / remove the rules first |
+| `STALE_REGISTRATION` / `STALE_IMPACT` | the registration or impact changed | show again / preview again |
+| `RUN_REQUIRED` | `fetch`/`explore` without `--run` | fetch only inside a Guard verification on an available scope (human item B16) |
+| `LOCAL_FIRST_BROKEN` | a formal Local rule with the identity is broken or exited | report the Local problem; the Reference is not substituted |
+| `FETCH_NOT_AUTHORIZED` | no `reference_fetch` grant covers the URL | the User grants it at their own terminal (`guard allow-egress`) |
+| `REAL_FETCH_PARKED` | target host is not `127.0.0.1` | real-domain fetching is parked (human item P-01) |
+| `FETCH_CAP_REACHED` | 20 Reference fetches in this verification | cached content still resolves; open a new verification |
+| `FETCH_FAILED` / `REFRESH_FAILED` / `PARSE_FAILED` | target, transport, response or parse failure (`detail`) | detail-specific |
+| delivered Guard codes (`RUN_FINISHED`, `BUDGET_*`, `EGRESS_INVALID`, …), `LOCKED`, `PATH_UNSAFE`, `IO_ERROR` | passed through unchanged | delivered next step |
 
 ## Authorization model
 

@@ -92,6 +92,22 @@ NEW_PAYLOAD = (
     "guard/helpers/snapshot.py",
     "guard/helpers/static.py",
     "guard/helpers/submit.py",
+    # maintenance (DAO-023/024 precedent): FEATURE-001-E new payload files (a later declared growth).
+    # DAO-007 code implementation: fixtures/delivered_tests_001abcdf.json rebaselined for the 4 approved
+    # closed-list test files only; pre_001g/exit-preview.json rebaselined for `reference_cache` (and the
+    # impact digest it feeds) only — P3: Reference cache became a supported impact kind (AC-001E-07c);
+    # pre_001g/init.json lists the new payload file references/reference-knowledge.md.
+    "reference/__init__.py",
+    "reference/cache.py",
+    "reference/cli_parser.py",
+    "reference/clock.py",
+    "reference/fetch.py",
+    "reference/parse.py",
+    "reference/policy_view.py",
+    "reference/registry.py",
+    "reference/registry_ops.py",
+    "reference/service.py",
+    "reference/urls.py",
 )
 NEW_REFERENCE = "references/knowledge-drafting.md"
 

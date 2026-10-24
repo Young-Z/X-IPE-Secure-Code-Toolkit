@@ -15,7 +15,7 @@ from presethelp import CUSTOM, TAGS, PEnv, unchanged_but_lock
 
 from x_ipe_secure_code.policy import service as policy
 
-REFERENCE_KNOWLEDGE = False  # FEATURE-001-E (Reference knowledge) is not delivered yet
+REFERENCE_KNOWLEDGE = True  # superseded per AC-001E-07a — re-run
 
 
 @pytest.fixture
@@ -51,7 +51,7 @@ def test_reference_member_refused_before_001e(env):
     assert code(result) == "REFERENCES_INVALID"
     ref = next(r for r in result.data["references"] if r["requested"] == "reference:OWASP/2021/A03")
     assert ref["reason"] == "invalid_reference"
-    assert "reference sources are not available" in ref["detail"].lower()
+    assert "not a registered reference rule" in ref["detail"].lower()  # superseded per AC-001E-07a — re-run
     assert result.next_steps
     unchanged_but_lock(before, files(env.project))
 
@@ -61,6 +61,8 @@ def test_reference_member_refused_before_001e(env):
     reason="conditional on FEATURE-001-E: Reference knowledge does not exist yet (AC-001F-05a)",
 )
 def test_tag_members_across_local_and_reference_sources(env):  # pragma: no cover - 001-E
+    # superseded per AC-001E-07a — re-run
+    __import__("reference.refhelp", fromlist=["refhelp"]).register_reference(env, "OWASP/2021/A03")
     result = env.tsave(members=[R1, "reference:OWASP/2021/A03"])
     assert result.ok
 

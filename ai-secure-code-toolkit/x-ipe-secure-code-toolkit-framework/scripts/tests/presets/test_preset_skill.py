@@ -123,7 +123,8 @@ def test_framework_package_has_no_stale_preset_text():
         assert not re.search(r"presets,\s*tags,\s*reference cache", text), name
         assert not re.search(r"`presets`,\s*`tags`,\s*`reference_cache`", text), name
     exiting = flat(skill_section("Exiting Knowledge"))
-    assert 'the kind "not checked in this version" (reference cache)' in exiting
+    # superseded per AC-001E-07c — re-run
+    assert "reference cache entries (`reference_cache`) that the confirmation will invalidate" in exiting
     assert "presets and tags that reference it" in exiting
     assert re.search(r"show.{0,100}impact.{0,100}maintainer", exiting)
 

@@ -46,7 +46,11 @@
           "items": [],
           "unreadable": []
         },
-        "reference_cache": "not checked in this version"
+        "reference_cache": {
+          "count": 0,
+          "items": [],
+          "unreadable": []
+        }
       },
       "action": "deactivate",
       "rule": "CWE/Top25-2025/CWE-78",
@@ -68,7 +72,7 @@
         "record the action in the changelog and increase the lifecycle revision 0 → 1",
         "no other rule, scope record, run or report is changed; references are reported broken"
       ],
-      "impact_digest": "sha256:a306742186df5e680db40b17709eda5cff16854ba9a08a8b28da5b5a0ed76daa",
+      "impact_digest": "sha256:1983d4986bc53823a75961cdd8fe389f3f5f6aaf926deb4bd554ac5bae7a0a97",
       "references_block": false
     },
     "problems": [],
