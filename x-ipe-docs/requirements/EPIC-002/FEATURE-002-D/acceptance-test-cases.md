@@ -1,7 +1,7 @@
 # Acceptance Test Cases
 
 > Feature: FEATURE-002-D — Trivy Adapter (EPIC-002)
-> **Current status (2026-10-24 B17 run, see the section "Resumed Run 2026-10-24 (B9, B10, B17)" at the end; it supersedes the results below for the frozen revision `44837bb0…`):** all **46 of 46 ACs pass** on Linux arm64 at the frozen toolkit revision — the live branch of AC-002D-02b/02c now **executed against the real `mirror.gcr.io` through the adapter (TC-L-01 Pass, real-host DNS/SNI/IP observation)**; Linux x86-64 is a human-accepted unverified limit (B10, TC-X-01 not executed); the real-binary gate file TC-G-01 stays **not executed** (apt packages not authorized under B17). TC tally 25/29 = 86.2 % on the same 29-case denominator. Stakeholder outcome not measured. Status transition is the owner's decision.
+> **Current status (2026-10-24 B17 run, see the section "Resumed Run 2026-10-24 (B9, B10, B17)" at the end; it supersedes the results below for the frozen revision `44837bb0…`):** all **46 of 46 ACs pass** on Linux arm64 at the frozen toolkit revision — the live branch of AC-002D-02b/02c now **executed against the real `mirror.gcr.io` through the adapter (TC-L-01 Pass, real-host DNS/SNI/IP observation)**; Linux x86-64 is a human-accepted unverified limit (B10, TC-X-01 not executed); the real-binary gate file TC-G-01 is **not executed — human-scoped (B17 = A, apt not authorized)**; its assertions are partially covered by executed real-binary evidence (check-by-check gate map, independent evidence review PASS-WITH-NITS, DAO-006). TC tally 25/29 = 86.2 % on the same 29-case denominator. Stakeholder outcome not measured. The closing evidence holds for toolkit revision `f18423e`. Status transition is the owner's decision.
 > Previous status (2026-10-23 rerun, kept for history): **Acceptance partial — B9 and B10 not executed; delivery NOT Completed.** At the fixed revision (Bug Fix TASK-059), 44 of 46 ACs pass with current black-box evidence (real Trivy v0.76.1 binary, real CLI, offline Linux arm64 container; macOS host for the Linux-only refusal). F-1 (AC-002D-03d) and F-2 (AC-002D-05b) from TASK-058 are fixed and verified with the real binary. **AC-002D-02b and 02c pass only against a loopback registry**; their live branch (provisioning from the real `mirror.gcr.io` / `ghcr.io` with real-host observation) and the mandatory real-binary gate file are **not executed (B9)**. The adapter on **Linux x86-64 is not executed (B10)**.
 > Revision: toolkit file list `2fc16db8…` (181 files; identical at the start and end of the rerun) · specification `229cc76e…` · design `cb2cd1cf…` · runner `66b42dce…` (SHA-256 prefixes; full values in Relevant Inputs).
 > History: acceptance **TASK-058** (2026-10-23, toolkit `8bf12b50…`: 42 Pass, 2 Fail F-1/F-2, 2 loopback-only) → DAO-001 of `x-ipe-docs/dao/26-10-23/decisions_made_feature_acceptance_test.md` → **Bug Fix TASK-059** ([bug-report-TASK-059.md](bug-report-TASK-059.md): `CONFIG_TYPES` = the 9 real v0.76.1 types incl. `ansible`; exact, version-pinned, fail-closed WARN allow-list for the two observed benign messages) → **full rerun** of this acceptance (all black-box cases, regressions, Framework suite) at the fixed revision, under the same DAO-002 rules. TASK-058's failing container evidence is kept as [evidence-container-linux-run1-TASK058-FAIL.jsonl](acceptance/evidence-container-linux-run1-TASK058-FAIL.jsonl).
@@ -336,9 +336,9 @@ New harness files (existing harness files unchanged): [fetch_trivy_arm64_b17.py]
 
 ### TC-L-01 — Live provisioning from the real registry through the adapter: **Pass (17/17)**
 
-[evidence-live-provisioning-b17.jsonl](acceptance/evidence-live-provisioning-b17.jsonl) · harness [tc_live_b17.py](acceptance/harness/tc_live_b17.py) (imports the unchanged runner's helpers; never imports toolkit code) · container `fat-uv-git:py312` on Docker's default `bridge` network, `UV_OFFLINE=1` (the CLI itself had no network), disposable HOME/trust store, project `live ü` · run 01:34:16–01:41:55 UTC.
+[evidence-live-provisioning-b17.jsonl](acceptance/evidence-live-provisioning-b17.jsonl) · harness [tc_live_b17.py](acceptance/harness/tc_live_b17.py) (imports the unchanged runner's helpers; never imports toolkit code) · container `fat-uv-git:py312` on Docker's default `bridge` network, `UV_OFFLINE=1` (this only stops uv from fetching packages; the CLI and the `trivy` processes shared the container's network), disposable HOME/trust store, project `live ü` · run 01:34:16–01:41:55 UTC.
 
-- **Before the live run:** the observers were self-tested offline (`--network none`: a loopback TLS ClientHello with SNI and a crafted DNS answer were decoded), and the whole flow was dry-run with `--network none` ([evidence-live-provisioning-dryrun-networknone-b17.jsonl](acceptance/evidence-live-provisioning-dryrun-networknone-b17.jsonl): the same three argv, every operation `failed` (the tool's OCI download error; for the bundle "download did not produce exactly the policy/ subtree"), previous `missing`, zero IP frames — no egress was possible). A first dry run stopped on a harness `None` check (fixed in the harness before the live run; not a product finding).
+- **Before the live run:** the observers were self-tested offline (`--network none`: a loopback TLS ClientHello with SNI and a crafted DNS answer; the self-test reported Pass on the console, but its output was **not kept as an evidence file** — the decoded SNI and DNS answers in the live evidence show the observers worked), and the whole flow was dry-run with `--network none` ([evidence-live-provisioning-dryrun-networknone-b17.jsonl](acceptance/evidence-live-provisioning-dryrun-networknone-b17.jsonl): the same three argv, every operation `failed` (the tool's OCI download error; for the bundle "download did not produce exactly the policy/ subtree"), previous `missing`, zero IP frames — no egress was possible). A first dry run stopped on a harness `None` check (fixed in the harness before the live run; not a product finding).
 - **Flow (real CLI):** `auth init` (in the container) → `init` → `tools register` (official binary) → scope, `guard open`/`plan` (one `trivy` runtime check on `app/requirements.txt`) → `guard extend` → `guard allow-egress --purpose tool_update --recipient https://mirror.gcr.io --data metadata --scope …trivy-db:2 --scope …trivy-java-db:1 --scope …trivy-checks:2` (grant `g-1`, typed at a terminal) → **one** `tools provision` (448.3 s) → offline scan → `guard conclude`.
 - **Result:** exit 0; three operations (run in parallel), each `completed`, previous `missing`:
 
@@ -356,7 +356,7 @@ New harness files (existing harness files unchanged): [fetch_trivy_arm64_b17.py]
 | DNS queries (outgoing UDP/53, decoded) | only `mirror.gcr.io`, to Docker Desktop's resolver `192.168.65.7` |
 | DNS answers (incoming, decoded) | `mirror.gcr.io` CNAME `googlecode.l.googleusercontent.com` → A `173.194.43.82` |
 | TLS ClientHello SNI (outgoing TCP payload) | 3 ClientHellos (one per process), all `mirror.gcr.io`; no `ghcr.io`, no `pkg-containers.githubusercontent.com`, no other server name |
-| IP destinations (every outgoing IPv4/IPv6 frame, 67,248 frames) | exactly `173.194.43.82:443/tcp` (the address returned for `mirror.gcr.io`) and `192.168.65.7:53/udp`; no other address, port or protocol; no IPv6 frame |
+| IP destinations (outgoing IPv4/IPv6 frames delivered to the AF_PACKET socket, 67,248 frames; the socket's drop counter was not read, so lost frames under load cannot be excluded) | exactly `173.194.43.82:443/tcp` (the address returned for `mirror.gcr.io`) and `192.168.65.7:53/udp`; no other address, port or protocol; no IPv6 frame |
 | Offline scan after provisioning (02d) | 1 `trivy` process with the six offline flags, method `ok`, **zero IP frames** |
 
   **Not observable** with this method: HTTP `Host` headers, paths and redirect targets inside TLS (a redirect to another host would have shown as a new DNS query and SNI — none occurred; a redirect within `mirror.gcr.io` would be invisible); traffic of other containers or of the macOS host; enforcement (the toolkit does not gate the launched tool's network use — the configuration-level limit stated by AC-002D-02b). The DNS-level name `googlecode.l.googleusercontent.com` is the CNAME of `mirror.gcr.io` and never appeared as a connection server name. This agrees with tool-validation Known Issue 17 (`mirror.gcr.io` operations contacted only `mirror.gcr.io:443`).
@@ -365,7 +365,7 @@ New harness files (existing harness files unchanged): [fetch_trivy_arm64_b17.py]
 
 | Run | Result | Evidence |
 | --- | --- | --- |
-| Container (TC-D-00…19; `run-container-b17.sh`, offline `b17-int` + loopback registry, 01:44–01:51 UTC) | **19/20 cases Pass; 444/445 checks**; the check-name lists of all 20 cases are identical to the TASK-059 rerun. The one failing check is TC-D-01 "01b x86-64 official binary on an arm64 host: refused TOOL_PLATFORM_MISMATCH": its fixture `/tv/64bit/trivy` (the official x86-64 binary) was **not available — the x86-64 asset is outside B17**; the path was missing, so the refusal was `TOOL_PATH_INVALID`. Not a product defect, and not an assertion of AC-002D-01b (whose text lists other version, custom build, modified file, archive, path cases — all passed); it concerns the x86-64 table entry (B10). It last passed in the TASK-059 rerun; `digests.py` and `registry_store.py` are unchanged since, `cli.py` changed | [evidence-container-linux-b17.jsonl](acceptance/evidence-container-linux-b17.jsonl) (`a8abebb6…`); stderr empty |
+| Container (TC-D-00…19; `run-container-b17.sh`, offline `b17-int` + loopback registry, 01:44–01:51 UTC) | **19/20 cases Pass; 444/445 checks**; the check-name lists of all 20 cases are identical to the TASK-059 rerun. The one failing check is TC-D-01 "01b x86-64 official binary on an arm64 host: refused TOOL_PLATFORM_MISMATCH": its fixture `/tv/64bit/trivy` (the official x86-64 binary) was **not available — the x86-64 asset is outside B17**; the path was missing, so the refusal code was presumably `TOOL_PATH_INVALID` (the evidence records only the failed check name; the code is stated in this report, not in the evidence). Not a product defect. AC-002D-01b passes **on the specification text** (other version, custom build, modified file, archive, path cases — all passed); the **x86-64 assertion of the AC map above (`TOOL_PLATFORM_MISMATCH`) was not re-executed (B17 scope)**; it concerns the x86-64 table entry (B10). Supporting unit evidence at this revision: `test_01f_static_build_matches_any_libc_opengrep_exact` passed ([evidence-unit-01f-b17.log](acceptance/evidence-unit-01f-b17.log)). It last passed in the TASK-059 rerun; `digests.py` and `registry_store.py` are unchanged since, `cli.py` changed | [evidence-container-linux-b17.jsonl](acceptance/evidence-container-linux-b17.jsonl) (`a8abebb6…`); stderr empty |
 | Host macOS (TC-H-01, TC-D-19; `run-host-b17.sh`, `UV_OFFLINE=1`, frozen copy) | **2/2, 12 checks** | [evidence-host-macos-b17.jsonl](acceptance/evidence-host-macos-b17.jsonl) (`c2b9c056…`); stderr empty |
 
 Observed values (loopback rebuilt from the live components): WebGoat `pom.xml` 36 findings, 18 packages skipped offline (unchanged), `completed_with_errors` with the unlisted pom WARN (fail-closed); 2019 DB variant used offline, age 2733 d; status `disk_bytes` equal to the summed blocks; zero IP frames and zero registry requests in every scan window; loopback provisioning (TC-D-03) SNI only `mirror.gcr.io`, frames only to the registry on 443.
@@ -380,9 +380,33 @@ Observed values (loopback rebuilt from the live components): WebGoat `pom.xml` 3
 
 `run-regressions-b17.sh` (unchanged runners; container `--network none` + macOS host): **all eight logs are byte-identical to the TASK-059 rerun evidence** — 002-A 26/26 + 2/2, 002-B 9/10 + 2/2 (the one failing check is the superseded "06b trivy/strix not provided", per AC-002D-08a, not counted as passed), 002-C 9/9 + 2/2, 003-A 11/11 + 2/2; all stderr empty. Files: `acceptance/regression-{002A,002B,002C,003A}-{container-linux,host-macos}-b17.jsonl`.
 
-### TC-G-01 — Real-binary gate: **Not executed (apt not authorized under B17)**
+### TC-G-01 — Real-binary gate: **Not executed — human-scoped (B17 = A, apt not authorized)**
 
-Prerequisites of `tests/guard/test_trivy_real.py --require-real-trivy` (unchanged, `a02faa0d…`), recorded: `SECURE_CODE_TRIVY_IMAGE` must contain Python ≥ 3.11, `cryptography`, `pyyaml` **and `iptables`** — no local image has `iptables` and installing it needs apt (not authorized); a `docker` CLI for the pytest process (present on the macOS host, absent in every local Linux image); the official binary on a path shared by the pytest process and the Docker daemon; samples and image archives; `SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1`. Never counted as passed. Its assertions are covered by TC-L-01 (live provisioning, real-host observation) and the offline black-box cases listed under "Gate-equivalent offline evidence" above, which is not the gate file.
+Prerequisites of `tests/guard/test_trivy_real.py --require-real-trivy` (unchanged, `a02faa0d…`), recorded: `SECURE_CODE_TRIVY_IMAGE` must contain Python ≥ 3.11, `cryptography`, `pyyaml` **and `iptables`** — no local image has `iptables` and installing it needs apt (not authorized); a `docker` CLI for the pytest process (present on the macOS host, absent in every local Linux image); the official binary on a path shared by the pytest process and the Docker daemon; samples and image archives; `SECURE_CODE_TRIVY_DOWNLOAD_AUTHORIZED=1`. Never counted as passed. Its assertions are **partially covered** by executed real-binary evidence (TC-L-01 and the TC-D container cases with the official binary) — see the gate map below; that evidence is not the gate file.
+
+#### TC-G-01 check-by-check gate map (independent evidence review, DAO-006)
+
+Independent evidence review of this run: verdict **PASS-WITH-NITS**; it classified `ghcr.io` Java DB as uncovered and the control windows, `ghcr.io` ×2, refused repository ×2 and the network-none variant as partial, none blocking a confirmed AC. The rows below apply that classification to every gate test item; the remaining items are covered (tally 16 covered, 6 partial, 1 uncovered). Evidence references compiled by the acceptance worker. Gate file `tests/guard/test_trivy_real.py` (`a02faa0d…`, 23 test items at the frozen revision).
+
+| Gate test item | Gate assertion (short) | State | Executed evidence |
+| --- | --- | --- | --- |
+| `test_control_windows_are_silent` | observer name lookup and a 10 s idle window: no DNS, SNI, catch-all or UDP | **Partial** | TC-D-00 control windows (internal network: DNS frame captured, idle window silent) and the TC-L-01 `--network none` dry run; the gate's own DNS-sinkhole/SNI-observer control was not run, and TC-L-01 had no idle control window |
+| `test_register_real_binary` | official binary registered, version 0.76.1, `platform_validated` on arm64, libc `None` | Covered | TC-D-01 (record checks), TC-L-01 (registration before provisioning) |
+| `test_open_verification_for_the_gate` | verification opened and planned for the nine gate objects | Covered | TC-D-03/TC-D-06 main verification (same samples and archives), TC-L-01 |
+| `test_provisioning_contacts_exactly_the_known_hosts[mirror.gcr.io-vulnerability_db]` | completed, content digest, metadata, known hosts = {mirror.gcr.io}; observed names/SNI = known hosts | Covered | TC-L-01 (live, real-host DNS/SNI/IP) + TC-D-03 (loopback) |
+| `…[mirror.gcr.io-java_db]` | same | Covered | TC-L-01 + TC-D-03 |
+| `…[mirror.gcr.io-checks_bundle]` | same | Covered | TC-L-01 + TC-D-03 (TC-L-01 ran the three components in one request, not one request each) |
+| `…[ghcr.io-vulnerability_db]` | completed with both grants; observed SNI = {ghcr.io, pkg-containers.githubusercontent.com} | **Partial** | TC-D-04 loopback only (no live `ghcr.io` contact) |
+| `…[ghcr.io-checks_bundle]` | same | **Partial** | TC-D-04 loopback only |
+| `…[ghcr.io-java_db]` | same | **Uncovered** | no adapter-level evidence (live or loopback) for the `ghcr.io` Java DB repository |
+| `test_refused_repository_fails_without_fallback[vulnerability_db]` | refused repository → `failed`, previous `kept`, only `mirror.gcr.io` contacted | **Partial** | TC-D-05 loopback only (refusal by the loopback registry) |
+| `test_refused_repository_fails_without_fallback[checks_bundle]` | same (tool exits 0 with embedded fallback, yet `failed`) | **Partial** | TC-D-05 loopback only |
+| `test_scans_are_offline_and_match_the_validation[C1…C9]` (9 items) | each scan silent; re-hash `unchanged`; C1 36 vuln findings and 18 skipped packages; C3 `Dockerfile_desktop` override `ok`; C8 "OS not detected"; project `.trivyignore` not loaded | Covered | TC-D-06, TC-D-07, TC-D-09 with the official binary and the live-provisioned component files (36 findings / 18 skipped; override `ok`; hello-world "OS not detected"; zero frames; re-hash `unchanged`; project Trivy configuration not loaded) |
+| `test_network_none_scan_and_timeouts_mapped` | scan completes with the runner disconnected from every network | **Partial** | scans on the `--internal` network with no route out (TC-D-00/06) and timeouts (TC-D-15); no scan with the network disconnected (`--network none` was used only for the TC-L-01 provisioning dry run) |
+| `test_secret_never_stored_and_components_unchanged` | fake key never stored; all components `present` | Covered | TC-D-18 (byte search: none), TC-D-17 / TC-L-01 status |
+| `test_config_types_equal_the_help_list` | `CONFIG_TYPES` = misconfiguration types of `trivy fs --help` | Covered | FF-01 help list of the same binary digest + TC-D-10 (all 9 types to the real binary); `trivy.py` unchanged |
+
+Uncovered and partial items are disclosed limits; per DAO-006 an uncovered assertion that matters for a confirmed AC would stop closing — the review found none.
 
 ### TC-X-01 — Linux x86-64: **Not executed — accepted limit (B10)**
 
@@ -399,7 +423,8 @@ Not run in this pass (not cheap: it needs its own comparison setup); stays defer
 | AC-002D-01a | **Pass (arm64)**: registration of the official arm64 binary with digest before execution and full record (TC-D-01). Linux x86-64: accepted unverified limit (B10, TC-X-01); the cross-architecture refusal check was not re-run (x86-64 asset outside B17) |
 | AC-002D-02b | **Pass**: live `mirror.gcr.io` branch through the adapter with real-host DNS/SNI/IP observation (TC-L-01) + loopback for refusals and the two-host `ghcr.io` branch (TC-D-02…05). Limit: `ghcr.io`/`pkg-containers.githubusercontent.com` not contacted live (one-time grant used for the validated default registry) |
 | AC-002D-02c | **Pass**: live result fields and metadata equal to the installed files (TC-L-01); failed, cancelled, timed-out, killed and partial branches on the loopback registry (TC-D-03, TC-D-05) |
-| all other 43 ACs | **Pass**, re-executed at the frozen revision with the same assertions as in the AC map above (TC-D-00…19, TC-H-01, TC-U-01) |
+| AC-002D-01b | **Pass on the specification text** (no Maintainer, other version/custom build, modified file, release archive, symlink, missing path, folder, relative path — TC-D-01). The AC map's additional x86-64 assertion (`TOOL_PLATFORM_MISMATCH`) was **not re-executed** (x86-64 asset outside B17); supporting unit test `test_01f_static_build_matches_any_libc_opengrep_exact` passed |
+| all other 42 ACs | **Pass**, re-executed at the frozen revision with the assertions of the AC map above (TC-D-00…19, TC-H-01, TC-U-01); exceptions are the rows of this table |
 
 **AC totals (46) at the frozen revision `44837bb0…`: Pass 46 · Fail 0 · Not executed 0** (01a on arm64 only; x86-64 is the human-accepted limit B10). Before (TASK-059 rerun): 44 Pass + 2 loopback-only (02b, 02c).
 
@@ -412,7 +437,7 @@ Not run in this pass (not cheap: it needs its own comparison setup); stays defer
 | integration — black-box CLI (TC-D-00…18 container; TC-H-01 host) | 20 | 19 | 0 | 0 | 1 partial (TC-D-01: one non-AC check without its x86-64 fixture) |
 | structured-review — package inspection (TC-D-19; container + host) | 1 | 1 | 0 | 0 | 0 |
 | unit / integration — Framework suite (TC-U-01) | 1 | 1 | 0 | 0 | 0 |
-| integration — real-binary gate file (TC-G-01) | 1 | 0 | 0 | 0 | 1 not executed (apt not authorized, B17) |
+| integration — real-binary gate file (TC-G-01) | 1 | 0 | 0 | 0 | 1 not executed — human-scoped (B17 = A, apt not authorized) |
 | integration — live provisioning (TC-L-01) | 1 | 1 | 0 | 0 | 0 |
 | integration — Linux x86-64 adapter (TC-X-01) | 1 | 0 | 0 | 0 | 1 not executed — accepted limit (B10) |
 | integration — black-box regression (TC-R-01…04; container + host) | 4 | 3 | 0 | 0 | 1 partial (TC-R-01, superseded check) |
@@ -423,13 +448,15 @@ Not run in this pass (not cheap: it needs its own comparison setup); stays defer
 ### Honest limits (this run)
 
 - **Live branch scope:** one provisioning from `mirror.gcr.io`; the live `ghcr.io` two-origin branch, live refusal/failure/timeout/cancel branches and a second live provisioning (replacing a previous generation) were not executed live (loopback only).
-- **Observation scope:** inside the runner container only (DNS, SNI, IP/port of every frame); TLS content, HTTP hosts/paths/redirects not observable; no enforcement claim. The macOS host and Docker VM traffic were not observed.
+- **Observation scope:** inside the runner container only (DNS, SNI, IP/port of the frames delivered to the AF_PACKET socket; its drop counter was not read); TLS content, HTTP hosts/paths/redirects not observable; no enforcement claim. The macOS host and Docker VM traffic were not observed.
 - **Loopback artifacts** are rebuilt from the live-downloaded component files (same file content, different layer/manifest digests; checks-bundle manifest annotated `2.0.0`); they prove the toolkit's behaviour, not the real registries'.
 - **x86-64:** neither the adapter (B10) nor the registration cross-architecture refusal was re-run at this revision.
-- **TC-G-01** gate file not executed (apt). **Clean `.tf`** known limitation and **F-3** unchanged (informational).
+- **TC-G-01** gate file not executed — human-scoped (B17 = A, apt not authorized); per the gate map 6 items are only partially covered (control windows, `ghcr.io` ×2 loopback-only, refused repository ×2 loopback-only, network-none scan variant).
+- **`ghcr.io` Java DB:** no adapter-level evidence at all (neither live nor loopback) — the one uncovered gate item.
+- **Clean `.tf`** known limitation and **F-3** unchanged (informational).
 - **Framework-only branches** (fake binary) as listed above; musl, Windows and a host with Python on `/usr/bin` not run.
 - **Host uv cache:** the macOS host runs built the frozen toolkit into the host's uv cache offline (as in earlier runs); no package was downloaded onto the host.
-- **Independent review** of this evidence: not performed by the acceptance worker; left to the owner. **Stakeholder outcome: not measured.**
+- **Independent review** of this evidence: performed afterwards for the owner (PASS-WITH-NITS, DAO-006); this worker did not review its own evidence. **Stakeholder outcome: not measured.**
 
 ### Hygiene and cleanup
 
@@ -456,9 +483,10 @@ Not run in this pass (not cheap: it needs its own comparison setup); stays defer
 
 ### Acceptance state and handoff (2026-10-24)
 
-- **Engineering delivery:** every scoped AC (46/46) has current passing evidence at the frozen revision on Linux arm64 (macOS for the Linux-only refusal), including the previously parked live branch of AC-002D-02b/02c. Not counted as passed: TC-G-01 (gate file; apt not authorized — explicitly left not executed by B17), TC-X-01 (accepted limit B10), TC-D-01 partial (one non-AC check without its x86-64 fixture), TC-R-01 partial (superseded check).
+- **Engineering delivery:** every scoped AC (46/46) has current passing evidence at the frozen revision on Linux arm64 (macOS for the Linux-only refusal), including the previously parked live branch of AC-002D-02b/02c. Not counted as passed: TC-G-01 (not executed — human-scoped (B17 = A, apt not authorized); partially covered per the gate map), TC-X-01 (accepted limit B10), TC-D-01 partial (one non-AC check without its x86-64 fixture), TC-R-01 partial (superseded check).
 - **Stakeholder outcome:** not measured.
-- **Owner decision:** whether TC-G-01's non-execution under B17 and the B10 limit permit the transition to Tested; independent review of this evidence; F-3 and clean-`.tf` CR candidates. Conditional successors returned unchanged: code refactor (no evidenced need) and feature closing. No board, Git or successor action taken.
+- **DAO-006 (2026-10-24):** ruled (a) with conditions — TC-G-01 is replaced by the reviewed check-by-check equivalent above (design erratum in [technical-design.md](technical-design.md)); independent evidence review PASS-WITH-NITS (nits applied in this report). The closing evidence holds for toolkit revision `f18423e` (frozen file list `44837bb0…`).
+- **Owner decision:** status transition and Feature Closing; F-3 and clean-`.tf` CR candidates. Conditional successors returned unchanged: code refactor (no evidenced need) and feature closing. No board, Git or successor action taken.
 
 ```yaml
 acceptance_evidence_2026_10_24:
@@ -477,7 +505,7 @@ acceptance_evidence_2026_10_24:
     - {tc_id: TC-D-19, status: Pass, evidence: [acceptance/evidence-container-linux-b17.jsonl, acceptance/evidence-host-macos-b17.jsonl]}
     - {tc_id: TC-U-01, status: Pass, result: "2884 passed, 5 skipped, 23 deselected; targeted 26 passed", evidence: acceptance/evidence-unit-integration-b17.log}
     - {tc_id: "TC-R-01..04", status: "TC-R-01 Partial (superseded); TC-R-02..04 Pass; byte-identical to the TASK-059 rerun", evidence: "acceptance/regression-*-b17.jsonl"}
-    - {tc_id: TC-G-01, status: "Not executed (apt not authorized, B17)"}
+    - {tc_id: TC-G-01, status: "Not executed - human-scoped (B17 = A, apt not authorized); partially covered per gate map (16 covered, 6 partial, 1 uncovered: ghcr.io java_db)"}
     - {tc_id: TC-X-01, status: "Not executed - accepted limit (B10)"}
   ac_totals: {pass: 46, fail: 0, not_executed: 0, note: "01a arm64 only; x86-64 accepted limit B10"}
   pass_rate: "25/29 = 86.2%"

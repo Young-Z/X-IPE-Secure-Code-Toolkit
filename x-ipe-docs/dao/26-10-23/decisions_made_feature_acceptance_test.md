@@ -10,6 +10,7 @@
 | DAO-003 | 2026-10-24T00:06:26+08:00 | TASK-091 | x-ipe-task-based-feature-acceptance-test | approval | 0.86 | FEATURE-002-G acceptance PASS (76/76 at 15985026…) accepted → Feature Closing; unit/integration evidence accepted (02c/02h/04f are Unit by spec; 07g/07h/07j Integration via in-process hooks; 05l simulated + limit); host-only 002-D regression accepted (no 002-D code touched; container re-run at 002-D B9 acceptance; no new downloads now); wording readings confirmed |
 | DAO-004 | 2026-10-24T05:15:42+08:00 | TASK-058 | x-ipe-task-based-feature-acceptance-test | critique | 0.86 | FEATURE-002-D B9 run: re-downloading the Trivy binary (GitHub) and Python deps (PyPI) is NOT covered by B9 (DB download via tool_update only; acceptance downloads were already ruled outside tool-validation authority in DAO-002 TD) → (B) escalate as human B17; park TASK-058 at existing status; no partial closing (C rejected); queue reorder to TASK-084 next confirmed |
 | DAO-005 | 2026-10-24T08:19:17+08:00 | TASK-103 | x-ipe-task-based-feature-acceptance-test | approval | 0.86 | FEATURE-001-G acceptance (62/62 active, 09a–e deferred by human B13) accepted → Feature Closing; O-084-1 → (a) separate Low bug-fix task (mask/omit refused provenance URLs, existing masking, no new output) after TASK-102, disclosed in closing; closing review = code review PASS + acceptance if both bound to 93e3eaa, else delta review; local commit (B8) |
+| DAO-006 | 2026-10-24T10:30:26+08:00 | TASK-058 | x-ipe-task-based-feature-acceptance-test | approval | 0.80 | FEATURE-002-D B17 run (46/46 ACs, TC-L-01 live pass): (a) accepted with conditions — design's 'mandatory real-binary gate before closing' amended (DAO design erratum) to TC-G-01 or a check-by-check executed equivalent confirmed by the independent evidence review; uncovered TC-G-01 assertions become disclosed limits; TC-G-01 recorded 'not executed — human scoped B17 = A', never passed; human told B17-B remains available |
 
 ---
 
@@ -249,3 +250,48 @@
 
 ### Follow-up
 > Low bug task O-084-1 (mask refused provenance URLs) after TASK-102; human follow-up C4 after 001-G closing.
+
+## DAO-006
+- **Timestamp:** 2026-10-24T10:30:26+08:00
+- **Task ID:** TASK-058
+- **Feature ID:** FEATURE-002-D
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-feature-acceptance-test
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human B9 = A, B10 = A, B17 = A (apt not authorized)
+- **Disposition:** approval
+- **Confidence:** 0.80
+
+### Message
+> B17 = A run at frozen f18423e (hash 44837bb0… start=end), committed c567207; doc acceptance-test-cases.md 1cad05c3…: archive e174dff2… and binary b422130e… matched pins before use; PyPI not needed. TC-L-01 live provisioning via the adapter (one-time B9 grant) PASS 17/17 (DNS only mirror.gcr.io, SNI ×3, destinations only that IP:443 + Docker resolver; offline scan afterwards zero frames; ghcr.io loopback only). ACs 46/46 Pass (01a on arm64; x86-64 = B10 limit). TCs 25/29 (Partial TC-D-01 444/445 — non-AC x86-64 check; Partial TC-R-01 superseded 002-B check; TC-G-01 real-binary gate not executed — needs apt, not authorized; TC-X-01 B10 limit). Suite 2884/5 skipped; 8 regressions byte-identical. Limits: live failure branches loopback-only; observation-only network evidence; no independent review of the evidence yet. DAO-002 said 002-D must not be marked done while B9/B10 not executed. Rule: (a) accept → independent evidence review → Feature Closing (TC-G-01 human-scoped non-execution); (b) keep parked until TC-G-01 runs (human B17-B); (c) other. Owner rec (a).
+
+### Guidance Returned
+> DAO verified:
+> - acceptance doc SHA 1cad05c3… (status L4: 46/46 ACs pass, TC-L-01 live pass, TC-G-01 not executed because apt was not authorized, outcome not measured; resumed-run section L302 ff.: pinned archive/binary verified before execution, one B9 provisioning request, offline scan with zero frames, container 444/445 with the one failing non-AC x86-64 check, observation limits stated at L61);
+> - human_decisions.md L56: B17 = A, with "apt packages (iptables, Docker CLI) NOT authorized";
+> - 002-D design L678/L684: "Mandatory real-binary acceptance … required before closing; not skippable".
+> **Decision: (a), with conditions.**
+> - DAO-002's condition is now met for every in-scope AC: all 46 ACs executed and pass, B9's live branch ran for real (TC-L-01), and B10 is a human-accepted limit.
+> - The remaining obstacle is TC-G-01, a verification means that the DAO-confirmed design made mandatory, not an AC. The human was offered B17-B (which would enable it) and chose A, so its non-execution is human-scoped and must never be reported as passed.
+> - Re-scoping a DAO-confirmed design gate, with an equivalence check, is within DAO authority. Option (b) would hold a 46/46-AC feature hostage to a means the human declined to authorize.
+> Conditions:
+> 1. **Design erratum (DAO-attributed, non-destructive):** the "mandatory real-binary gate before closing" becomes "TC-G-01, or an executed check-by-check equivalent from real-binary evidence (TC-L-01 + TC-D container cases with the official binary), confirmed by the independent evidence review; any TC-G-01 assertion without executed equivalent evidence is a disclosed limit".
+> 2. **Independent review of the acceptance evidence before closing.** It must explicitly map every assertion of `tests/guard/test_trivy_real.py` to executed evidence or list it as uncovered. If an uncovered assertion is verdict-relevant for a confirmed AC, closing stops and that AC goes back to the human (B17-B).
+> 3. Report TC-G-01 as "not executed — human-scoped (B17 = A, apt not authorized)", TC-X-01 as "B10 accepted limit", and TC-D-01's single failing check as non-AC (x86-64, outside B17). Keep the limits: live failure/timeout/cancel branches loopback-only; network evidence is observation-only, with no enforcement claim; Host headers inside TLS are not observable.
+> 4. **Deferred items now unblocked:** run the supplementary real-Trivy 002-G comparison (DAO-003 acceptance), using the provisioned local components only, with no new download beyond B9/B17. Run it if feasible before closing; otherwise run it as a separate small task.
+> 5. **Human status summary:** say that 002-D closes without TC-G-01, per their B17 = A choice, and that B17-B (apt) remains available to run it later.
+> Then Feature Closing (proportionate review = the evidence review), the board set to Completed by the owner, and a local exact-path commit (B8).
+
+### Rationale
+> Every confirmed AC is executed and passing, including the real live provisioning the human authorized; the only gap is a DAO-mandated verification means whose prerequisites the human explicitly chose not to authorize. Replacing it with a reviewed, check-by-check equivalent keeps assurance honest without overriding the human's network decision.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-feature-closing"
+>     match_strength: "strong"
+>     reason: "After the independent evidence review with the TC-G-01 equivalence map"
+>     execution_steps:
+>       - phase: "1. Verify"
+>         step: "1.1 Verify goals/AC/evidence; record limits and human-scoped non-execution"
+
+### Follow-up
+> Supplementary real-Trivy 002-G comparison; human informed that B17-B can still enable TC-G-01.
