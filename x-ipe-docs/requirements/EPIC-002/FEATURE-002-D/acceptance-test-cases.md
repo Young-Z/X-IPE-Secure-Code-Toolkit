@@ -511,3 +511,5 @@ acceptance_evidence_2026_10_24:
   pass_rate: "25/29 = 86.2%"
   stakeholder_outcome: "not measured"
 ```
+
+> **Note (2026-10-24, closing):** the B17 input table cites the design at run time (`cb2cd1cf…`); later documentation-only errata (DAO-006 gate erratum; TASK-059 review erratum) changed its hash without affecting any executed assertion.

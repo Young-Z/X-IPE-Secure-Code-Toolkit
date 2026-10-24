@@ -9,6 +9,7 @@
 | DAO-002 | 2026-10-23T15:28:27+08:00 | TASK-069 | x-ipe-task-based-code-implementation | approval | 0.84 | FEATURE-001-F: Q1 A — append the 5 new 001-F payload paths to delivered 003-B test helper ERA_001A_REMOVED as a test-defect fix (no assertion/fixture/AC change); DAO-009 (2) amended; maintenance point noted in 003-B/001-F designs; Q2 Framework Status line updated honestly |
 | DAO-003 | 2026-10-24T02:56:11+08:00 | TASK-090 | x-ipe-task-based-code-implementation | approval | 0.88 | CR-TASK-086 renderer identity: three-file RENDERER_MANIFEST (__init__.py, atomic.py, guard/report.py) confirmed as exactly the DAO-003 (CR) DEC-2 closure rule; over-inclusion is the safe direction; design note to record it; closure test must enforce it |
 | DAO-004 | 2026-10-24T06:38:31+08:00 | TASK-084 | x-ipe-task-based-code-implementation | approval | 0.84 | FEATURE-001-G implementation DEC-I1…I14 approved with conditions: I1 ERA_001A_REMOVED append (DAO-002 precedent); I5 assert the design-order code exactly (no either/or) + R1 design erratum; I3/I7/I11/I13 recorded as closing notes; I13 fixtures named in maintenance notes with self-explaining failure messages; closing after independent code review |
+| DAO-005 | 2026-10-24T10:57:12+08:00 | TASK-085 | x-ipe-task-based-code-implementation | approval | 0.80 | FEATURE-002-F implementation: (1) DEC-I17 maintenance points + DEC-I18 approved per DAO-023/024; (2) snapshot Medium bug fixed here RED-first; (3) DEC-I4 narrow GPG_KEY fingerprint exemption within authority + design erratum; (4) DEC-I5 → (b) as spec clarification v1.3.x within authority (intent 'network disabled'), stronger probe evidence incl. CapEff, delta review, human visibility; (5) flaky 001-G test → separate Low task; (6) other DEC-I approved, DEC-I6 tighten /dev/shm if conformance passes else honest limit |
 
 ---
 
@@ -196,3 +197,73 @@
 
 ### Follow-up
 > Design erratum (R1) and spec P3a wording erratum at next sync; maintenance notes for the two hash fixtures.
+
+## DAO-005
+- **Timestamp:** 2026-10-24T10:57:12+08:00
+- **Task ID:** TASK-085
+- **Feature ID:** FEATURE-002-F
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-code-implementation
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human B12 = A
+- **Disposition:** approval
+- **Confidence:** 0.80
+
+### Message
+> Implementation per spec eafc9894 / design 4202a1c0: 324 new tests (4 opt-in real Docker passed with local python:3.12-slim --network none, nothing pulled), 74/74 active ACs traced, only the 11 closed-list delivered files changed (+77 added), engine edit limited to the helper branch; full suite 3201/4 failed/8 skipped. Report implementation-report-TASK-085.md (9e5fefcb; §9 DEC-I1…I20). Code review PASS-WITH-FIXES. Rulings: (1) DEC-I17 STOP — test_01h, drafting test_08a, test_08d fail by design → apply DAO-023/024 maintenance points now; DEC-I18 ERA_001A_REMOVED append. (2) Review Medium bug helpers/snapshot.py:82 (unreadable/FIFO/symlink/non-UTF-8 entries outside read scope silently omitted → accepted_full while files never seen) → fix here, RED first. (3) DEC-I4 GPG_KEY=<40-hex> false positive → narrow registry-only exemption — within authority? (4) DEC-I5 P-01 /sys/class/net == [lo] fails on Docker Desktop (down address-less tunnel devices) → (a) strict, (b) relax AC-002F-11b to "no interface up / with address / route" + stronger probes, (c) other; owner rec (b) via human unless clarification of intent. (5) Flaky delivered test_02e under load → separate Low task. (6) Other DEC-I per §9.
+
+### Guidance Returned
+> DAO verified:
+> - report SHA 9e5fefcb… (§9 DEC-I1…I20; limits: one real runtime, Docker Desktop on macOS arm64; no permitted Python image registers under DEC-5);
+> - spec SHA eafc9894…: AC-002F-11b (L187, "no network interface other than loopback and failed outbound connection and DNS … no capabilities …") and AC-002F-04b (L106, canonical config incl. network `none`, all capabilities dropped, `no-new-privileges`, non-root).
+> **(1) DEC-I17 → approved; 002-F lands first, so it makes the edits:**
+> - `test_compare_skill.py::test_01h` is scoped per DAO-024: 002-G's section ends at the next `^#{1,2} ` heading or EOF; exactly one ATX heading inside; the compare/cleanup command check stays; the prefix hash check stays. Rebaseline `DELIVERED_SIZE`/`DELIVERED_SHA256` only if 002-F changed bytes before offset 12017, with the recorded reason in a comment. Add the DAO-023 maintenance comment.
+> - `drafthelp.NEW_PAYLOAD` gains exactly the 002-F new payload paths.
+> - `guard_copilot_hashes.json` is rebaselined for Guard SKILL.md only (Copilot unchanged).
+> - No other assertion changes. List all three in the 002-F closing as maintenance points.
+> **DEC-I18 → approved** (pure append, DAO-002 precedent).
+> **(2) snapshot.py:82 → fix in this task, RED first.** Every non-excluded entry under the check object (unreadable, FIFO, symlink, non-UTF-8 name) must be recorded as seen-but-not-covered. It counts as uncovered, so a clean result is at most `accepted_partial` (AC-002F-07c v1.3.1), with the uncovered entries named in the report gap line. Re-review this delta.
+> **(3) DEC-I4 → within DAO authority (clarifies my own DEC-5 condition in DAO-014 TD, whose intent is credentials, not public key fingerprints).** The exemption sits in `registry.py` only, with `mask_text` untouched. Exactly:
+> - key `GPG_KEY` or `GPG_KEYS`;
+> - whole value `^[0-9A-Fa-f]{40}( [0-9A-Fa-f]{40})*$`;
+> - not refused, still shown to the Maintainer labelled "public key fingerprint (not a secret)";
+> - every other flagged entry is still refused.
+> Add tests for the exempt case plus near-misses (other key names, wrong lengths, extra characters). Design erratum (DAO-attributed); the design's own example at L267 already shows `GPG_KEY` recorded.
+> **(4) DEC-I5 → (b), as a clarification within DAO authority, with stronger evidence.** The human-confirmed requirement (A-15; workflow DAO-001 gate) is "network disabled", and AC-002F-11b's "no interface other than loopback" was the DAO-confirmed spec's proxy for it. 002-F is undelivered, so its wording can be clarified to the intent without a human CR. The new probe must prove ALL of:
+> - every non-loopback interface is administratively down (no IFF_UP) and has no IPv4/IPv6 address (`/proc/net/if_inet6`, `fib_trie`);
+> - no routes other than loopback (`/proc/net/route`, `ipv6_route`);
+> - the process lacks CAP_NET_ADMIN/NET_RAW (`/proc/self/status` CapEff/CapBnd = 0, matching inspect CapDrop ALL), so the devices cannot be brought up;
+> - outbound connect and DNS fail;
+> - network mode `none` per inspect.
+> Any failure means non-execution. Apply as spec v1.3.x (11b wording, Version History attributed to the DAO representative, DAO-005 code implementation), with an independent delta review of spec + probe change. Keep the honest limit that evidence comes from one runtime (Docker Desktop/LinuxKit, macOS arm64). For human visibility, put a line in the next status summary ("002-F network check clarified from 'only lo exists' to 'no usable non-loopback interface, no routes, no capability to create one'"); the human may overrule.
+> **(5) Flaky `test_draft_cli_approve::test_02e` → a separate Low bug task** (001-G test robustness; reproduce under load first). It does not block 002-F. Every 002-F full-suite run must report it honestly: any rerun is documented, and it is never silently retried away.
+> **(6) Other DEC-I → approved as reported, with these notes:**
+> - **I1:** inlining the section keeps the renderer manifest truthful (DAO-003 code implementation).
+> - **I2:** the tolerant `.get` stays within the single 3-line engine edit; the delivered CR-077 tests pass unchanged.
+> - **I6:** tighten `/dev/shm` with `--ipc none` (or a minimal `--shm-size`) if the real-runtime conformance passes, since AC-002F-04b intends results-only writes beyond the declared `/tmp`. Otherwise keep it as a recorded honest limit.
+> - **I8/I9:** stricter, documented.
+> - **I10:** the probe is a data file, never imported, consistent with the 002-C no-socket test.
+> - **I11:** masking mounts only under `/proc`, `/sys`, `/dev`, and no sockets.
+> - **I19:** new maintenance points, named in the closing notes with self-explaining test messages.
+> - **I3, I7, I12–I16, I20:** approved.
+> Closing conditions for TASK-085:
+> - code-review fixes and the snapshot fix re-reviewed;
+> - full suite with only the documented flaky exception;
+> - 001-A/B/C/D/F, 002-A/B/C/G and 003-A/B regressions as required;
+> - stop rule held (closed list plus the ruled maintenance points);
+> - local exact-path commit (B8).
+> Then acceptance (real-runtime cases need a registrable image, now possible via DEC-I4, and P-01 under the clarified 11b).
+
+### Rationale
+> The maintenance points and ERA append follow established rulings; the snapshot fix closes a real coverage over-claim; the GPG_KEY exemption and the 11b clarification realize the intents (no credentials, network disabled) with stronger, narrower evidence instead of proxies that make the feature unusable on the only available runtime.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-code-implementation"
+>     match_strength: "strong"
+>     reason: "Apply rulings, RED-first snapshot fix, spec 11b clarification, re-review"
+>     execution_steps:
+>       - phase: "1. Implement"
+>         step: "1.1 Apply ruled changes, full suite, independent delta review"
+
+### Follow-up
+> Spec v1.3.x 11b clarification + delta review; human visibility note on the network-check clarification; Low bug task for the flaky 001-G test.

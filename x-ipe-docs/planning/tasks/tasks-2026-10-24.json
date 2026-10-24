@@ -64,12 +64,25 @@
       "task_type": "Feature Closing",
       "description": "Close FEATURE-002-D at toolkit f18423e (acceptance c567207 + review fixes; DAO-006: TC-G-01 human-scoped non-execution, gate map 16 covered / 6 partial / 1 uncovered, none AC-blocking; B10 accepted limit; design erratum). Must close before any 002-F code commit (shared files).",
       "role": "Sage",
-      "status": "in_progress",
-      "output_links": [],
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/closing-report.md"
+      ],
       "next_task": "",
       "created_at": "2026-10-24T02:47:54.415921+00:00",
-      "last_updated": "2026-10-24T02:47:54.415921+00:00",
+      "last_updated": "2026-10-24T03:04:02.746376+00:00",
       "task_id": "TASK-109"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-001-G test robustness (Low, DAO-005 code implementation): delivered test_draft_cli_approve.py::test_02e_equivalent_to_plain_update_time_normalised fails intermittently under full-suite load (passes 10/10 alone); timing-sensitive digest comparison across two runs at different moments (timestamps normalised in text, not digests). Reproduce deterministically (frozen clock), fix test or product as root cause dictates; independent review.",
+      "role": "Sage",
+      "status": "pending",
+      "output_links": [],
+      "next_task": "",
+      "created_at": "2026-10-24T02:59:51.962802+00:00",
+      "last_updated": "2026-10-24T02:59:51.962802+00:00",
+      "task_id": "TASK-110"
     }
   ]
 }

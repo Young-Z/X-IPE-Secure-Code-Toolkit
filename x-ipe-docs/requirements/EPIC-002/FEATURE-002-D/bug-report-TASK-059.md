@@ -166,3 +166,8 @@ task_completion_output:
 ```
 
 One lifecycle owner (Sage) handles review, acceptance rerun, board and routing; this child wrote no board/Git/app state.
+
+## Owner Addendum (2026-10-24, appended by Sage)
+
+- Independent review of this fix (DAO-001 condition 4): **PASS-WITH-NITS** at toolkit revision f18423e (git-archive copy). F-1 (9 v0.76.1 config types incl. `ansible`) and F-2 (version-keyed exact benign WARN allow-list, WARN only, provisioning unaffected) fixed at the root; no regression; targeted tests 27 passed, four Trivy test files 220 passed; RED claim assessed from test content. Nits were documentation-only (design log-regex `Z` vs accepted offsets; out-of-date "design text lag" note) and are corrected in the design erratum of 2026-10-24.
+- The acceptance rerun and the B17 run (46/46 ACs, commit c567207, DAO-006) supersede the "pending" notes above.
