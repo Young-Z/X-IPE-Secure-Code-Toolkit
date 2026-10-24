@@ -1,0 +1,250 @@
+{"registered": "sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1", "env_labels": {"GPG_KEY": "public key fingerprint (not a secret)"}}
+[
+ {
+  "id": "P-00",
+  "name": "configuration",
+  "pass": true,
+  "detail": "rendering identical across probe containers"
+ },
+ {
+  "id": "P-01",
+  "name": "network",
+  "pass": true,
+  "detail": "{\"CapBnd\": \"0000000000000000\", \"CapEff\": \"0000000000000000\", \"connect\": \"ENETUNREACH\", \"dns\": \"gaierror\", \"ifaces\": {\"erspan0\": \"0x1002\", \"gre0\": \"0x80\", \"gretap0\": \"0x1002\", \"ip6_vti0\": \"0x80\", \"ip6gre0\": \"0x80\", \"ip6tnl0\": \"0x80\", \"ip_vti0\": \"0x80\", \"lo\": \"0x9\", \"sit0\": \"0x80\", \"tunl0\": \"0x80\"}, \"route4\": [], \"route6\": [], \"v4\": [], \"v6\": []}"
+ },
+ {
+  "id": "P-02",
+  "name": "read-only",
+  "pass": true,
+  "detail": "{\"/dev/shm/x\": \"ENOENT\", \"/helper/x\": \"EROFS\", \"/input/x\": \"EROFS\", \"/usr/x\": \"EROFS\", \"/x\": \"EROFS\"}"
+ },
+ {
+  "id": "P-03",
+  "name": "mounts",
+  "pass": true,
+  "detail": "{\"extra_mounts\": [], \"socks\": []}"
+ },
+ {
+  "id": "P-04",
+  "name": "namespaces",
+  "pass": true,
+  "detail": "{\"cgroup\": \"0::/\", \"host_compared\": false, \"hostname\": \"5335ad1f981b\", \"ns\": {\"cgroup\": \"cgroup:[4026532682]\", \"ipc\": \"ipc:[4026532680]\", \"mnt\": \"mnt:[4026532678]\", \"net\": \"net:[4026532683]\", \"pid\": \"pid:[4026532681]\", \"user\": \"user:[4026531837]\", \"uts\": \"uts:[4026532679]\"}, \"pid1\": \"/usr/local/bin/python3 -I -B /helper/launcher.py target 30 \", \"ppid\": 1}"
+ },
+ {
+  "id": "P-05",
+  "name": "devices",
+  "pass": true,
+  "detail": "{\"core\": \"link\", \"fd\": \"link\", \"full\": \"char\", \"mqueue\": \"dir\", \"null\": \"char\", \"ptmx\": \"link\", \"pts\": \"dir\", \"random\": \"char\", \"stderr\": \"link\", \"stdin\": \"link\", \"stdout\": \"link\", \"tty\": \"char\", \"urandom\": \"char\", \"zero\": \"char\"}"
+ },
+ {
+  "id": "P-06",
+  "name": "user",
+  "pass": true,
+  "detail": "{\"euid\": 65534, \"gid\": 65534, \"groups\": [65534], \"uid\": 65534}"
+ },
+ {
+  "id": "P-07",
+  "name": "capabilities",
+  "pass": true,
+  "detail": "{\"CapAmb\": \"0000000000000000\", \"CapBnd\": \"0000000000000000\", \"CapEff\": \"0000000000000000\", \"CapInh\": \"0000000000000000\", \"CapPrm\": \"0000000000000000\"}"
+ },
+ {
+  "id": "P-08",
+  "name": "no-new-privileges and seccomp",
+  "pass": true,
+  "detail": "{\"NoNewPrivs\": \"1\", \"Seccomp\": \"2\", \"Seccomp_filters\": \"1\", \"arch\": \"aarch64\", \"denied\": {\"add_key\": \"EPERM\", \"keyctl\": \"EPERM\", \"request_key\": \"EPERM\", \"unshare\": \"EPERM\"}, \"profile\": [\"name=seccomp,profile=builtin\"]}"
+ },
+ {
+  "id": "P-09",
+  "name": "pids",
+  "pass": true,
+  "detail": "{\"error\": \"EAGAIN\", \"forked\": 62}"
+ },
+ {
+  "id": "P-10",
+  "name": "memory",
+  "pass": true,
+  "detail": "{\"exit\": 137, \"notes\": {}, \"oom\": true}"
+ },
+ {
+  "id": "P-11",
+  "name": "open files",
+  "pass": true,
+  "detail": "{\"error\": \"EMFILE\", \"opened\": 253}"
+ },
+ {
+  "id": "P-12",
+  "name": "/tmp",
+  "pass": true,
+  "detail": "{\"error\": \"ENOSPC\", \"exec\": \"EACCES\", \"written\": 16777216}"
+ },
+ {
+  "id": "P-13",
+  "name": "results",
+  "pass": true,
+  "detail": "{\"big\": 2097152, \"error\": \"ENOSPC\", \"files\": 15, \"files_error\": \"ENOSPC\", \"pad\": \"pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\"}"
+ },
+ {
+  "id": "P-13b",
+  "name": "malicious results",
+  "pass": true,
+  "detail": "{\"extra-dir\": \"unexpected directory in the results area: results/sub\", \"extra-file\": \"unexpected file in the results area: results/extra\", \"fifo\": \"result.json is a non-regular entry\", \"hardlink\": \"unexpected file in the results area: results/other\", \"link-helper\": \"result.json is a symbolic link\", \"link-input\": \"result.json is a symbolic link\", \"link-parent\": \"result.json is a symbolic link\", \"link-passwd\": \"result.json is a symbolic link\", \"many\": \"unexpected file in the results area: results/e0\"}"
+ },
+ {
+  "id": "P-14",
+  "name": "time",
+  "pass": true,
+  "detail": "{\"limit\": \"time\", \"stopped\": true}"
+ },
+ {
+  "id": "P-15",
+  "name": "output",
+  "pass": true,
+  "detail": "{\"kept\": 0, \"limit\": \"output\"}"
+ },
+ {
+  "id": "P-16",
+  "name": "attach",
+  "pass": true,
+  "detail": "{\"stdout\": \"0123456789\"}"
+ },
+ {
+  "id": "P-17",
+  "name": "fail-safe time",
+  "pass": true,
+  "detail": "{\"attack-pid1\": {\"pass\": true, \"seconds\": 7.3, \"stopped_after\": 5.4}, \"churn\": {\"pass\": true, \"seconds\": 7.2, \"stopped_after\": 5.4}, \"cpu\": {\"pass\": true, \"seconds\": 7.3, \"stopped_after\": 5.4}, \"early-exit\": {\"pass\": true, \"seconds\": 2.3, \"stopped_after\": 0.4}, \"sleeper\": {\"pass\": true, \"seconds\": 7.3, \"stopped_after\": 5.4}}"
+ },
+ {
+  "id": "P-18",
+  "name": "cleanup",
+  "pass": true,
+  "detail": "{\"cancel\": true, \"cancelled\": true, \"normal\": true}"
+ }
+]
+.{"registered": "sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1", "env_labels": {"GPG_KEY": "public key fingerprint (not a secret)"}}
+.{"registered": "sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1", "env_labels": {"GPG_KEY": "public key fingerprint (not a secret)"}}
+.{"registered": "sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1", "env_labels": {"GPG_KEY": "public key fingerprint (not a secret)"}}
+[
+ {
+  "id": "P-00",
+  "name": "configuration",
+  "pass": true,
+  "detail": "rendering identical across probe containers"
+ },
+ {
+  "id": "P-01",
+  "name": "network",
+  "pass": true,
+  "detail": "{\"CapBnd\": \"0000000000000000\", \"CapEff\": \"0000000000000000\", \"connect\": \"ENETUNREACH\", \"dns\": \"gaierror\", \"ifaces\": {\"erspan0\": \"0x1002\", \"gre0\": \"0x80\", \"gretap0\": \"0x1002\", \"ip6_vti0\": \"0x80\", \"ip6gre0\": \"0x80\", \"ip6tnl0\": \"0x80\", \"ip_vti0\": \"0x80\", \"lo\": \"0x9\", \"sit0\": \"0x80\", \"tunl0\": \"0x80\"}, \"route4\": [], \"route6\": [], \"v4\": [], \"v6\": []}"
+ },
+ {
+  "id": "P-02",
+  "name": "read-only",
+  "pass": true,
+  "detail": "{\"/dev/shm/x\": \"ENOENT\", \"/helper/x\": \"EROFS\", \"/input/x\": \"EROFS\", \"/usr/x\": \"EROFS\", \"/x\": \"EROFS\"}"
+ },
+ {
+  "id": "P-03",
+  "name": "mounts",
+  "pass": true,
+  "detail": "{\"extra_mounts\": [], \"socks\": []}"
+ },
+ {
+  "id": "P-04",
+  "name": "namespaces",
+  "pass": true,
+  "detail": "{\"cgroup\": \"0::/\", \"host_compared\": false, \"hostname\": \"b72c0321d0ed\", \"ns\": {\"cgroup\": \"cgroup:[4026532682]\", \"ipc\": \"ipc:[4026532680]\", \"mnt\": \"mnt:[4026532678]\", \"net\": \"net:[4026532683]\", \"pid\": \"pid:[4026532681]\", \"user\": \"user:[4026531837]\", \"uts\": \"uts:[4026532679]\"}, \"pid1\": \"/usr/local/bin/python3 -I -B /helper/launcher.py target 30 \", \"ppid\": 1}"
+ },
+ {
+  "id": "P-05",
+  "name": "devices",
+  "pass": true,
+  "detail": "{\"core\": \"link\", \"fd\": \"link\", \"full\": \"char\", \"mqueue\": \"dir\", \"null\": \"char\", \"ptmx\": \"link\", \"pts\": \"dir\", \"random\": \"char\", \"stderr\": \"link\", \"stdin\": \"link\", \"stdout\": \"link\", \"tty\": \"char\", \"urandom\": \"char\", \"zero\": \"char\"}"
+ },
+ {
+  "id": "P-06",
+  "name": "user",
+  "pass": true,
+  "detail": "{\"euid\": 65534, \"gid\": 65534, \"groups\": [65534], \"uid\": 65534}"
+ },
+ {
+  "id": "P-07",
+  "name": "capabilities",
+  "pass": true,
+  "detail": "{\"CapAmb\": \"0000000000000000\", \"CapBnd\": \"0000000000000000\", \"CapEff\": \"0000000000000000\", \"CapInh\": \"0000000000000000\", \"CapPrm\": \"0000000000000000\"}"
+ },
+ {
+  "id": "P-08",
+  "name": "no-new-privileges and seccomp",
+  "pass": true,
+  "detail": "{\"NoNewPrivs\": \"1\", \"Seccomp\": \"2\", \"Seccomp_filters\": \"1\", \"arch\": \"aarch64\", \"denied\": {\"add_key\": \"EPERM\", \"keyctl\": \"EPERM\", \"request_key\": \"EPERM\", \"unshare\": \"EPERM\"}, \"profile\": [\"name=seccomp,profile=builtin\"]}"
+ },
+ {
+  "id": "P-09",
+  "name": "pids",
+  "pass": true,
+  "detail": "{\"error\": \"EAGAIN\", \"forked\": 62}"
+ },
+ {
+  "id": "P-10",
+  "name": "memory",
+  "pass": true,
+  "detail": "{\"exit\": 137, \"notes\": {}, \"oom\": true}"
+ },
+ {
+  "id": "P-11",
+  "name": "open files",
+  "pass": true,
+  "detail": "{\"error\": \"EMFILE\", \"opened\": 253}"
+ },
+ {
+  "id": "P-12",
+  "name": "/tmp",
+  "pass": true,
+  "detail": "{\"error\": \"ENOSPC\", \"exec\": \"EACCES\", \"written\": 16777216}"
+ },
+ {
+  "id": "P-13",
+  "name": "results",
+  "pass": true,
+  "detail": "{\"big\": 2097152, \"error\": \"ENOSPC\", \"files\": 15, \"files_error\": \"ENOSPC\", \"pad\": \"pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\"}"
+ },
+ {
+  "id": "P-13b",
+  "name": "malicious results",
+  "pass": true,
+  "detail": "{\"extra-dir\": \"unexpected directory in the results area: results/sub\", \"extra-file\": \"unexpected file in the results area: results/extra\", \"fifo\": \"result.json is a non-regular entry\", \"hardlink\": \"unexpected file in the results area: results/other\", \"link-helper\": \"result.json is a symbolic link\", \"link-input\": \"result.json is a symbolic link\", \"link-parent\": \"result.json is a symbolic link\", \"link-passwd\": \"result.json is a symbolic link\", \"many\": \"unexpected file in the results area: results/e0\"}"
+ },
+ {
+  "id": "P-14",
+  "name": "time",
+  "pass": true,
+  "detail": "{\"limit\": \"time\", \"stopped\": true}"
+ },
+ {
+  "id": "P-15",
+  "name": "output",
+  "pass": true,
+  "detail": "{\"kept\": 0, \"limit\": \"output\"}"
+ },
+ {
+  "id": "P-16",
+  "name": "attach",
+  "pass": true,
+  "detail": "{\"stdout\": \"0123456789\"}"
+ },
+ {
+  "id": "P-17",
+  "name": "fail-safe time",
+  "pass": true,
+  "detail": "{\"attack-pid1\": {\"pass\": true, \"seconds\": 7.3, \"stopped_after\": 5.4}, \"churn\": {\"pass\": true, \"seconds\": 7.2, \"stopped_after\": 5.4}, \"cpu\": {\"pass\": true, \"seconds\": 7.3, \"stopped_after\": 5.4}, \"early-exit\": {\"pass\": true, \"seconds\": 2.3, \"stopped_after\": 0.4}, \"sleeper\": {\"pass\": true, \"seconds\": 7.3, \"stopped_after\": 5.5}}"
+ },
+ {
+  "id": "P-18",
+  "name": "cleanup",
+  "pass": true,
+  "detail": "{\"cancel\": true, \"cancelled\": true, \"normal\": true}"
+ }
+]
+.
+4 passed in 209.85s (0:03:29)

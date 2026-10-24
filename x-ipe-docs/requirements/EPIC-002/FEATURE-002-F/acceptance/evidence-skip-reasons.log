@@ -1,0 +1,16 @@
+# skip-reason probe (diagnostic for the frozen full suite's 9 skips), frozen FW/scripts, 2026-10-24T14:41:44Z-14:44:06Z
+# cmd: uv run --offline python -m pytest -p no:cacheprovider -q -o addopts= -rs <the 20 test files/folders that contain skip/skipif/importorskip>
+SKIPPED [1] tests/adapters/test_adapters_units.py:510: file system rejects non-UTF-8 names
+SKIPPED [1] tests/adapters/test_trivy_units.py:182: x-ipe-docs is not part of this checkout; mandatory in acceptance
+SKIPPED [1] tests/knowledge/test_exit_review_fixes.py:272: delete has no append step
+SKIPPED [1] tests/guard/test_guard_units.py:685: file system rejects non-UTF-8 names
+SKIPPED [1] tests/presets/test_tags.py:59: conditional on FEATURE-001-E: Reference knowledge does not exist yet (AC-001F-05a)
+SKIPPED [1] tests/helpers/test_helper_conformance_real.py:85: not executed (no local runtime/image): set SECURE_CODE_HELPER_REAL=1 with a local image
+SKIPPED [1] tests/helpers/test_helper_conformance_real.py:105: not executed (no local runtime/image): set SECURE_CODE_HELPER_REAL=1 with a local image
+SKIPPED [1] tests/helpers/test_helper_conformance_real.py:111: not executed (no local runtime/image): set SECURE_CODE_HELPER_REAL=1 with a local image
+SKIPPED [1] tests/helpers/test_helper_conformance_real.py:119: not executed (no local runtime/image): set SECURE_CODE_HELPER_REAL=1 with a local image
+910 passed, 9 skipped in 141.68s (0:02:21)
+exit=0
+# extra: tests/adapters/test_trivy_units.py::test_07a_validation_record_complete_and_bound_to_driver with a copy of x-ipe-docs/requirements/EPIC-002/FEATURE-002-D/tool-validation (tree sha256 b4dc5b7a6cb55bca14642e68a80774b458f639ff4804e13e8e3628037fab982d) placed beside the frozen toolkit, removed afterwards:
+.                                                                        [100%]
+1 passed in 0.06s

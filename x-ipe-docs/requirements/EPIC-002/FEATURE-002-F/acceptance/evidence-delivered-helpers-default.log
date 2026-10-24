@@ -1,0 +1,11 @@
+...................ssss................................................. [ 20%]
+........................................................................ [ 40%]
+........................................................................ [ 61%]
+........................................................................ [ 81%]
+.................................................................        [100%]
+=========================== short test summary info ============================
+SKIPPED [1] tests/helpers/test_helper_conformance_real.py:85: not executed (no local runtime/image): set SECURE_CODE_HELPER_REAL=1 with a local image
+SKIPPED [1] tests/helpers/test_helper_conformance_real.py:105: not executed (no local runtime/image): set SECURE_CODE_HELPER_REAL=1 with a local image
+SKIPPED [1] tests/helpers/test_helper_conformance_real.py:111: not executed (no local runtime/image): set SECURE_CODE_HELPER_REAL=1 with a local image
+SKIPPED [1] tests/helpers/test_helper_conformance_real.py:119: not executed (no local runtime/image): set SECURE_CODE_HELPER_REAL=1 with a local image
+349 passed, 4 skipped in 1062.37s (0:17:42)
