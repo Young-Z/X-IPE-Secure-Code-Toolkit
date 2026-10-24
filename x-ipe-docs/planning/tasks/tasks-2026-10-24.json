@@ -1,0 +1,29 @@
+{
+  "_version": "1.0",
+  "tasks": [
+    {
+      "task_type": "Feature Closing",
+      "description": "Close FEATURE-001-G at 93e3eaa (acceptance 5df4967; code review PASS bound to same revision; DAO-005 acceptance). Closing report carries 09a-09e deferred by B13=H2, B14=No (@SYNTH only), DAO-004 closing notes (I3, I7, I11, I13, R1 and P3a errata), honest limits, outcome not measured, O-084-1 residual, human follow-up C4.",
+      "role": "Sage",
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-001/FEATURE-001-G/closing-report.md"
+      ],
+      "next_task": "",
+      "created_at": "2026-10-24T00:21:17.441334+00:00",
+      "last_updated": "2026-10-24T00:27:52.369021+00:00",
+      "task_id": "TASK-104"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-001-G O-084-1 (Low, DAO-005 acceptance): draft-check prints a refused provenance URL unmasked when an unsupported language prevents the pre-check. Apply existing deterministic masking (or host+reason only) to all displayed draft-derived text regardless of pre-check; no new output kind; RED first (credential-like token in refused URL + unsupported language); re-run 001-G drafting tests. Queue after TASK-102.",
+      "role": "Sage",
+      "status": "pending",
+      "output_links": [],
+      "next_task": "",
+      "created_at": "2026-10-24T00:21:17.474179+00:00",
+      "last_updated": "2026-10-24T00:21:17.474179+00:00",
+      "task_id": "TASK-105"
+    }
+  ]
+}

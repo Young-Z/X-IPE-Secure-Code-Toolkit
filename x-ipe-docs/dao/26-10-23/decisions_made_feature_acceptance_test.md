@@ -9,6 +9,7 @@
 | DAO-002 | 2026-10-23T17:47:54+08:00 | TASK-070 | x-ipe-task-based-feature-acceptance-test | approval | 0.85 | FEATURE-001-F acceptance PASS accepted (63/63, 3 superseded, 001-D 02b clauses superseded/re-run) → Feature Closing; O-1 interpretation confirmed (existing knowledge lock file on first use, consistent with DAO-004 (1)); O-2 recorded as optional human CR/polish candidate, not a defect |
 | DAO-003 | 2026-10-24T00:06:26+08:00 | TASK-091 | x-ipe-task-based-feature-acceptance-test | approval | 0.86 | FEATURE-002-G acceptance PASS (76/76 at 15985026…) accepted → Feature Closing; unit/integration evidence accepted (02c/02h/04f are Unit by spec; 07g/07h/07j Integration via in-process hooks; 05l simulated + limit); host-only 002-D regression accepted (no 002-D code touched; container re-run at 002-D B9 acceptance; no new downloads now); wording readings confirmed |
 | DAO-004 | 2026-10-24T05:15:42+08:00 | TASK-058 | x-ipe-task-based-feature-acceptance-test | critique | 0.86 | FEATURE-002-D B9 run: re-downloading the Trivy binary (GitHub) and Python deps (PyPI) is NOT covered by B9 (DB download via tool_update only; acceptance downloads were already ruled outside tool-validation authority in DAO-002 TD) → (B) escalate as human B17; park TASK-058 at existing status; no partial closing (C rejected); queue reorder to TASK-084 next confirmed |
+| DAO-005 | 2026-10-24T08:19:17+08:00 | TASK-103 | x-ipe-task-based-feature-acceptance-test | approval | 0.86 | FEATURE-001-G acceptance (62/62 active, 09a–e deferred by human B13) accepted → Feature Closing; O-084-1 → (a) separate Low bug-fix task (mask/omit refused provenance URLs, existing masking, no new output) after TASK-102, disclosed in closing; closing review = code review PASS + acceptance if both bound to 93e3eaa, else delta review; local commit (B8) |
 
 ---
 
@@ -195,3 +196,56 @@
 
 ### Follow-up
 > Human item B17 (re-download authorization for 002-D acceptance); TASK-058 parked.
+
+## DAO-005
+- **Timestamp:** 2026-10-24T08:19:17+08:00
+- **Task ID:** TASK-103
+- **Feature ID:** FEATURE-001-G
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-feature-acceptance-test
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human B13 = H2, B14 = No, B8 = A
+- **Disposition:** approval
+- **Confidence:** 0.86
+
+### Message
+> Acceptance at toolkit 93e3eaa from a frozen git-archive copy (start/end hash identical 44837bb0…): 62/62 active ACs Pass (09a–09e deferred by B13=H2, not counted), 36/36 TCs Pass (container Linux 29, host User 4, frozen drafting tests 269, frozen full suite 2884/0/5 skipped, delivered runners 001-A/B/C/D/F pass). Disclosures: run1 runner bug fixed + rerun (run1 kept); full-suite run1 env failure (frozen copy lacked repo .github/copilot-instructions.md) → run2 clean; AC-05d nuance. No product defect. O-084-1: when an unsupported language prevents the pre-check, draft-check prints the refused provenance URL unmasked — outside AC-001G-02d precondition → AC Pass, residual Low gap. Committed 5df4967 (acceptance-test-cases.md 712bf597…). Questions: (1) proceed to Feature Closing? (2) O-084-1 routing (a) Low bug task after TASK-102, (b) known limit only, (c) CR candidate; owner rec (a). (3) Closing: proportionate review = code review (PASS) + acceptance; closing report + board Completed + local commit.
+
+### Guidance Returned
+> DAO verified:
+> - acceptance doc SHA 712bf597…: status "Verified delivery — 62/62 active ACs Pass; 36/36 TCs Pass… Stakeholder outcome not measured" (L5); 09a–09e "deferred by human decision B13 = H2 — not tested and never reported passed" (L3); spec v1.3.3 4cb3a1eb… and design v1.2 5e0f2aa8… bound (L13–14);
+> - git log: 93e3eaa (implementation), 5df4967 (acceptance).
+> **(1) Accepted → Feature Closing for FEATURE-001-G.** The evidence is revision-bound (frozen copy, identical start/end hash), the disclosures are honest (run1 kept, not overwritten), and there is no product defect. The closing report must carry:
+> - 09a–09e as "deferred by human decision B13 = H2" (never passed; any future explanation work needs a new human decision or CR);
+> - B14 = No (internal drafting refused in this environment; tests used `@SYNTH` only);
+> - the DAO-004 code-implementation closing notes (I3 AC-08a interpretation, I7 extra read-only helpers, I11 `blocking` field, I13 hash-fixture maintenance points, the R1 design erratum, the P3a spec wording erratum);
+> - the honest limits (tamper-evident markers only, heuristic lint, non-Python syntax not validated, scripted ledgers not live-model proof, no-egress claim bounded);
+> - stakeholder outcome not measured;
+> - the O-084-1 residual;
+> - the human follow-up C4 (relabel CWE/OWASP seed content after 001-G ships).
+> **(2) O-084-1 → (a), a separate Low bug-fix task after TASK-102, within DAO defect-fix authority.** Echoing agent-supplied provenance text unmasked when the pre-check is skipped is inconsistent with the feature's display-masking intent (AC-001G-02d/03i: values never appear in output). Scope:
+> - apply the existing deterministic masking (or omit the refused URL value and show only host + reason) to every displayed draft-derived text, regardless of whether the pre-check ran;
+> - no new output kind or code;
+> - test first, with a credential-like token in a refused URL plus an unsupported language;
+> - re-run the 001-G drafting tests.
+> Disclose it in the closing report as a known Low residual until fixed.
+> **(3) Closing review → accepted as proportionate,** on the condition that the passed independent code review and the acceptance are bound to the same revision (93e3eaa or the code-review revision with no product change since).
+> - If any product file changed after the code review, an independent delta review of that change is required before Completed.
+> - Then the closing report, the board set to Completed (owner's single writer), and a local exact-path commit (B8, no push).
+
+### Rationale
+> Acceptance is complete and honest at a pinned revision with human-deferred items clearly excluded; the residual is a small secret-hygiene inconsistency best fixed as its own reproduced task; closing relies on reviews already bound to the accepted revision.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-feature-closing"
+>     match_strength: "strong"
+>     reason: "Engineering-next after passing acceptance"
+>     execution_steps:
+>       - phase: "1. Verify"
+>         step: "1.1 Verify goals/AC/evidence at current revision; record limits, deferrals, residuals"
+>   - skill_name: "x-ipe-task-based-bug-fix"
+>     match_strength: "partial"
+>     reason: "O-084-1 Low bug task after TASK-102"
+
+### Follow-up
+> Low bug task O-084-1 (mask refused provenance URLs) after TASK-102; human follow-up C4 after 001-G closing.
