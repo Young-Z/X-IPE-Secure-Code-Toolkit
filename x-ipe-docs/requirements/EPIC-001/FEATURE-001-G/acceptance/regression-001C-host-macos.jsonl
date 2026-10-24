@@ -1,0 +1,2 @@
+{"tc": "TC-C-15", "acs": ["AC-001C-01e", "AC-001C-03a"], "status": "Pass", "checks": ["01e knowledge/pending unchanged", "01e/03a never-authorized User: maintenance_needed", "unknown scope \u2192 SCOPE_NOT_FOUND"], "failed": []}
+{"summary": {"mode": "host", "platform": "darwin", "python": "3.13.3", "passed": 1, "total": 1}}
