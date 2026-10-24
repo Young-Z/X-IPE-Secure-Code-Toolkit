@@ -1,0 +1,69 @@
+{
+  "checks": [
+    {
+      "description": null,
+      "id": "C1",
+      "method_choice": {
+        "considered": [
+          "semantic-review",
+          "aux-read"
+        ],
+        "cost": null,
+        "reason": "cheapest sufficient",
+        "selected": [
+          "semantic-review"
+        ]
+      },
+      "methods": [
+        {
+          "kind": "reading",
+          "name": "semantic-review",
+          "required": true
+        },
+        {
+          "kind": "reading",
+          "name": "aux-read",
+          "required": false
+        },
+        {
+          "kind": "reading",
+          "name": "extra-read",
+          "required": false
+        }
+      ],
+      "minimum_evidence": [
+        "reading"
+      ],
+      "object": [
+        "src/login.py"
+      ],
+      "object_part": null,
+      "rule": "CWE/4.14/CWE-79"
+    }
+  ],
+  "exclusions": [],
+  "method_changes": [
+    {
+      "adapter_runs": 0,
+      "change": "supplement",
+      "check": "C1",
+      "evidence_ids": [],
+      "finding_ids": [],
+      "from": null,
+      "method": {
+        "kind": "reading",
+        "name": "extra-read"
+      },
+      "reason": "r",
+      "selected_before": [
+        "semantic-review"
+      ]
+    }
+  ],
+  "not_applicable": [
+    {
+      "reason": "no database access in the target",
+      "rule": "CWE/4.14/CWE-89"
+    }
+  ]
+}

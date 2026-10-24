@@ -1,0 +1,28 @@
+{
+  "command": "guard record",
+  "data": {
+    "budget": {
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extra_attempts": 3,
+      "extra_left": 2,
+      "extra_used": 1,
+      "paused": false,
+      "remaining_seconds": 3600.0,
+      "total_seconds": 3600
+    },
+    "conflicts": [],
+    "evidence": [],
+    "findings": [],
+    "ledger": [],
+    "masked": [],
+    "verification_id": "gv-20261024T010000Z-<vid8>"
+  },
+  "next_steps": [
+    "Ask one independent read-only Reviewer to re-check verdict-affecting findings and N/A decisions, then record its result with secure-code guard review"
+  ],
+  "ok": true,
+  "problems": [],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

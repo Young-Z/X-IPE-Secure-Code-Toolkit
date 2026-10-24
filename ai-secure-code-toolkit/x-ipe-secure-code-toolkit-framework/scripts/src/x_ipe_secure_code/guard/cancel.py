@@ -16,6 +16,7 @@ from typing import Any
 from ..atomic import LockHeld, ProcessLock
 from ..results import Result
 from . import budget, engine, report, runs, targets
+from .helpers import report as helper_report
 from .model import MAX_TEXT, Checker, GuardError
 from .service import _call, _policy_now, _repair_report, _summary, consumed, control_of, now, reconcile_status
 
@@ -111,6 +112,7 @@ def finalize_frozen(root: Path, vid: str, command: str, termination: dict[str, A
         cancellation["policy_note"] = "Policy state could not be read (store busy); treated as not checked"
     observed = {t["path"]: targets.observe(root, t["path"]) for t in state["artifact"]["targets"]}
     result = engine.conclude(state, observed, policy_now, requested_at, control_of(state, used, cancellation))
+    helper_report.attach(state, result)  # FEATURE-002-F: key `helpers` only for runs with helpers
     report.stamp(result)  # CR-TASK-086: direct cancel and a pending cancellation finalized by conclude
     try:
         runs.create_result_exclusive(root, result)

@@ -1,0 +1,27 @@
+{
+  "command": "guard plan",
+  "data": {
+    "budget": {
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extra_attempts": 3,
+      "extra_left": 3,
+      "extra_used": 0,
+      "paused": false,
+      "remaining_seconds": 3600.0,
+      "total_seconds": 3600
+    }
+  },
+  "next_steps": [
+    "Fix the plan file (see the Guard skill references/guard-records.md) and record it again"
+  ],
+  "ok": false,
+  "problems": [
+    {
+      "code": "PLAN_INVALID",
+      "message": "checks[0].methods[0]: Adapter method must be named exactly 'opengrep' with kind runtime"
+    }
+  ],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

@@ -10,6 +10,7 @@
 | DAO-003 | 2026-10-24T02:56:11+08:00 | TASK-090 | x-ipe-task-based-code-implementation | approval | 0.88 | CR-TASK-086 renderer identity: three-file RENDERER_MANIFEST (__init__.py, atomic.py, guard/report.py) confirmed as exactly the DAO-003 (CR) DEC-2 closure rule; over-inclusion is the safe direction; design note to record it; closure test must enforce it |
 | DAO-004 | 2026-10-24T06:38:31+08:00 | TASK-084 | x-ipe-task-based-code-implementation | approval | 0.84 | FEATURE-001-G implementation DEC-I1…I14 approved with conditions: I1 ERA_001A_REMOVED append (DAO-002 precedent); I5 assert the design-order code exactly (no either/or) + R1 design erratum; I3/I7/I11/I13 recorded as closing notes; I13 fixtures named in maintenance notes with self-explaining failure messages; closing after independent code review |
 | DAO-005 | 2026-10-24T10:57:12+08:00 | TASK-085 | x-ipe-task-based-code-implementation | approval | 0.80 | FEATURE-002-F implementation: (1) DEC-I17 maintenance points + DEC-I18 approved per DAO-023/024; (2) snapshot Medium bug fixed here RED-first; (3) DEC-I4 narrow GPG_KEY fingerprint exemption within authority + design erratum; (4) DEC-I5 → (b) as spec clarification v1.3.x within authority (intent 'network disabled'), stronger probe evidence incl. CapEff, delta review, human visibility; (5) flaky 001-G test → separate Low task; (6) other DEC-I approved, DEC-I6 tighten /dev/shm if conformance passes else honest limit |
+| DAO-006 | 2026-10-24T12:47:45+08:00 | TASK-085 | x-ipe-task-based-code-implementation | approval | 0.86 | FEATURE-002-F: DEC-I21…I25 approved (guard-records.md hash rebaseline as same maintenance point; snapshot_unsafe on unopenable folder; IPC none; P-01 details; header refresh); human confirmed P-01 clarification 12:24; TASK-085 complete → Implemented, local exact-path commit; acceptance on local Docker Desktop with local images only, --network none, no pulls; full regression set incl. 002-D (local assets only) |
 
 ---
 
@@ -267,3 +268,55 @@
 
 ### Follow-up
 > Spec v1.3.x 11b clarification + delta review; human visibility note on the network-check clarification; Low bug task for the flaky 001-G test.
+
+## DAO-006
+- **Timestamp:** 2026-10-24T12:47:45+08:00
+- **Task ID:** TASK-085
+- **Feature ID:** FEATURE-002-F
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-code-implementation
+- **Source:** ai (lifecycle owner "Sage"); delegation continues; human confirmed the P-01 clarification (2026-10-24 12:24)
+- **Disposition:** approval
+- **Confidence:** 0.86
+
+### Message
+> DAO-005 rulings applied; human confirmed the P-01 clarification (12:24, "network disabled, proven by a stronger probe"). Spec v1.3.3 (fcf0f92a), design v1.2.1 errata + owner honest-limit note (fib_trie can't show IPv4 on a down interface; mitigated by down + caps 0 + connect/DNS fail). Full suite 3234 passed / 0 failed / 8 skipped (flaky test_02e passed, no reruns); real Docker Desktop 4/4 with real registration + 20/20 probes; delta re-review PASS-WITH-NITS (nit → honest limit). New DECs: I21 guard_copilot_hashes.json also rebaselined for Guard guard-records.md (beyond "SKILL.md only"); I22 unopenable folder under the check object → snapshot_unsafe before any container; I23 IPC mode exactly none (erratum E3); I24 P-01 details (missing IPv6 files = IPv6 disabled; missing IPv4 files fail; IPv4 outside 127/8 fails even on lo); I25 spec header refreshed to v1.3.3, design header bound. Prefix rebaseline 12017→16160 verified (first diff at offset 737 from 002-F edits; 002-G section byte-identical). Approve → TASK-085 complete, 002-F Implemented, local commit, Feature Acceptance on Docker Desktop with local images only; confirm 002-D regressions in 002-F acceptance.
+
+### Guidance Returned
+> DAO verified:
+> - human_decisions.md L67–74: the 12:24 human decision confirming the 002-F P-01 clarification. It also records "B7: the human will test all at once when everything is done".
+> - spec SHA fcf0f92a…;
+> - `test_compare_skill.py`: `DELIVERED_SIZE = 16160`, the DAO-023/024 maintenance comment (L46) and the level-1/2 boundary (L53);
+> - `guard_copilot_hashes.json` now includes the Guard `references/guard-records.md` entry.
+> - **DEC-I21 → approved.** `guard-records.md` is a Guard skill-package file that 002-F changes by design (closed list §1.1, spec 03g/10a), and the fixture's own failure message directs exactly this rebaseline. It is the same DEC-I13 maintenance point. My "SKILL.md only" wording was meant to exclude Copilot; Copilot entries stay untouched.
+> - **DEC-I22 → approved.** It is stricter and consistent with delivered `targets.stage`: nothing runs, and the gap is reported.
+> - **DEC-I23 → approved.** IPC `none` realizes the DAO-005 I6 tightening (erratum E3); the conformance probes passed with it.
+> - **DEC-I24 → approved** (fail-closed details of the human-confirmed probe). The fib_trie honest limit stays as written.
+> - **DEC-I25 → approved** (bookkeeping).
+> - **Prefix rebaseline 12017→16160 → accepted.** 002-F's confirmed scope includes updating existing Guard skill text (spec Technical Considerations: runtime evidence now also from toolkit-run helpers; closed list §1.1). The 002-G section is byte-identical, and the reason is recorded.
+> **TASK-085 complete. Set FEATURE-002-F to Implemented and make a local exact-path commit (B8, no push).**
+> **Feature Acceptance next.**
+> - Real-runtime cases on the local Docker Desktop use only images already present locally, with `--network none` and no pulls or builds from the network.
+> - Fixture/loopback otherwise.
+> - Honest limits: one runtime (Docker Desktop/LinuxKit, macOS arm64); Linux hosts, x86-64, Podman and Windows not run (Windows: non-execution path only).
+> - The 002-C change TASK-077 black-box helper path is proven here (DAO-002 change request).
+> **Regressions in 002-F acceptance: confirmed, including FEATURE-002-D,** because 002-F changed shared Guard files.
+> - Run the 002-D host regression, plus the 002-D container regression using only local assets still present (e.g. the B17-provisioned volumes). No new download: B9 was one-time and B17 does not cover this purpose.
+> - If those assets are gone, run host-only and record it.
+> - Also run 001-A/B/C/D/F/G, 002-A/B/C/G and 003-A/B as the design's regression plan requires.
+> - Report the flaky `test_02e` honestly if it recurs.
+
+### Rationale
+> All new DECs are stricter or bookkeeping consistent with prior rulings and the human's 12:24 confirmation; the implementation evidence is complete at the reviewed revision; acceptance proceeds within existing local-only authority.
+
+### Suggested Skills
+> suggested_skills:
+>   - skill_name: "x-ipe-task-based-feature-acceptance-test"
+>     match_strength: "strong"
+>     reason: "Engineering-next after implementation"
+>     execution_steps:
+>       - phase: "1. Plan"
+>         step: "1.1 Plan black-box + real local runtime cases and regressions"
+
+### Follow-up
+> None.

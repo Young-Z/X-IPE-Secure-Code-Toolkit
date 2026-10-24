@@ -1,0 +1,27 @@
+{
+  "command": "guard review",
+  "data": {
+    "budget": {
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extra_attempts": 3,
+      "extra_left": 1,
+      "extra_used": 2,
+      "paused": false,
+      "remaining_seconds": 3600.0,
+      "total_seconds": 3600
+    }
+  },
+  "next_steps": [
+    "Fix the Reviewer record file and record it again"
+  ],
+  "ok": false,
+  "problems": [
+    {
+      "code": "REVIEW_INVALID",
+      "message": "subjects[0].type must be one of finding, na_decision (got 'foo')"
+    }
+  ],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

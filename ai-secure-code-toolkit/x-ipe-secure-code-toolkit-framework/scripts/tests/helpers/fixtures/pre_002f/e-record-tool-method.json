@@ -1,0 +1,27 @@
+{
+  "command": "guard record",
+  "data": {
+    "budget": {
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extra_attempts": 3,
+      "extra_left": 3,
+      "extra_used": 0,
+      "paused": false,
+      "remaining_seconds": 3600.0,
+      "total_seconds": 3600
+    }
+  },
+  "next_steps": [
+    "Fix the record file and record it again; nothing from it was stored"
+  ],
+  "ok": false,
+  "problems": [
+    {
+      "code": "RECORD_INVALID",
+      "message": "evidence[0]: tool evidence is recorded only by secure-code guard tool"
+    }
+  ],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

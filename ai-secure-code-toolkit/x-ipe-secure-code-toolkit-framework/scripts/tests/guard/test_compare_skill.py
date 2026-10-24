@@ -8,8 +8,11 @@ import re
 from conftest import SCRIPTS, TOOLKIT_ROOT
 
 SKILL = TOOLKIT_ROOT / "x-ipe-secure-code-toolkit-guard" / "SKILL.md"
-DELIVERED_SIZE = 12017
-DELIVERED_SHA256 = "cdbfc5bc9c312604641380feff7f8e704a158c97701bacfad7cd4927fd1da292"
+# Rebaselined (DAO-005, FEATURE-002-F): 002-F changed Guard skill bytes before the former offset 12017
+# (step 3 methods line, step 5 Adapters line and the inserted step 5c), so the prefix before 002-G's
+# section moved; was 12017 / cdbfc5bc9c312604641380feff7f8e704a158c97701bacfad7cd4927fd1da292.
+DELIVERED_SIZE = 16160
+DELIVERED_SHA256 = "e24862a3750071d772d6ae6adda5dae832510da4e61f73c15ef9431167083b73"
 DELIVERED_SKILL_TESTS = {
     "tests/guard/test_guard_skill.py": "4999c6b4b570ff63246b001edd6c7c7c1f919b23a1e9c264d8259e7453e3e657",
     "tests/copilot/test_copilot_skill.py": "3025db4b2d09294725698988fabf4a8be0dfd21c5027891eada6764de9a6bc24",
@@ -40,13 +43,17 @@ def test_01f_comparing_section_rules():
     assert "secure-code guard compare --project . --earlier <id-or-file> --later <id-or-file> --json" in text
 
 
+# maintenance (DAO-023/024): scoped to the 002-G section so later appended sections don't break AC-002G-01h
 def test_01h_only_added_section():
     raw = SKILL.read_bytes()
     assert hashlib.sha256(raw[:DELIVERED_SIZE]).hexdigest() == DELIVERED_SHA256
     suffix = _section()
     assert suffix.startswith("\n## Comparing two reports\n")
-    assert len(re.findall(r"(?m)^#{1,6} ", suffix)) == 1
-    assert set(re.findall(r"secure-code guard ([a-z-]+)", suffix)) == {"compare", "cleanup"}
+    heading = "\n## Comparing two reports\n"
+    later = re.search(r"(?m)^#{1,2} ", suffix[len(heading) :])
+    own = suffix if later is None else suffix[: len(heading) + later.start()]
+    assert len(re.findall(r"(?m)^#{1,6} ", own)) == 1
+    assert set(re.findall(r"secure-code guard ([a-z-]+)", own)) == {"compare", "cleanup"}
 
 
 def test_01i_delivered_skill_tests_unchanged():

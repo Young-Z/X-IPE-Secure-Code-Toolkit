@@ -1,0 +1,78 @@
+{
+  "command": "guard cancel",
+  "data": {
+    "budget": {
+      "attempts_exhausted": false,
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extensions": [],
+      "extra_attempts": 3,
+      "extra_used": 0,
+      "legacy": false,
+      "model_usage": {
+        "input_tokens": 0,
+        "not_applicable_attempts": 0,
+        "output_tokens": 0,
+        "requests": 0,
+        "unknown_attempts": 1
+      },
+      "pauses": [],
+      "total_seconds": 3600
+    },
+    "cancellation": {
+      "agent_attempts": [],
+      "agent_note": "stop requested, not confirmed by the toolkit",
+      "consumed_at_request": 0.0,
+      "reason": "user stopped",
+      "remote_note": "remote requests already sent may continue or be billed; the toolkit cannot stop them",
+      "requested_at": "<time>",
+      "tool_termination": {
+        "tool": "none"
+      }
+    },
+    "ended_at": "<time>",
+    "finalization": "done",
+    "findings": [],
+    "ledger": [
+      {
+        "check": "C1",
+        "state": "unconfirmed"
+      },
+      {
+        "check": "policy:CWE/4.14/CWE-89",
+        "state": "unconfirmed"
+      }
+    ],
+    "other_blockers": [],
+    "reasons": [
+      {
+        "code": "CHECK_UNCONFIRMED",
+        "detail": "not executed: no ledger state was recorded",
+        "subject": "C1"
+      },
+      {
+        "code": "CHECK_UNCONFIRMED",
+        "detail": "N/A not confirmed by a valid review (recorded reason: no database access in the target)",
+        "subject": "policy:CWE/4.14/CWE-89"
+      },
+      {
+        "code": "CANCELLED",
+        "detail": "cancelled by the user; unfinished work was not verified",
+        "subject": "verification"
+      }
+    ],
+    "report": "x-ipe-docs/secure-code/reports/guard/gv-20261024T010000Z-<vid8>.md",
+    "result": "x-ipe-docs/secure-code/reports/guard/gv-20261024T010000Z-<vid8>.json",
+    "risk_acceptances": [],
+    "verdict": "cannot_confirm_pass",
+    "verdict_text": "Cannot confirm pass",
+    "verification_id": "gv-20261024T010000Z-<vid8>"
+  },
+  "next_steps": [
+    "The cancelled report lists what was verified and what was not; rerun when ready"
+  ],
+  "ok": true,
+  "problems": [],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

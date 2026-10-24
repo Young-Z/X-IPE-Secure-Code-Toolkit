@@ -7,6 +7,7 @@ import sys
 
 from . import __version__
 from .auth.service import auth_status, initialize_authorization, revoke_authorization
+from .guard.helpers import cli_args as helper_cli
 from .project_init import initialize_project
 from .results import Result
 from .status import collect
@@ -258,6 +259,7 @@ def build_parser() -> argparse.ArgumentParser:
     g_compare.add_argument("--later", action="append", metavar="ID_OR_REPORT")
     g_compare.add_argument("--project")
     g_compare.add_argument("--json", action="store_true")
+    helper_cli.add_guard_helper(g_commands)  # FEATURE-002-F
 
     copilot = commands.add_parser("copilot", help="Copilot suggestions and adoption review (FEATURE-003-A)")
     c_commands = copilot.add_subparsers(dest="copilot_command", required=True)
@@ -308,6 +310,7 @@ def build_parser() -> argparse.ArgumentParser:
     t_remove.add_argument("--component", action="append", help="vulnerability_db, java_db or checks_bundle")
     t_remove.add_argument("--all", action="store_true", help="remove every provisioned component")
     t_remove.add_argument("--json", action="store_true")
+    helper_cli.add_tools_helper(t_commands)  # FEATURE-002-F
 
     auth = commands.add_parser("auth", help="Owner authorization")
     auth_commands = auth.add_subparsers(dest="auth_command", required=True)
@@ -347,6 +350,10 @@ def run(args: argparse.Namespace) -> Result:
                                            args.time_limit)
         if args.tools_command == "remove-components":
             return tools_service.remove_components(args.project, args.tool, args.component, args.all)
+        if args.tools_command == "register-helper-image":
+            return tools_service.register_helper_image(args.project, args.image)
+        if args.tools_command == "helper-conformance":
+            return tools_service.helper_conformance(args.project)
         return tools_service.register(args.project, args.tool, args.path)
     if args.auth_command == "init":
         return initialize_authorization()
@@ -461,6 +468,8 @@ def _guard(args: argparse.Namespace) -> Result:
     from .guard import service
 
     cmd = args.guard_command
+    if cmd == "helper":
+        return helper_cli.run_guard_helper(args)
     if cmd == "tool":
         from .guard.toolrun import run_tool
 

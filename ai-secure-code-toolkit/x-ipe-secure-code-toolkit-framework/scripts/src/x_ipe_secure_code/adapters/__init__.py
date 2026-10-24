@@ -39,3 +39,13 @@ def reserved_name(value: str) -> bool:
 def reserved_id(value: str) -> bool:
     """Evidence and finding ids in the Adapter namespace (`<adapter>-…`)."""
     return isinstance(value, str) and any(value.casefold().startswith(f"{name}-") for name in provided())
+
+
+def reserved_helper_name(value: str) -> bool:
+    """Method names and finding sources that only `guard helper run` may record (FEATURE-002-F)."""
+    return isinstance(value, str) and value.casefold().startswith("helper.")
+
+
+def reserved_helper_id(value: str) -> bool:
+    """Evidence and finding ids in the helper namespace (`helper-…`, FEATURE-002-F)."""
+    return isinstance(value, str) and value.casefold().startswith("helper-")

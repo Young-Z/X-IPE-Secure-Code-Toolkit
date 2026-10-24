@@ -331,6 +331,7 @@ def render(result: dict[str, Any]) -> str:
     out += _budget_section(result)
     out += _cancel_section(result.get("cancellation"))
     out += _egress_section(result.get("egress"))
+    out += _helper_section(result.get("helpers"))
     ret = result["evidence_retention"]
     out += [
         "## Evidence Retention",
@@ -547,6 +548,17 @@ def _provisioning_section(provisioning: list[dict[str, Any]] | None) -> list[str
         ]
     )
     return out
+
+
+def _helper_section(part: dict[str, Any] | None) -> list[str]:
+    """FEATURE-002-F "Temporary helper checks": rendered from the structured part only (no import, so the
+    renderer manifest of CR-TASK-086 is unchanged); absent part → nothing."""
+    if not part:
+        return []
+    out = ["## Temporary helper checks", "", md_text(part["statement"]), ""]
+    out += _table(part["columns"], part["rows"])
+    out += _bullets([md_text(g) for g in part["gaps"]])
+    return out + _bullets([md_text(n) for n in part["notes"]])
 
 
 def footer_digest(text: str) -> str | None:

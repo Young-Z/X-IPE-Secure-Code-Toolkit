@@ -22,6 +22,8 @@ from ..projects import knowledge_root
 from ..results import Result
 from . import budget, engine, records, report, runs, targets
 from . import model as guard_model
+from .helpers import report as helper_report
+from .helpers import review as helper_review
 from .model import (
     LOCK_REL,
     SCHEMA_OPEN,
@@ -415,6 +417,9 @@ def record_review(project: str | None, run_id: str, request: str) -> Result:
             budget.cite(state, doc["attempt"], {"reviewer"}, used_items, used, now()[0], doc.get("usage"))
             entry["attempt"] = doc["attempt"]
             state["reviews"].append(entry)
+            if used_items["helpers"]:  # FEATURE-002-F: events and post-run acceptance (same commit)
+                observed = {t["path"]: targets.observe(root, t["path"]) for t in state["artifact"]["targets"]}
+                helper_review.on_recorded(state, entry, observed, now()[0])
             runs.commit_state(root, state, expected_revision=rev)
             found.update(
                 index=len(state["reviews"]) - 1, completeness=warnings, budget=budget.status(state, used)
@@ -515,6 +520,7 @@ def _conclude_open(root: Path, vid: str, command: str) -> dict[str, Any] | None:
     result = engine.conclude(
         state, observed, _policy_now(root, state, command), ended_at, control_of(state, used)
     )
+    helper_report.attach(state, result)  # FEATURE-002-F: key `helpers` only for runs with helpers
     report.stamp(result)  # CR-TASK-086: the build writing this result (engine output stays pure)
     with ProcessLock(runs.commit_lock(root, vid), timeout=runs.BARRIER_TIMEOUT):
         if runs.cancel_marker(root, vid) is not None:

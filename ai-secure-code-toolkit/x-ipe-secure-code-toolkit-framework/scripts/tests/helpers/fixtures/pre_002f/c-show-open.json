@@ -1,0 +1,29 @@
+{
+  "command": "guard show",
+  "data": {
+    "budget": {
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extra_attempts": 3,
+      "extra_left": 3,
+      "extra_used": 0,
+      "paused": false,
+      "remaining_seconds": 3600.0,
+      "total_seconds": 3600
+    },
+    "cancel_requested": false,
+    "verification_id": "gv-20261024T010000Z-<vid8>"
+  },
+  "next_steps": [
+    "Conclude it first: secure-code guard conclude --run gv-20261024T010000Z-<vid8>"
+  ],
+  "ok": false,
+  "problems": [
+    {
+      "code": "NOT_CONCLUDED",
+      "message": "Verification gv-20261024T010000Z-<vid8> is still open"
+    }
+  ],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

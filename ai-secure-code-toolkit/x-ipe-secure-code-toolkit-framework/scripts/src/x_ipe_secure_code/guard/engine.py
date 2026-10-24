@@ -40,6 +40,9 @@ def _relevant_paths(state: dict[str, Any], subject: dict[str, Any]) -> list[str]
     if subject["type"] == "finding":
         found = next(f for f in state["findings"] if f["id"] == subject["id"])
         paths = [owning_target(artifact, found["location"]["path"])]
+    elif subject["type"] == "helper":  # FEATURE-002-F: bound to the read scope's owning targets
+        helper = next((h for h in state.get("helpers") or [] if h.get("id") == subject["id"]), {})
+        paths = [owning_target(artifact, p) for p in helper.get("read_scope") or []]
     elif subject["id"].startswith("policy:"):
         paths = [t["path"] for t in artifact["targets"]]
     else:

@@ -9,8 +9,10 @@ import copy
 from pathlib import Path
 from typing import Any
 
-from ..adapters import provided, reserved_id, reserved_name
+from ..adapters import provided, reserved_helper_id, reserved_helper_name, reserved_id, reserved_name
 from ..reviewer import envelope
+from .helpers import plan_rules
+from .helpers import review as helper_review
 from .mask import mask_text
 from .model import (
     CONFLICT_KINDS,
@@ -65,6 +67,7 @@ def validate_plan(state: dict[str, Any], doc: dict[str, Any]) -> dict[str, Any]:
     """Necessary checks over adopted rules only; every adopted rule is planned, N/A or excluded."""
     ck = Checker("PLAN_INVALID", PLAN_STEP)
     ck.obj(doc, "plan", {"schema", "checks", "not_applicable", "exclusions"})
+    doc, gaps = plan_rules.split_plan(doc)  # FEATURE-002-F: additive `gap` for helper methods only
     adopted = _adopted(state)
 
     def rule(value: Any, where: str) -> str:
@@ -171,6 +174,7 @@ def validate_plan(state: dict[str, Any], doc: dict[str, Any]) -> dict[str, Any]:
             f"Adopted Policies without a check, N/A reason or user exclusion: {', '.join(missing)}",
             "Plan a check for each, give a factual N/A reason, or record the user's exclusion",
         )
+    plan_rules.check_plan(ck, checks, gaps)
     return {
         "checks": checks,
         "not_applicable": not_applicable,
@@ -216,6 +220,8 @@ def _method_changes(ck: Checker, state: dict[str, Any], new: dict[str, Any], raw
     """Switches/supplements add a method as auxiliary and are logged with the results present at that time."""
     checks = {c["id"]: c for c in new["plan"]["checks"]}
     log = new["plan"].setdefault("method_changes", [])
+    raw_list, gaps = plan_rules.split_changes(raw_list)  # FEATURE-002-F
+    start = len(log)
     for i, raw in enumerate(ck.items(raw_list, "method_changes")):
         where = f"method_changes[{i}]"
         ck.obj(
@@ -255,6 +261,7 @@ def _method_changes(ck: Checker, state: dict[str, Any], new: dict[str, Any], raw
                 "adapter_runs": len(state.get("adapter_runs", [])),
             }
         )
+    plan_rules.check_changes(ck, log[start:], gaps)
 
 
 def _content_file(root: Path, ck: Checker, raw: Any, where: str) -> str:
@@ -323,6 +330,8 @@ def apply_record(
         eid = ck.pattern(raw["id"], f"{where}.id", ITEM_ID)
         if reserved_id(eid) or reserved_name(raw.get("method")):
             raise ck.fail(f"{where}: tool evidence is recorded only by secure-code guard tool")
+        if reserved_helper_id(eid) or reserved_helper_name(raw.get("method")):
+            raise ck.fail(f"{where}: {plan_rules.RESERVED}")
         if any(e["id"].casefold() == eid.casefold() for e in new["evidence"]):
             raise ck.fail(f"{where}.id {eid} is a duplicate")
         kind = ck.choice(raw["kind"], f"{where}.kind", KINDS)
@@ -416,6 +425,8 @@ def apply_record(
         fid = ck.pattern(raw["id"], f"{where}.id", ITEM_ID)
         if reserved_id(fid) or reserved_name(raw.get("source")):
             raise ck.fail(f"{where}: tool findings are recorded only by secure-code guard tool")
+        if reserved_helper_id(fid) or reserved_helper_name(raw.get("source")):
+            raise ck.fail(f"{where}: {plan_rules.RESERVED}")
         known = {f["id"]: f for f in new["findings"]}
         if fid in known:
             raise ck.fail(f"{where}.id {fid} is a duplicate")
@@ -569,6 +580,8 @@ def _subject(
     i: int,
     warnings: list[str],
 ) -> dict[str, Any]:
+    if isinstance(raw, dict) and raw.get("type") == "helper":  # FEATURE-002-F (FR-002A-4 extension)
+        return helper_review.subject(ck, state, subjects, raw, i, warnings)
     where = f"subjects[{i}]"
     ck.obj(
         raw,

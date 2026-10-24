@@ -1,0 +1,68 @@
+{
+  "command": "guard conclude",
+  "data": {
+    "budget": {
+      "attempts_exhausted": false,
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extensions": [],
+      "extra_attempts": 3,
+      "extra_used": 0,
+      "legacy": false,
+      "model_usage": {
+        "input_tokens": 0,
+        "not_applicable_attempts": 0,
+        "output_tokens": 0,
+        "requests": 0,
+        "unknown_attempts": 2
+      },
+      "pauses": [],
+      "total_seconds": 3600
+    },
+    "cancellation": null,
+    "ended_at": "<time>",
+    "findings": [
+      {
+        "final_severity": "high",
+        "id": "F1",
+        "review": "unconfirmed"
+      }
+    ],
+    "ledger": [
+      {
+        "check": "C1",
+        "state": "not_met"
+      },
+      {
+        "check": "policy:CWE/4.14/CWE-89",
+        "state": "n/a"
+      }
+    ],
+    "other_blockers": [],
+    "reasons": [
+      {
+        "code": "CHECK_NOT_MET",
+        "detail": "check not met",
+        "subject": "C1"
+      },
+      {
+        "code": "FINDING_UNCONFIRMED",
+        "detail": "high finding without a confirming valid review",
+        "subject": "F1"
+      }
+    ],
+    "report": "x-ipe-docs/secure-code/reports/guard/gv-20261024T010000Z-<vid8>.md",
+    "result": "x-ipe-docs/secure-code/reports/guard/gv-20261024T010000Z-<vid8>.json",
+    "risk_acceptances": [],
+    "verdict": "cannot_confirm_pass",
+    "verdict_text": "Cannot confirm pass",
+    "verification_id": "gv-20261024T010000Z-<vid8>"
+  },
+  "next_steps": [
+    "Resolve the listed reasons (evidence, review, scope) and run a new verification"
+  ],
+  "ok": true,
+  "problems": [],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

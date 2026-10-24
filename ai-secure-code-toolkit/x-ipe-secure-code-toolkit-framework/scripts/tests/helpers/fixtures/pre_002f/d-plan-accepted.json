@@ -1,0 +1,30 @@
+{
+  "command": "guard plan",
+  "data": {
+    "budget": {
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extra_attempts": 3,
+      "extra_left": 3,
+      "extra_used": 0,
+      "paused": false,
+      "remaining_seconds": 3600.0,
+      "total_seconds": 3600
+    },
+    "checks": [
+      "C1"
+    ],
+    "exclusions": [],
+    "not_applicable": [
+      "CWE/4.14/CWE-89"
+    ],
+    "verification_id": "gv-20261024T010000Z-<vid8>"
+  },
+  "next_steps": [
+    "Review the targets, then record evidence, findings and ledger states with secure-code guard record"
+  ],
+  "ok": true,
+  "problems": [],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

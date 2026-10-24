@@ -1,0 +1,450 @@
+"""Toolkit-owned conformance probe suite (FEATURE-002-F design §12.2). Data file (never imported, not a
+toolkit module): staged as
+`/helper/script.py` with a first line `PROBE = "<id>"` and run by the trusted launcher exactly like a target
+run; never imported by the toolkit. Each probe writes `/results/result.json` in the helper result schema
+with compact JSON evidence in `notes`; the toolkit judges pass/fail from that evidence and the runtime's
+own inspect state. Python 3.10+ standard library only (probes may use os/ctypes; they are toolkit code).
+"""
+
+import ctypes
+import errno
+import json
+import os
+import platform
+import signal
+import socket
+import stat
+import subprocess
+import sys
+import time
+
+PROBE = globals().get("PROBE", "")
+RESULT = "/results/result.json"
+SYSCALLS = {
+    "x86_64": {"add_key": 248, "request_key": 249, "keyctl": 250, "unshare": 272, "ptrace": 101},
+    "aarch64": {"add_key": 217, "request_key": 218, "keyctl": 219, "unshare": 97, "ptrace": 117},
+}
+CLONE_NEWUSER = 0x10000000
+
+
+def err(exc):
+    return errno.errorcode.get(getattr(exc, "errno", None) or 0, type(exc).__name__)
+
+
+def write(notes, scanned=("probe.txt",)):
+    doc = {
+        "schema": "x-ipe-helper-result/1",
+        "helper": "probe",
+        "status": "complete",
+        "scanned": list(scanned),
+        "findings": [],
+        "notes": json.dumps(notes, sort_keys=True)[:2000],
+    }
+    with open(RESULT, "w", encoding="utf-8") as out:
+        json.dump(doc, out)
+
+
+def try_write(path):
+    try:
+        with open(path, "w") as f:
+            f.write("x")
+        return "written"
+    except OSError as exc:
+        return err(exc)
+
+
+def status_fields():
+    out = {}
+    with open("/proc/self/status") as f:
+        for line in f:
+            key, _, value = line.partition(":")
+            out[key] = value.strip()
+    return out
+
+
+def _flags(name):
+    try:
+        with open(f"/sys/class/net/{name}/flags") as f:
+            return f.read().strip()
+    except OSError as exc:
+        return err(exc)
+
+
+def v4_local(text):
+    """IPv4 addresses outside 127/8 with a `host LOCAL` entry in /proc/net/fib_trie."""
+    found, last = set(), None
+    for line in text.splitlines():
+        item = line.strip()
+        if item.startswith("|-- "):
+            last = item[4:]
+        elif "host LOCAL" in item and last and not last.startswith("127."):
+            found.add(last)
+    return sorted(found)
+
+
+def v6_devs(text):
+    """Devices other than lo holding an IPv6 address (/proc/net/if_inet6, device name last)."""
+    return sorted({cols[-1] for cols in map(str.split, text.splitlines()) if cols and cols[-1] != "lo"})
+
+
+def route4_devs(text):
+    """Devices other than lo with an IPv4 route (/proc/net/route, header line first)."""
+    rows = text.splitlines()[1:]
+    return sorted({cols[0] for cols in map(str.split, rows) if cols and cols[0] != "lo"})
+
+
+def route6_devs(text):
+    """Devices other than lo with an IPv6 route (/proc/net/ipv6_route, device name last)."""
+    return sorted({cols[-1] for cols in map(str.split, text.splitlines()) if cols and cols[-1] != "lo"})
+
+
+def _proc(path, parse, missing_means_none):
+    try:
+        with open(path) as f:
+            return parse(f.read())
+    except FileNotFoundError as exc:
+        return [] if missing_means_none else err(exc)
+    except OSError as exc:
+        return err(exc)
+
+
+def p01():
+    """Network disabled (spec v1.3.3 AC-002F-11b, DAO-005): interface flags, addresses, routes,
+    capabilities, outbound connect and DNS; the toolkit judges together with the runtime's inspect."""
+    base = "/sys/class/net"
+    ifaces = {n: _flags(n) for n in sorted(os.listdir(base)) if os.path.isdir(os.path.join(base, n))}
+    caps = status_fields()
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(2)
+    try:
+        s.connect(("1.1.1.1", 53))
+        connect = "connected"
+    except OSError as exc:
+        connect = err(exc)
+    finally:
+        s.close()
+    try:
+        socket.getaddrinfo("example.com", 443)
+        dns = "resolved"
+    except OSError as exc:
+        dns = err(exc) if getattr(exc, "errno", None) else "failed"
+    write(
+        {
+            "ifaces": ifaces,
+            "v4": _proc("/proc/net/fib_trie", v4_local, False),
+            "v6": _proc("/proc/net/if_inet6", v6_devs, True),
+            "route4": _proc("/proc/net/route", route4_devs, False),
+            "route6": _proc("/proc/net/ipv6_route", route6_devs, True),
+            "CapEff": caps.get("CapEff"),
+            "CapBnd": caps.get("CapBnd"),
+            "connect": connect,
+            "dns": dns,
+        }
+    )
+
+
+def p02():
+    write({p: try_write(p) for p in ("/usr/x", "/input/x", "/helper/x", "/x", "/dev/shm/x")})
+
+
+def p03():
+    mounts = []
+    with open("/proc/self/mountinfo") as f:
+        for line in f:
+            mounts.append(line.split()[4])
+    socks = []
+    for base in ("/var/run", "/run", "/tmp"):
+        for dirpath, _dirs, files in os.walk(base):
+            socks += [os.path.join(dirpath, n) for n in files if n.endswith(".sock")]
+    named = [m for m in mounts if m.endswith((".sock", "docker.sock", "podman.sock"))]
+    write({"mounts": sorted(set(mounts)), "socks": socks + named})
+
+
+def p04():
+    ns = {}
+    for name in ("pid", "ipc", "uts", "net", "cgroup", "user", "mnt"):
+        try:
+            ns[name] = os.readlink(f"/proc/self/ns/{name}")
+        except OSError as exc:
+            ns[name] = err(exc)
+    with open("/proc/1/cmdline", "rb") as f:
+        pid1 = f.read().replace(b"\0", b" ").decode("utf-8", "replace")[:200]
+    with open("/proc/self/cgroup") as f:
+        cgroup = f.read().strip()[:200]
+    write({"ns": ns, "pid1": pid1, "ppid": os.getppid(), "hostname": socket.gethostname(), "cgroup": cgroup})
+
+
+def p05():
+    entries = {}
+    for name in sorted(os.listdir("/dev")):
+        mode = os.lstat(os.path.join("/dev", name)).st_mode
+        entries[name] = (
+            "block"
+            if stat.S_ISBLK(mode)
+            else "char"
+            if stat.S_ISCHR(mode)
+            else "dir"
+            if stat.S_ISDIR(mode)
+            else "link"
+            if stat.S_ISLNK(mode)
+            else "other"
+        )
+    write({"dev": entries})
+
+
+def p06():
+    write({"uid": os.getuid(), "gid": os.getgid(), "euid": os.geteuid(), "groups": sorted(os.getgroups())})
+
+
+def p07():
+    st = status_fields()
+    write({k: st.get(k) for k in ("CapEff", "CapPrm", "CapBnd", "CapAmb", "CapInh")})
+
+
+def _syscall(number, *args):
+    libc = ctypes.CDLL(None, use_errno=True)
+    libc.syscall.restype = ctypes.c_long
+    rc = libc.syscall(ctypes.c_long(number), *[ctypes.c_long(a) for a in args])
+    return "ok" if rc != -1 else errno.errorcode.get(ctypes.get_errno(), str(ctypes.get_errno()))
+
+
+def p08():
+    st = status_fields()
+    arch = platform.machine()
+    numbers = SYSCALLS.get(arch)
+    denied = {}
+    if numbers:
+        key_type = ctypes.c_char_p(b"user")
+        desc = ctypes.c_char_p(b"probe")
+        addr = ctypes.cast(key_type, ctypes.c_void_p).value
+        daddr = ctypes.cast(desc, ctypes.c_void_p).value
+        denied["add_key"] = _syscall(numbers["add_key"], addr, daddr, 0, 0, -2)
+        denied["request_key"] = _syscall(numbers["request_key"], addr, daddr, 0, -2)
+        denied["keyctl"] = _syscall(numbers["keyctl"], 0, -2, 0)
+        denied["unshare"] = _syscall(numbers["unshare"], CLONE_NEWUSER)
+    write(
+        {
+            "arch": arch,
+            "NoNewPrivs": st.get("NoNewPrivs"),
+            "Seccomp": st.get("Seccomp"),
+            "Seccomp_filters": st.get("Seccomp_filters"),
+            "denied": denied,
+        }
+    )
+
+
+def p09():
+    children, error = [], None
+    for _ in range(200):
+        try:
+            pid = os.fork()
+        except OSError as exc:
+            error = err(exc)
+            break
+        if pid == 0:
+            time.sleep(30)
+            os._exit(0)
+        children.append(pid)
+    for pid in children:
+        os.kill(pid, signal.SIGKILL)
+    for pid in children:
+        os.waitpid(pid, 0)
+    write({"forked": len(children), "error": error})
+
+
+def p10():
+    write({"phase": "before"})
+    try:
+        block = bytearray(600 * 1024 * 1024)
+        block[::4096] = b"x" * len(block[::4096])
+        write({"phase": "allocated", "bytes": len(block)})
+    except MemoryError:
+        write({"memory_error": True})
+
+
+def p11():
+    fds, error = [], None
+    for _ in range(1000):
+        try:
+            fds.append(os.open("/dev/null", os.O_RDONLY))
+        except OSError as exc:
+            error = err(exc)
+            break
+    count = len(fds)
+    for fd in fds:
+        os.close(fd)
+    write({"opened": count, "error": error})
+
+
+def p12():
+    written, error = 0, None
+    try:
+        with open("/tmp/fill", "wb") as f:
+            chunk = b"x" * (1024 * 1024)
+            for _ in range(17):
+                f.write(chunk)
+                f.flush()
+                written += len(chunk)
+    except OSError as exc:
+        error = err(exc)
+    try:
+        os.unlink("/tmp/fill")
+    except OSError:
+        pass
+    with open(sys.executable, "rb") as src, open("/tmp/exe", "wb") as dst:
+        dst.write(src.read())
+    os.chmod("/tmp/exe", 0o755)
+    try:
+        subprocess.run(["/tmp/exe", "-c", "pass"], check=False, timeout=10)
+        execute = "executed"
+    except OSError as exc:
+        execute = err(exc)
+    write({"written": written, "error": error, "exec": execute})
+
+
+def p13():
+    big, error = 0, None
+    try:
+        with open("/results/big", "wb") as f:
+            for _ in range(3 * 16):
+                f.write(b"x" * 65536)
+                f.flush()
+                big += 65536
+    except OSError as exc:
+        error = err(exc)
+    try:
+        os.unlink("/results/big")
+    except OSError:
+        pass
+    created, files_error = 0, None
+    for i in range(17):
+        try:
+            with open(f"/results/f{i}", "w"):
+                created += 1
+        except OSError as exc:
+            files_error = err(exc)
+            break
+    for i in range(created):
+        os.unlink(f"/results/f{i}")
+    write({"big": big, "error": error, "files": created, "files_error": files_error, "pad": "p" * 600})
+
+
+def p13b(variant):
+    if variant == "link-input":
+        os.symlink("/input/probe.txt", RESULT)
+    elif variant == "link-helper":
+        os.symlink("/helper/script.py", RESULT)
+    elif variant == "link-passwd":
+        os.symlink("/etc/passwd", RESULT)
+    elif variant == "link-parent":
+        os.symlink("../", RESULT)
+    elif variant == "hardlink":
+        write({"x": 1})
+        os.link(RESULT, "/results/other")
+    elif variant == "extra-file":
+        write({"x": 1})
+        open("/results/extra", "w").close()
+    elif variant == "extra-dir":
+        write({"x": 1})
+        os.mkdir("/results/sub")
+    elif variant == "fifo":
+        os.mkfifo(RESULT)
+    elif variant == "many":
+        for i in range(15):
+            open(f"/results/e{i}", "w").close()
+
+
+def p14():
+    time.sleep(30)
+
+
+def p15():
+    sys.stdout.write("o" * (1024 * 1024))
+    sys.stdout.flush()
+    time.sleep(10)
+
+
+def p16():
+    sys.stdout.write("0123456789")
+    sys.stdout.flush()
+
+
+def p17(variant):
+    if variant == "cpu":
+        while True:
+            pass
+    if variant == "churn":
+        if os.fork() == 0:
+            os.setsid()
+            time.sleep(600)
+            os._exit(0)
+        while True:
+            pid = os.fork()
+            if pid == 0:
+                end = time.time() + 0.5
+                while time.time() < end:
+                    pass
+                os._exit(0)
+            os.waitpid(pid, 0)
+    if variant == "sleeper":
+        if os.fork() == 0:
+            time.sleep(600)
+            os._exit(0)
+        time.sleep(600)
+    if variant == "early-exit":
+        if os.fork() == 0:
+            os.setsid()
+            time.sleep(600)
+            os._exit(0)
+        return
+    if variant == "attack-pid1":
+        notes = {}
+        for name, sig in (("SIGKILL", signal.SIGKILL), ("SIGSTOP", signal.SIGSTOP)):
+            try:
+                os.kill(1, sig)
+                notes[name] = "sent"
+            except OSError as exc:
+                notes[name] = err(exc)
+        numbers = SYSCALLS.get(platform.machine(), {})
+        notes["ptrace"] = _syscall(numbers["ptrace"], 16, 1, 0, 0) if numbers else "unknown-arch"
+        libc = ctypes.CDLL(None, use_errno=True)
+        buf = ctypes.create_string_buffer(8)
+        local = (ctypes.c_void_p * 2)(ctypes.cast(buf, ctypes.c_void_p), ctypes.c_void_p(8))
+        remote = (ctypes.c_void_p * 2)(ctypes.c_void_p(4096), ctypes.c_void_p(8))
+        rc = libc.process_vm_writev(1, local, 1, remote, 1, 0)
+        notes["process_vm_writev"] = "ok" if rc != -1 else errno.errorcode.get(ctypes.get_errno(), "error")
+        write(notes)
+        time.sleep(600)
+
+
+def main():
+    probe, _, variant = PROBE.partition(":")
+    functions = {
+        "P-01": p01,
+        "P-02": p02,
+        "P-03": p03,
+        "P-04": p04,
+        "P-05": p05,
+        "P-06": p06,
+        "P-07": p07,
+        "P-08": p08,
+        "P-09": p09,
+        "P-10": p10,
+        "P-11": p11,
+        "P-12": p12,
+        "P-13": p13,
+        "P-14": p14,
+        "P-15": p15,
+        "P-16": p16,
+        "P-18": p16,
+    }
+    if probe == "P-13b":
+        p13b(variant)
+    elif probe == "P-17":
+        p17(variant)
+    else:
+        functions[probe]()
+
+
+if PROBE:
+    main()

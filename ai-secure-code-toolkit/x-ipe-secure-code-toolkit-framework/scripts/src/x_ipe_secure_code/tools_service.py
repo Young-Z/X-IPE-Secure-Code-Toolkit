@@ -74,3 +74,17 @@ def remove_components(project: str | None, tool: str, components: list[str] | No
     from .adapters import trivy_provision
 
     return trivy_provision.remove_components(project, tool, components, remove_all, trust_paths)
+
+
+def register_helper_image(project: str | None, image: str, trust_paths: TrustPaths | None = None) -> Result:
+    """Maintainer registration of a locally present helper image (FEATURE-002-F; never pulls or builds)."""
+    from .guard.helpers import registry
+
+    return registry.register_image(project, image, trust_paths)
+
+
+def helper_conformance(project: str | None, trust_paths: TrustPaths | None = None) -> Result:
+    """Maintainer offline conformance suite of the helper runtime (FEATURE-002-F)."""
+    from .guard.helpers import conformance
+
+    return conformance.run(project, trust_paths)

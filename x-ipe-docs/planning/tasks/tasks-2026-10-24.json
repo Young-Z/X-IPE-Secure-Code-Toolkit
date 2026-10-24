@@ -83,6 +83,17 @@
       "created_at": "2026-10-24T02:59:51.962802+00:00",
       "last_updated": "2026-10-24T02:59:51.962802+00:00",
       "task_id": "TASK-110"
+    },
+    {
+      "task_type": "Feature Acceptance Test",
+      "description": "Acceptance FEATURE-002-F at the TASK-085 commit (frozen copy): black-box CLI + real-runtime cases on local Docker Desktop with local images only, --network none, no pulls/builds; CR-077 helper path black-box; regressions 001-A/B/C/D/F/G, 002-A/B/C/D(host; container only with local assets)/G, 003-A/B; honest limits (one runtime); flaky test_02e reported honestly (DAO-006 code implementation).",
+      "role": "Sage",
+      "status": "in_progress",
+      "output_links": [],
+      "next_task": "",
+      "created_at": "2026-10-24T04:48:47.883621+00:00",
+      "last_updated": "2026-10-24T04:48:47.883621+00:00",
+      "task_id": "TASK-111"
     }
   ]
 }

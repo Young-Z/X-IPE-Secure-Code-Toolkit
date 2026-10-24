@@ -1,0 +1,27 @@
+{
+  "command": "guard plan",
+  "data": {
+    "budget": {
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extra_attempts": 3,
+      "extra_left": 3,
+      "extra_used": 0,
+      "paused": false,
+      "remaining_seconds": 3600.0,
+      "total_seconds": 3600
+    }
+  },
+  "next_steps": [
+    "Record evidence and ledger states, or open a new verification"
+  ],
+  "ok": false,
+  "problems": [
+    {
+      "code": "PLAN_EXISTS",
+      "message": "A check plan is already recorded for this verification"
+    }
+  ],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

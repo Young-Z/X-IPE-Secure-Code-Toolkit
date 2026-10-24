@@ -83,6 +83,27 @@ ERA_001A_REMOVED = (
     f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_pipeline.py",
     f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_service.py",
     f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/knowledge/drafting_supplements.py",
+    # FEATURE-002-F.
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/__init__.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/canonical.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/cli_args.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/conformance.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/evidence.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/execute.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/execute_io.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/grant.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/model.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/plan_rules.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/registry.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/report.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/results.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/review.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/runtime.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/snapshot.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/static.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/submit.py",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/probes/suite.probe",
+    f"{FRAMEWORK}/scripts/src/x_ipe_secure_code/guard/helpers/payload/launcher.py",
 )
 
 # FEATURE-001-A minimal fragment, byte for byte as written by host_fragment.py a14b9b85… (golden).

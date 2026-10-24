@@ -1,0 +1,26 @@
+{
+  "command": "guard review",
+  "data": {
+    "budget": {
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extra_attempts": 3,
+      "extra_left": 1,
+      "extra_used": 2,
+      "paused": false,
+      "remaining_seconds": 3600.0,
+      "total_seconds": 3600
+    },
+    "completeness": [],
+    "index": 0,
+    "validity": "decided at conclusion: complete and bound to current digests",
+    "verification_id": "gv-20261024T010000Z-<vid8>"
+  },
+  "next_steps": [
+    "Conclude when the review is complete: secure-code guard conclude"
+  ],
+  "ok": true,
+  "problems": [],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

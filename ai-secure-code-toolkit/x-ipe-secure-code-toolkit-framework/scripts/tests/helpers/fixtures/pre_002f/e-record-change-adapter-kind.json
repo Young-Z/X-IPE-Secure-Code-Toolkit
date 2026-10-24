@@ -1,0 +1,27 @@
+{
+  "command": "guard record",
+  "data": {
+    "budget": {
+      "consumed_seconds": 0.0,
+      "defaulted": true,
+      "exhausted": null,
+      "extra_attempts": 3,
+      "extra_left": 2,
+      "extra_used": 1,
+      "paused": false,
+      "remaining_seconds": 3600.0,
+      "total_seconds": 3600
+    }
+  },
+  "next_steps": [
+    "Fix the record file and record it again; nothing from it was stored"
+  ],
+  "ok": false,
+  "problems": [
+    {
+      "code": "RECORD_INVALID",
+      "message": "method_changes[0]: Adapter method must be named exactly 'trivy' with kind runtime"
+    }
+  ],
+  "schema": "ai-secure-code-toolkit/result/v1"
+}

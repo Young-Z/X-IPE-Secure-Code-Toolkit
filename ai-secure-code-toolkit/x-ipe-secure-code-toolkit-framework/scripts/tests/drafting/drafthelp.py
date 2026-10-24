@@ -71,6 +71,27 @@ NEW_PAYLOAD = (
     "knowledge/drafting_pipeline.py",
     "knowledge/drafting_service.py",
     "knowledge/drafting_supplements.py",
+    # maintenance (DAO-023/024, DAO-005): FEATURE-002-F new payload files (a later declared growth).
+    "guard/helpers/__init__.py",
+    "guard/helpers/canonical.py",
+    "guard/helpers/cli_args.py",
+    "guard/helpers/conformance.py",
+    "guard/helpers/evidence.py",
+    "guard/helpers/execute.py",
+    "guard/helpers/execute_io.py",
+    "guard/helpers/grant.py",
+    "guard/helpers/model.py",
+    "guard/helpers/payload/launcher.py",
+    "guard/helpers/plan_rules.py",
+    "guard/helpers/probes/suite.probe",
+    "guard/helpers/registry.py",
+    "guard/helpers/report.py",
+    "guard/helpers/results.py",
+    "guard/helpers/review.py",
+    "guard/helpers/runtime.py",
+    "guard/helpers/snapshot.py",
+    "guard/helpers/static.py",
+    "guard/helpers/submit.py",
 )
 NEW_REFERENCE = "references/knowledge-drafting.md"
 
