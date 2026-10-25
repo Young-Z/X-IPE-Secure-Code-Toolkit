@@ -678,6 +678,7 @@ The original project is never mounted: mount sources are staging folders only (i
    - otherwise collect (the exit status is never evidence, 07b).
 
    PIDs/open-files/`/tmp` exhaustion is named only when stderr shows the errno (`EAGAIN` on fork, `EMFILE`, `ENOSPC` on `/tmp`); otherwise "script error under enforced limits" (honest, §15). A sample cut short by a budget cap below L-10 is `BUDGET_TIME_EXHAUSTED`, not a script failure.
+   *Erratum (TASK-112, DAO-006 bug fix, 2026-10-25):* `ENOSPC` does not name the failing mount. When the run has a results volume, `execute_io` reads the area once through the holder (`cp`, capped, in memory, nothing kept): a full area (≥ 16 entries, or regular bytes within 64 KiB of 2 MiB) is named `results` ("results area limit (L-08)"); room left keeps `tmp`; an unreadable area names no limit ("script error under enforced limits"). Honest limits: the mount is inferred after the stop; a `/tmp` exhaustion while the results area is within 64 KiB of full is named `results` — the method fails either way.
 6. Collect (§10.1) from the holder, then `rm -f` both containers and `volume rm` (verified).
 
 If the toolkit process dies mid-run, these still hold (M4, re-review major):
@@ -1180,6 +1181,7 @@ Applicable ACs: 74 (05f not applicable). **Boundary regression (DAO-014/017 TD),
 | 10-23-2026 | Technical Design | v1.1: DAO-014 TD rulings (DEC-3 variant B, engine unchanged except T-4 plumbing; DEC-2 own walker; DEC-5 spec clarification; DEC-9 CR-077 erratum; DEC-14 labelling; DEC-16 new). Review fixes B1, M1–M7. Spec rebound to v1.3 |
 | 10-23-2026 | Technical Design | v1.2: re-review of v1.1 + DAO-017/DAO-018. 07c per spec v1.3.1 (unchanged-rules state; per-file coverage honest limit; gap line; skill guidance; coverage tests). PID-1 launcher + P-17 churn probes. `on_recorded(…, observed)`. Closed list (reservation via `adapters`, ERA append), byte-identity suite. Spec rebound to v1.3.1 |
 | 10-24-2026 | Code Implementation | v1.2.1 errata E1–E4 (DAO-005, code implementation; TASK-085): GPG_KEY/GPG_KEYS fingerprint exemption at registration; P-01 "network disabled" evidence per spec v1.3.3 AC-002F-11b; `--ipc none` + P-02 `/dev/shm`; snapshot job C lists uncopyable object entries (always uncovered). Original text kept; see "Errata (DAO-005)" |
+| 10-25-2026 | Bug Fix (TASK-112) | §9.3 step 5 erratum (DAO-006 bug fix): results-area `ENOSPC` is named `results` (L-08) when the area is full after the stop; unreadable area → no limit named. |
 
 ### Re-review Nits (v1.2, appended by Sage, 2026-10-23)
 

@@ -1,0 +1,16 @@
+{
+  "_version": "1.0",
+  "tasks": [
+    {
+      "task_type": "Feature Closing",
+      "description": "Close FEATURE-002-F at the TASK-112 commit: 74/74 active ACs (05f N/A, B12 = A); D-1 history; DEC-2/DEC-4 limits; expected partials (001-G TC-G-33 / 002-G TC-G-23 byte pins, 002-D TC-H-01 env); /tmp-named check fake-runtime only; one runtime (Docker Desktop macOS arm64); flaky test_02e cited (TASK-110); P-01 clarification human-confirmed; maintenance points DAO-005/023/024.",
+      "role": "Sage",
+      "status": "in_progress",
+      "output_links": [],
+      "next_task": "",
+      "created_at": "2026-10-25T02:21:15.794730+00:00",
+      "last_updated": "2026-10-25T02:21:15.794730+00:00",
+      "task_id": "TASK-114"
+    }
+  ]
+}

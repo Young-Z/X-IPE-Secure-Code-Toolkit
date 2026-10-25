@@ -10,6 +10,7 @@
 | DAO-003 | 2026-10-24T03:36:44+08:00 | TASK-097 | x-ipe-task-based-bug-fix | approval | 0.84 | FEATURE-001-A read-path sweep: DEC-1…5 approved (existing delivered codes RECORD_INVALID, TOOLKIT_FILES_CHANGED, IO_ERROR, TRUST_INVALID, PAYLOAD_INCOMPLETE; fail-closed); O-1 → separate bug task on FEATURE-002-B shared safe_io (reproduced; O_NONBLOCK+fstat; 002-B/002-D regressions); O-2 → separate FEATURE-003-B defect candidate scheduled after the human's B7 smoke unless the smoke runs at the fixed revision; swap race stays a Low honest limit |
 | DAO-004 | 2026-10-24T04:28:26+08:00 | TASK-100 | x-ipe-task-based-bug-fix | approval | 0.85 | FEATURE-002-B safe_io FIFO hang: DEC-1 (existing TOOL_NOT_REGISTERED via existing UnsafePath mapping), DEC-2 (set_blocking guarded by NONBLOCK), DEC-3 (shared helper only) approved; targets.py:270 walk folded into TASK-100 with the same pattern and a deterministic RED test, reviewed as a delta — else separate Low candidate |
 | DAO-005 | 2026-10-24T05:12:02+08:00 | TASK-100 | x-ipe-task-based-bug-fix | approval | 0.86 | TASK-100 close confirmed (walk fold-in test-first, review finding fixed, delta re-review PASS, full 2616/0, 002-B host regression identical); O-3 targets.file_digest → (a) separate Low bug-fix task after TASK-099 (reproduce first, reuse safe_io pattern); local exact-path commit allowed (B8) |
+| DAO-006 | 2026-10-25T10:12:39+08:00 | TASK-112 | x-ipe-task-based-bug-fix | approval | 0.85 | FEATURE-002-F D-1: DEC-1 reason 'results area limit (L-08)' approved; DEC-2 unreadable area → no limit named (design §9.3 'otherwise') approved as honest limit; DEC-3 design erratum required; DEC-4 threshold approved with misattribution limit; after review PASS → AC-002F-04l Pass, 74/74, Feature Closing; TASK-110 prioritized next in bug queue |
 
 ---
 
@@ -253,3 +254,34 @@
 
 ### Follow-up
 > Low bug task O-3 (targets.file_digest) queued after TASK-099.
+
+## DAO-006
+- **Timestamp:** 2026-10-25T10:12:39+08:00
+- **Task ID:** TASK-112
+- **Feature ID:** FEATURE-002-F (defect D-1, AC-002F-04l)
+- **Workflow:** N/A
+- **Calling Skill:** x-ipe-task-based-bug-fix
+- **Source:** ai (lifecycle owner "Sage"); delegation continues
+- **Disposition:** approval
+- **Confidence:** 0.85
+
+### Message
+> D-1 fixed per acceptance DAO-007: ENOSPC with hint tmp + results volume → execute_io reads the results area via the holder (cp, capped, in memory, nothing kept); full → limit `results`, "results area limit (L-08)"; room left → `tmp`; unreadable → no limit ("script error under enforced limits"). RED 2 behavioural (+9 seam) / GREEN 12; helpers 361/4 skipped; full suite 3513 / 1 failed (flaky test_02e, TASK-110) / 7 skipped; real-runtime re-run on a new frozen copy TC-F-21 11/11, TC-F-27 7/7, TC-F-51 4/4; 102 containers --network none, nothing pulled. Rule DEC-1…4; after review PASS → 04l Pass, 74/74, Feature Closing? Flaky 02e reproduces alone 1/3 → prioritize TASK-110.
+
+### Guidance Returned
+> DAO verified: bug report `bug-report-TASK-112.md` (7e062e35…, 144 lines, DEC-1…4 L103–106); `git diff HEAD` of execute_io.py (+13: `_enospc_mount` only when `volume and out.limit == "tmp"`; unreadable/oversized cp → `area_full(None)` → limit None) and results.py (+16: `area_full` reads the tar in memory, never extracts; `AREA_SLACK` 64 KiB; ≥ L08_INODES entries or bytes > L08_AREA − slack); collection branch still skipped whenever a reason is set (nothing kept); design §9.3 step 5 (`ENOSPC` on `/tmp` named, "otherwise script error under enforced limits"); spec AC-002F-04l (failed method naming the limit, nothing over the limit retained); acceptance doc "D-1 Re-run" appended with original Fail kept (L300–314).
+> **DEC-1 → approved.** Existing enum value `results`; reason style matches "memory limit (L-06)". No new field/kind.
+> **DEC-2 → approved as a recorded limit**, not a guess: the design names a mount only on evidence; when the area can't be read the mount is unknown. Only reachable when the holder `cp` fails (injected test only); the method still fails and nothing is kept. List it in the 002-F closing honest limits.
+> **DEC-3 → required (not optional):** owner adds the sentence to design §9.3 step 5 plus a Change Log line (erratum, no behaviour/interface change) so design and code agree before closing.
+> **DEC-4 → approved** with the disclosed misattribution case (/tmp ENOSPC while the area is within 64 KiB of full → named `results`) recorded as a limit together with the inference-after-stop note (errno text doesn't name the path). Both ambiguous cases still fail the method, so no safety claim depends on the name.
+> **Route:** after the independent review returns PASS (or PASS-WITH-NITS with nits applied/recorded): TASK-112 complete → local exact-path commit (B8 = A; only TASK-112 files, keep TASK-098's paths separate) → AC-002F-04l Pass from the "D-1 Re-run" evidence at the new frozen copy → 002-F acceptance 74/74 active ACs (05f N/A per B12=A; original Fail kept in history) → Feature Closing. Closing records: D-1 history, DEC-2/DEC-4 limits, the expected 001-G/002-G byte-pin Partials (acceptance DAO-007), 002-D TC-H-01 Partial. /tmp naming preservation is fake-runtime evidence plus an unchanged branch; say so, don't claim a real-runtime /tmp naming run unless one exists.
+> **Flaky test_02e:** reproducing alone (1/3) shows it isn't a load-only or 002-F effect → TASK-110 goes first in the Low bug queue (before the other Low tasks). It doesn't block 002-F closing; closing cites it as a known unrelated flaky failure with its run counts. A clean full suite for later features still needs TASK-110.
+
+### Rationale Summary
+> The fix restores the named-limit behavior of AC-002F-04l as designed. The unknown-mount and threshold edge cases fail safe and are disclosed. The design wording must match before closing.
+
+### Suggested Skills
+- x-ipe-task-based-bug-fix (finish after review) → x-ipe-task-based-feature-closing (FEATURE-002-F); x-ipe-task-based-bug-fix (TASK-110 next in Low queue)
+
+### Follow-up
+- Design §9.3 step 5 erratum + Change Log; closing honest limits (DEC-2, DEC-4, inference after stop); TASK-110 priority.

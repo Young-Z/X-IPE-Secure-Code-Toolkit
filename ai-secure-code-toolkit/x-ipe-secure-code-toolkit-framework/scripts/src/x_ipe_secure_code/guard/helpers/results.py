@@ -14,6 +14,7 @@ from typing import Any
 
 from ..mask import mask_text
 from .model import (
+    L08_AREA,
     L08_BASIS,
     L08_DEPTH,
     L08_EXCERPT,
@@ -29,6 +30,7 @@ from .model import (
 KEYS = {"schema", "helper", "status", "scanned", "findings", "notes"}
 FINDING_KEYS = {"path", "line", "rule", "title", "excerpt", "basis"}
 TAR_CAP = 3 * 1024 * 1024
+AREA_SLACK = 64 * 1024  # tmpfs page rounding of up to L08_INODES - 1 files
 
 
 class ResultInvalid(Exception):
@@ -86,6 +88,20 @@ def from_tar(data: bytes | None) -> bytes:
     if len(raw) != result.size:
         raise ResultInvalid("result.json is truncated")
     return raw
+
+
+def area_full(data: bytes | None) -> bool | None:
+    """Whether a collected results area (tar stream, never extracted) has no room left under L-08: its
+    entries reach the inode bound or its regular bytes reach the size bound. None when unreadable."""
+    if not data:
+        return None
+    try:
+        with tarfile.open(fileobj=io.BytesIO(data), mode="r:") as tar:
+            members = tar.getmembers()
+    except tarfile.TarError:
+        return None
+    used = sum(m.size for m in members if m.isreg())
+    return len(members) >= L08_INODES or used > L08_AREA - AREA_SLACK
 
 
 def _no_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:

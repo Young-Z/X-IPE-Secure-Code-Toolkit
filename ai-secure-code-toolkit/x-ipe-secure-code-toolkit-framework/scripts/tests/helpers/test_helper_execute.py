@@ -282,6 +282,58 @@ def test_04l_limit_naming_fake(flow):
     assert out.data["limit"] == "time"
 
 
+ENOSPC = (
+    "Traceback (most recent call last):\n    json.dump(doc, out)\n"
+    "OSError: [Errno 28] No space left on device\n"
+)
+FULL_AREA = [{"name": "results", "type": "dir"}, {"name": "results/result.json", "size": 2 * 1024 * 1024}]
+
+
+# ---------- AC-002F-04l, TASK-112 D-1: ENOSPC is named by the mount that is full (results area versus /tmp)
+def test_04l_enospc_full_results_area_names_results_limit(flow):
+    vid, hid = flow.ready()
+    flow.fake.set(runs={"target": {"mode": "tar", "members": FULL_AREA, "exit": 1, "stderr": ENOSPC}})
+    out = flow.run(vid, hid, flow.helper_attempt(vid))
+    assert out.data["outcome"] == "failed", out.to_text()
+    assert out.data["limit"] == "results", out.data
+    assert "L-08" in out.data["reason"], out.data
+    run = helper_of(flow.env, vid, hid)["runs"][-1]
+    assert run["target"]["result_sha256"] is None
+    assert not any(
+        p.name.endswith("-result.json") for p in (flow.root / GUARD / vid / "helpers" / hid).iterdir()
+    )
+
+
+def test_04l_enospc_full_results_inodes_names_results_limit(flow):
+    vid, hid = flow.ready()
+    members = [{"name": "results", "type": "dir"}] + [
+        {"name": f"results/f{i}", "data": "x"} for i in range(15)
+    ]
+    flow.fake.set(runs={"target": {"mode": "tar", "members": members, "exit": 1, "stderr": ENOSPC}})
+    out = flow.run(vid, hid, flow.helper_attempt(vid))
+    assert out.data["outcome"] == "failed" and out.data["limit"] == "results", out.data
+
+
+def test_04l_enospc_with_room_in_results_area_names_tmp_limit(flow):
+    vid, hid = flow.ready()
+    flow.fake.set(runs={"target": {"mode": "none", "exit": 1, "stderr": ENOSPC}})
+    out = flow.run(vid, hid, flow.helper_attempt(vid))
+    assert out.data["outcome"] == "failed" and out.data["limit"] == "tmp", out.data
+    assert out.data["reason"] == "tmp limit reached"
+
+
+def test_04l_enospc_unreadable_results_area_names_no_limit():
+    execute_io = mod("execute_io")
+
+    class Runtime:
+        def call(self, args, **kw):
+            return type("Got", (), {"exit": 1, "stdout": b"", "oversized": False})()
+
+    out = execute_io.Outcome(container="c", purpose="target", exit=1, limit="tmp", reason="tmp limit reached")
+    execute_io._enospc_mount(Runtime(), "c-holder", out)
+    assert out.limit is None and out.reason == "script error under enforced limits (exit 1)"
+
+
 # ---------- AC-002F-04m
 def test_04m_stdout_flood_terminated(flow):
     vid, hid = flow.ready()

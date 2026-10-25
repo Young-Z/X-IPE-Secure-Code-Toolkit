@@ -254,3 +254,22 @@ def test_12b_injected_states_ignored(flow):
     concluded = guard.conclude(str(flow.root), vid)
     assert concluded.data["verdict"] != "pass"
     assert {r["check"]: r["state"] for r in concluded.data["ledger"]}["C1"] == "unconfirmed"
+
+
+# ---------- AC-002F-04l, TASK-112 D-1: is the results area full (ENOSPC attribution; measured, never kept)
+@pytest.mark.parametrize(
+    ("data", "full"),
+    [
+        (None, None),
+        (b"", None),
+        (b"not a tar archive" * 64, None),
+        (tar(ROOT), False),
+        (tar(ROOT, GOOD), False),
+        (tar(ROOT, ("results/result.json", "file", b"n" * (2 * 1024 * 1024), {})), True),
+        (tar(ROOT, *[(f"results/f{i}", "file", b"x", {}) for i in range(15)]), True),
+        (tar(ROOT, *[(f"results/f{i}", "file", b"x", {}) for i in range(14)]), False),
+    ],
+    ids=["none", "empty", "not-tar", "dir-only", "small-result", "bytes-full", "inodes-full", "inodes-room"],
+)
+def test_04l_area_full(data, full):
+    assert mod("results").area_full(data) is full

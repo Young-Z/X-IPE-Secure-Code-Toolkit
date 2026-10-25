@@ -298,3 +298,22 @@ Docker objects after the work equal the pre-run baseline (containers, volumes, n
 - Full runtime-call log (with `inspect` output, 5.9 MB) kept in the session evidence folder (`fat-002f/evidence-host-docker-calls.full.jsonl`); the repository copy replaces each `inspect` output by its SHA-256.
 
 File SHA-256s are listed in the owner handoff (written after this report was finalised).
+
+## D-1 Re-run (2026-10-25, TASK-112 bug fix; appended — the original Fail above is unchanged)
+
+**Fix under test:** `guard/helpers/execute_io.py` `9b427c83…` (was `b8e3948b…`) and `guard/helpers/results.py` `17d84545…` (was `786822ee…`): an `ENOSPC` hint is now attributed to the mount that is full — after the run stopped, the results area is read through the holder (same `cp <holder>:/results -`, parsed in memory, never extracted, nothing kept); full (16 entries, or regular bytes within 64 KiB of 2 MiB) → `limit: results`, "results area limit (L-08)"; room left → `limit: tmp` as before; unreadable → no limit named ("script error under enforced limits"). Details: `bug-report-TASK-112.md`.
+
+**Frozen copy:** the live toolkit tree after the fix (`rsync`, `.venv`/caches excluded — nothing committed yet), session folder `bugfix-112/frozen/ai-secure-code-toolkit`; file-list hash (`find . -type f | LC_ALL=C sort | xargs shasum -a 256`, then `shasum -a 256` of that list) start `e8a8bc44e52d49a696f8a5e7363c58a225bd662ca880826dd413cf744ecd15f8` = end (415 files = `git ls-files` of HEAD `41bdbde` + the 4 changed files; 368 → 415 vs the original frozen copy because HEAD now includes FEATURE-001-E). Live tree = frozen copy verified immediately before the run.
+
+**Method:** unchanged `acceptance/blackbox.py` imported by a subset driver `acceptance/run-d1.py` (TC-F-20 as prerequisite registration, TC-F-21, TC-F-27; same `case()` output format); seeds = byte copy of the original container-made handoff (tree hash `c334904c…` identical); Maintainer steps via `maint.py` with a throwaway trust store under the work folder (no `auth init` on the host); real Docker Desktop 29.7.2, local `python:3.12-slim` (`a6e34c59…`), nothing pulled/built; TC-F-51 = `SECURE_CODE_HELPER_REAL=1 … pytest tests/helpers/test_helper_conformance_real.py` in the frozen copy. Run 2026-10-25 02:00:55Z–02:07:21Z.
+
+| TC | Result | Evidence (`acceptance/`) |
+| --- | --- | --- |
+| TC-F-20 (prerequisite) | Pass (9/9) | `evidence-host-macos-d1.jsonl` |
+| TC-F-21 | **Pass** (11/11; 20/20 probes P-00…P-18 + P-13b; record `cf-f7bf9244c7fd7e79`, 95.8 s) | `evidence-host-macos-d1.jsonl` `info.conformance` |
+| TC-F-27 | **Pass** (7/7): 3 MiB results write → `outcome: failed`, `limit: results`, reason "results area limit (L-08)" (stderr diagnostics 243 bytes; no result kept); flood → `output`; 700 MiB → `memory`; both 07g → failed; conclude `unconfirmed`; no leftovers / no raw result file | `evidence-host-macos-d1.jsonl` `info.results_b` |
+| TC-F-51 | **Pass** (4 passed in 213 s, exit 0) | `evidence-delivered-helpers-real-d1.log` |
+
+Run facts: 1,050 runtime calls (`evidence-host-docker-calls-d1.jsonl`, inspect output replaced by SHA-256), 102 creates all `--network none`, 0 forbidden calls (pull/build/load), no toolkit-labelled container or volume left; Docker containers/volumes/images/networks after = before (the only pre-existing difference, volume `fat-uv-cache-001e`, belongs to a concurrent worker and was not touched). Empty stderr. Evidence SHA-256: `evidence-host-macos-d1.jsonl` `cb3f8ef8…`, `evidence-host-docker-calls-d1.jsonl` `fb1b91cd…`, `evidence-delivered-helpers-real-d1.log` `2c42fbf5…`, `run-d1.py` `43456da2…`.
+
+**Result:** D-1 no longer reproduces at the fixed tree; AC-002F-04l's "naming the limit" clause is met for the results-size limit on the real runtime. Not re-run here: the other TCs (only `execute_io`/`results` changed; covered by the full suite, 3513 passed + 1 known flaky, see bug report) and the regression runners. Independent review of the fix and the decision to mark D-1 closed remain with the owner.

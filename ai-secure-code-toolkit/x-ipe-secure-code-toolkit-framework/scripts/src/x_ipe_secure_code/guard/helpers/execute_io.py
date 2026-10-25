@@ -171,6 +171,8 @@ def run_container(
         if out.exit is None and isinstance(state.get("ExitCode"), int) and not out.limit:
             out.exit = state["ExitCode"]
         _classify(out)
+        if volume and out.limit == "tmp":
+            _enospc_mount(rt, holder, out)
         if volume and (out.limit is None and out.reason is None or run.self_stop_wait is not None):
             got = rt.call(["cp", f"{holder}:/results", "-"], cap=results.TAR_CAP)
             try:
@@ -238,6 +240,17 @@ def _classify(out: Outcome) -> None:
         out.reason = (
             f"{hint} limit reached" if hint else f"script error under enforced limits (exit {out.exit})"
         )
+
+
+def _enospc_mount(rt: CliRuntime, holder: str, out: Outcome) -> None:
+    """ENOSPC names the full mount (design §9): the results area (L-08) when it has no room left, else
+    `/tmp` (L-07); an unreadable area names no limit. Only measured in memory; nothing is kept."""
+    got = rt.call(["cp", f"{holder}:/results", "-"], cap=results.TAR_CAP)
+    full = results.area_full(got.stdout if got.exit == 0 and not got.oversized else None)
+    if full is None:
+        out.limit, out.reason = None, f"script error under enforced limits (exit {out.exit})"
+    elif full:
+        out.limit, out.reason = "results", "results area limit (L-08)"
 
 
 def sweep(rt: CliRuntime, now: float | None = None) -> list[str]:
