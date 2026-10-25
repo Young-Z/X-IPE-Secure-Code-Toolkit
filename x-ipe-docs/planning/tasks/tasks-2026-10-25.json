@@ -5,12 +5,25 @@
       "task_type": "Feature Closing",
       "description": "Close FEATURE-002-F at the TASK-112 commit: 74/74 active ACs (05f N/A, B12 = A); D-1 history; DEC-2/DEC-4 limits; expected partials (001-G TC-G-33 / 002-G TC-G-23 byte pins, 002-D TC-H-01 env); /tmp-named check fake-runtime only; one runtime (Docker Desktop macOS arm64); flaky test_02e cited (TASK-110); P-01 clarification human-confirmed; maintenance points DAO-005/023/024.",
       "role": "Sage",
-      "status": "in_progress",
-      "output_links": [],
+      "status": "completed",
+      "output_links": [
+        "x-ipe-docs/requirements/EPIC-002/FEATURE-002-F/closing-report.md"
+      ],
       "next_task": "",
       "created_at": "2026-10-25T02:21:15.794730+00:00",
-      "last_updated": "2026-10-25T02:21:15.794730+00:00",
+      "last_updated": "2026-10-25T02:36:13.137869+00:00",
       "task_id": "TASK-114"
+    },
+    {
+      "task_type": "Bug Fix",
+      "description": "FEATURE-002-F O-1 (Low, closing residual): AC-002F-04l limit names `pids` and the CPU-time reason have no test at any level (an accepted helper cannot create processes/threads). Add fake-runtime tests for both names; no product change expected.",
+      "role": "Sage",
+      "status": "pending",
+      "output_links": [],
+      "next_task": "",
+      "created_at": "2026-10-25T02:36:13.168274+00:00",
+      "last_updated": "2026-10-25T02:36:13.168274+00:00",
+      "task_id": "TASK-115"
     }
   ]
 }

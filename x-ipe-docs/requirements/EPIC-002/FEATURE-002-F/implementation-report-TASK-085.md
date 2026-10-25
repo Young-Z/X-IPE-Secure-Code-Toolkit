@@ -461,3 +461,5 @@ Maintenance points to list in the 002-F closing:
 - The flaky delivered `test_02e` passing in this run is not evidence that TASK-110 is fixed.
 
 Engineering delivery: **verified** for the 74 active ACs at the final tree (353 new tests; full suite 3234 passed / 0 failed / 8 skipped; real-runtime conformance and flow passing without seeded records); delivered-file parity = closed list + the 3 ruled maintenance points; engine boundary unchanged. Stakeholder outcome: **not measured.**
+
+> **Owner note (2026-10-25):** the delta re-review of the DAO-005 fixes returned **PASS-WITH-NITS**; its nit (fib_trie cannot show IPv4 on a down interface) is recorded as an honest limit in the design. Representative DAO-006 (code implementation) approved DEC-I21…I25.
