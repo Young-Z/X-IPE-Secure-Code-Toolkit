@@ -38,3 +38,6 @@ node_modules/
 /x-ipe-docs/requirements/EPIC-001/FEATURE-001-E/specification.md
 /x-ipe-docs/requirements/EPIC-001/FEATURE-001-G/specification.md
 /x-ipe-docs/requirements/EPIC-001/FEATURE-001-G/technical-design.md
+
+# board lock files
+x-ipe-docs/planning/**/*.lock
